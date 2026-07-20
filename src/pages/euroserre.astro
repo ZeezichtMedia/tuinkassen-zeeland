@@ -1,0 +1,147 @@
+---
+import Basis from '../layouts/Basis.astro';
+import { bedrijf, euroSerres } from '../data/aanbod';
+import PaginaKop from '../components/PaginaKop.astro';
+
+const categorieen = ['Alles', 'Vrijstaand', 'Tegen een muur'];
+---
+
+<Basis
+  titel={`Euroserre aluminium serres | ${bedrijf.naam}`}
+  omschrijving="Naast onze eigen stalen kassen leveren en plaatsen we de aluminium serres van Euroserre: van de Euro-Micro tot de Euro-Super, en muurserres."
+>
+  {/* Geen foto: dit zijn serres van Euroserre, en eigen kassen erbij zetten zou
+      suggereren dat het hun modellen zijn. Liever ruimte dan een foute foto. */}
+  <PaginaKop
+    label="Ook bij ons te krijgen"
+    titel="De aluminium serres van Euroserre"
+    tekst="Wij bouwen zelf in staal, maar we snappen dat aluminium ook zo zijn voordelen heeft: lichter, onderhoudsarm en met slanke profielen. Daarom zijn we leverancier van Euroserre, dat al meer dan veertig jaar serres en tuinkamers maakt. Je koopt hem bij ons, en wij plaatsen hem ook."
+  />
+
+  <!-- Filter en modellen -->
+  <section class="bg-white py-14 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter op type serre">
+        {
+          categorieen.map((c, i) => (
+            <button
+              type="button"
+              data-filter={c}
+              class:list={[
+                'rounded-full px-5 py-2.5 text-sm font-semibold transition-colors',
+                i === 0
+                  ? 'bg-blad-600 text-white'
+                  : 'bg-staal-100 text-staal-700 hover:bg-staal-200',
+              ]}
+              aria-pressed={i === 0 ? 'true' : 'false'}
+            >
+              {c}
+            </button>
+          ))
+        }
+        <p class="ml-auto text-sm text-staal-500" data-telling>
+          {euroSerres.length} modellen
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          euroSerres.map((s) => (
+            <article
+              data-serre
+              data-categorie={s.categorie}
+              class="rijs flex flex-col rounded-2xl bg-klei-50 p-6 transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-22px_rgba(14,26,15,0.4)]"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <h2 class="text-2xl text-staal-900">{s.naam}</h2>
+                <span class="shrink-0 rounded-full bg-blad-50 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-blad-700">
+                  {s.categorie}
+                </span>
+              </div>
+              <p class="mt-3 flex-1 text-sm leading-relaxed text-staal-600">{s.omschrijving}</p>
+              <dl class="mt-5 flex gap-8 border-t border-staal-900/10 pt-4 text-sm">
+                <div>
+                  <dt class="text-staal-500">Breedte</dt>
+                  <dd class="mt-0.5 font-semibold text-staal-900">{s.breedte}</dd>
+                </div>
+                <div>
+                  <dt class="text-staal-500">Vanaf lengte</dt>
+                  <dd class="mt-0.5 font-semibold text-staal-900">{s.minLengte}</dd>
+                </div>
+              </dl>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Zelfbouw of plaatsen -->
+  <section class="bg-klei-50 py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs max-w-xl">
+        <p class="oogmerk text-blad-600">Twee manieren</p>
+        <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Zelf bouwen of door ons laten zetten</h2>
+      </div>
+      <div class="mt-10 grid gap-5 sm:grid-cols-2">
+        <div class="rijs rounded-2xl bg-white p-7">
+          <h3 class="text-2xl text-staal-900">Zelfbouwpakket</h3>
+          <p class="mt-3 text-sm leading-relaxed text-staal-600">
+            Je krijgt de serre compleet aangeleverd met een handleiding, en zet hem zelf in elkaar.
+            Handig als je graag klust en het budget scherp wilt houden.
+          </p>
+        </div>
+        <div class="rijs rounded-2xl bg-blad-600 p-7 text-white">
+          <h3 class="text-2xl text-white">Wij plaatsen hem</h3>
+          <p class="mt-3 text-sm leading-relaxed text-blad-50">
+            Wij zetten je serre vakkundig neer, net als onze eigen kassen. Inclusief fundering en
+            afvoer als je dat wilt. Je hoeft er zelf niets voor te doen.
+          </p>
+        </div>
+      </div>
+
+      <div class="rijs mt-10 flex flex-col gap-3 sm:flex-row">
+        <a href="/samenstellen/" class="knop-vol justify-center">Stel je serre samen</a>
+        <a
+          href={`tel:${bedrijf.telefoonNet}`}
+          class="inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-staal-300 px-6 py-3.5 font-semibold text-staal-800 transition-colors hover:bg-staal-100"
+        >
+          Bel {bedrijf.telefoonToon} voor advies
+        </a>
+      </div>
+    </div>
+  </section>
+</Basis>
+
+<script>
+  const knoppen = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+  const kaarten = Array.from(document.querySelectorAll<HTMLElement>('[data-serre]'));
+  const telling = document.querySelector('[data-telling]');
+
+  knoppen.forEach((k) => {
+    k.addEventListener('click', () => {
+      const keuze = k.dataset.filter;
+
+      knoppen.forEach((b) => {
+        const actief = b === k;
+        b.setAttribute('aria-pressed', String(actief));
+        b.classList.toggle('bg-blad-600', actief);
+        b.classList.toggle('text-white', actief);
+        b.classList.toggle('bg-staal-100', !actief);
+        b.classList.toggle('text-staal-700', !actief);
+        b.classList.toggle('hover:bg-staal-200', !actief);
+      });
+
+      let zichtbaar = 0;
+      kaarten.forEach((kaart) => {
+        const tonen = keuze === 'Alles' || kaart.dataset.categorie === keuze;
+        kaart.classList.toggle('weg', !tonen);
+        if (tonen) zichtbaar++;
+      });
+
+      if (telling) {
+        telling.textContent = zichtbaar === 1 ? '1 model' : `${zichtbaar} modellen`;
+      }
+    });
+  });
+</script>

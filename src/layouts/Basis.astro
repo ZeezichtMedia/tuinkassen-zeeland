@@ -1,0 +1,75 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  titel: string;
+  omschrijving: string;
+}
+
+const { titel, omschrijving } = Astro.props;
+const pad = Astro.url.pathname;
+
+/* Alleen de homepage opent met een donkere fotohero waar een lichte header
+   overheen moet. De andere pagina's beginnen op crème, daar hoort de header
+   meteen in zijn lichte staat te staan (anders zweeft er een donkere balk over
+   een lichte pagina tot je scrollt). */
+const donkereHero = pad === '/';
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titel}</title>
+    <meta name="description" content={omschrijving} />
+    <meta property="og:title" content={titel} />
+    <meta property="og:description" content={omschrijving} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#1e6d13" />
+    <link rel="icon" href="/logo-tuinkassen-zeeland.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+    />
+  </head>
+  <body class="antialiased">
+    <a
+      href="#hoofd"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-blad-600 focus:px-5 focus:py-3 focus:text-white"
+    >
+      Naar de inhoud
+    </a>
+    <Header pad={pad} startLicht={!donkereHero} />
+    <main id="hoofd">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Rustige opkomst bij scrollen
+      const rijzers = document.querySelectorAll('.rijs');
+      if (rijzers.length) {
+        const waarnemer = new IntersectionObserver(
+          (regels) => {
+            regels.forEach((r) => {
+              if (r.isIntersecting) {
+                (r.target as HTMLElement).classList.add('zichtbaar');
+                waarnemer.unobserve(r.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+        rijzers.forEach((el, i) => {
+          (el as HTMLElement).style.transitionDelay = `${Math.min(i % 4, 3) * 70}ms`;
+          waarnemer.observe(el);
+        });
+      }
+    </script>
+  </body>
+</html>

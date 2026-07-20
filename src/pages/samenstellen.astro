@@ -1,0 +1,642 @@
+---
+import Basis from '../layouts/Basis.astro';
+import { bedrijf } from '../data/aanbod';
+import PaginaKop from '../components/PaginaKop.astro';
+import kopfoto from '../assets/fotos/kas-tuin-breed.jpg';
+---
+
+<Basis
+  titel={`Stel je kas samen | ${bedrijf.naam}`}
+  omschrijving="Stel zelf je tuinkas samen: kies je constructie, je maat en je opties, en zie meteen je oppervlak. Stuur het als aanvraag door naar Tuinkassen Zeeland in Ritthem."
+>
+  <PaginaKop
+    label="Stel samen"
+    titel="Bouw je kas op het scherm, dan bouwen wij hem in het echt"
+    tekst="Kies hieronder wat je wilt. Je ziet meteen wat je oppervlak wordt en hoe je kas eruit komt te zien. Aan het eind stuur je het door, dan bellen we je met een prijs."
+    foto={kopfoto}
+    altTekst="Ruime tuinkas in een achtertuin"
+  />
+
+  <section class="bg-klei-50 py-14 sm:py-20">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="grid gap-8 lg:grid-cols-[1fr_400px] lg:items-start lg:gap-10">
+        <!-- Keuzes -->
+        <div class="space-y-6">
+          <!-- 1. Constructie -->
+          <fieldset class="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(14,26,15,0.08)] sm:p-7">
+            <legend class="sr-only">Constructie</legend>
+            <div class="flex items-baseline gap-3">
+              <span class="font-kop text-2xl font-light text-blad-500">01</span>
+              <h2 class="text-2xl text-staal-900">Waar wil je hem van hebben?</h2>
+            </div>
+            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+              <label class="keuze" data-keuzevak>
+                <input type="radio" name="constructie" value="staal" checked class="sr-only" data-veld="constructie" data-opp="0" />
+                <span class="keuze-kop">Gegalvaniseerd staal</span>
+                <span class="keuze-tekst">Onze eigen bouw. Zwaarder, sterker, geen diagonalen nodig, gaat 30 jaar en langer mee.</span>
+                <span class="keuze-merk">Tuinkassen Zeeland</span>
+              </label>
+              <label class="keuze" data-keuzevak>
+                <input type="radio" name="constructie" value="aluminium" class="sr-only" data-veld="constructie" data-opp="0" />
+                <span class="keuze-kop">Aluminium</span>
+                <span class="keuze-tekst">Lichter en onderhoudsarm, met slanke profielen. Uit de reeks van Euroserre.</span>
+                <span class="keuze-merk">Euroserre</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 2. Model -->
+          <fieldset class="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(14,26,15,0.08)] sm:p-7">
+            <legend class="sr-only">Model</legend>
+            <div class="flex items-baseline gap-3">
+              <span class="font-kop text-2xl font-light text-blad-500">02</span>
+              <h2 class="text-2xl text-staal-900">Welk model past bij je tuin?</h2>
+            </div>
+            <div class="mt-5 grid gap-3 sm:grid-cols-2" data-modellen></div>
+          </fieldset>
+
+          <!-- 3. Maat -->
+          <fieldset class="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(14,26,15,0.08)] sm:p-7">
+            <legend class="sr-only">Maat</legend>
+            <div class="flex items-baseline gap-3">
+              <span class="font-kop text-2xl font-light text-blad-500">03</span>
+              <h2 class="text-2xl text-staal-900">Hoe groot mag hij worden?</h2>
+            </div>
+
+            <div class="mt-6">
+              <div class="flex items-baseline justify-between">
+                <label for="breedte" class="text-sm font-semibold text-staal-700">Breedte</label>
+                <output for="breedte" class="font-kop text-xl text-blad-700" data-uit="breedte">3,40 m</output>
+              </div>
+              <input
+                id="breedte"
+                type="range"
+                class="schuif mt-2"
+                data-veld="breedte"
+                min="0"
+                max="1"
+                step="1"
+                value="0"
+              />
+              <p class="mt-1.5 text-xs text-staal-500" data-hint="breedte"></p>
+            </div>
+
+            <div class="mt-7">
+              <div class="flex items-baseline justify-between">
+                <label for="lengte" class="text-sm font-semibold text-staal-700">Lengte</label>
+                <output for="lengte" class="font-kop text-xl text-blad-700" data-uit="lengte">3,75 m</output>
+              </div>
+              <input
+                id="lengte"
+                type="range"
+                class="schuif mt-2"
+                data-veld="lengte"
+                min="3.75"
+                max="10"
+                step="0.25"
+                value="3.75"
+              />
+              <p class="mt-1.5 text-xs text-staal-500" data-hint="lengte"></p>
+            </div>
+          </fieldset>
+
+          <!-- 4. Opties -->
+          <fieldset class="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(14,26,15,0.08)] sm:p-7">
+            <legend class="sr-only">Opties</legend>
+            <div class="flex items-baseline gap-3">
+              <span class="font-kop text-2xl font-light text-blad-500">04</span>
+              <h2 class="text-2xl text-staal-900">Wat wil je erbij?</h2>
+            </div>
+            <div class="mt-5 grid gap-3 sm:grid-cols-2">
+              <label class="keuze" data-keuzevak>
+                <input type="checkbox" class="sr-only" data-optie value="Werkbank" />
+                <span class="keuze-kop">Werkbank</span>
+                <span class="keuze-tekst">Watervast gelamineerd multiplex op een ijzeren frame, ingebouwd op jouw hoogte.</span>
+              </label>
+              <label class="keuze" data-keuzevak>
+                <input type="checkbox" class="sr-only" data-optie value="Automatische raamopeners" />
+                <span class="keuze-kop">Automatische raamopeners</span>
+                <span class="keuze-tekst">Ramen die vanzelf open en dicht gaan bij de temperatuur die jij instelt.</span>
+              </label>
+              <label class="keuze" data-keuzevak>
+                <input type="checkbox" class="sr-only" data-optie value="Fundering" />
+                <span class="keuze-kop">Fundering</span>
+                <span class="keuze-tekst">Van een betonrand tot een hele vloer. We kijken samen wat past bij je grond.</span>
+              </label>
+              <label class="keuze" data-keuzevak>
+                <input type="checkbox" class="sr-only" data-optie value="Regenton aansluiten" checked />
+                <span class="keuze-kop">Regenton aansluiten</span>
+                <span class="keuze-tekst">Goten met afvoer zitten er standaard op. Wij sluiten hem aan op je regenton of hemelwater.</span>
+              </label>
+              <label class="keuze" data-keuzevak>
+                <input type="checkbox" class="sr-only" data-optie value="Plaatsen door ons" checked />
+                <span class="keuze-kop">Plaatsen door ons</span>
+                <span class="keuze-tekst">Wij zetten hem compleet neer. We hebben er meerdere transportmiddelen voor.</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Overzicht -->
+        <aside class="lg:sticky lg:top-28">
+          <div class="overflow-hidden rounded-2xl bg-white shadow-[0_12px_40px_-16px_rgba(14,26,15,0.3)]">
+            <!-- Tekening -->
+            <div class="border-b border-staal-200 bg-staal-50 p-5">
+              <svg viewBox="0 0 320 200" class="mx-auto h-48 w-full" role="img" aria-labelledby="tekeningtitel">
+                <title id="tekeningtitel" data-tekening-titel>Schematische tekening van je kas</title>
+                <defs>
+                  <linearGradient id="glas" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#dbeafe" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#eef4f8" stop-opacity="0.5" />
+                  </linearGradient>
+                </defs>
+                <!-- grond -->
+                <line x1="14" y1="172" x2="306" y2="172" stroke="#b4bcc3" stroke-width="1.5" />
+                <g data-kas>
+                  <!-- gevel + kap, wordt door script geschaald -->
+                  <polygon data-glasvlak fill="url(#glas)" points="" />
+                  <polyline data-omtrek fill="none" stroke="#343a40" stroke-width="3" stroke-linejoin="round" points="" />
+                  <g data-stijlen stroke="#55606a" stroke-width="1.5"></g>
+                </g>
+                <!-- Figuurtje van 1,75 m als maatstok, 100 eenheden hoog -->
+                <g data-mens fill="#8b97a1" aria-hidden="true">
+                  <circle cx="12" cy="10" r="9" />
+                  <path d="M12 21c-7 0-11 5-11 12v27h5l2 40h8l2-40h5V33c0-7-4-12-11-12z" />
+                </g>
+                <text
+                  data-maatlabel
+                  x="160"
+                  y="192"
+                  text-anchor="middle"
+                  font-size="11"
+                  fill="#6b7883"
+                  font-family="Oswald, sans-serif"></text>
+              </svg>
+            </div>
+
+            <div class="p-6">
+              <p class="oogmerk text-blad-600">Jouw kas</p>
+              <h2 class="mt-2 font-kop text-2xl text-staal-900" data-uit="titel">Venlo kas</h2>
+
+              <dl class="mt-5 space-y-3 text-sm">
+                <div class="flex justify-between gap-4 border-b border-staal-100 pb-3">
+                  <dt class="text-staal-500">Constructie</dt>
+                  <dd class="text-right font-semibold text-staal-900" data-uit="constructie">
+                    Gegalvaniseerd staal
+                  </dd>
+                </div>
+                <div class="flex justify-between gap-4 border-b border-staal-100 pb-3">
+                  <dt class="text-staal-500">Afmeting</dt>
+                  <dd class="text-right font-semibold text-staal-900" data-uit="afmeting">3,40 x 3,75 m</dd>
+                </div>
+                <div class="flex justify-between gap-4 border-b border-staal-100 pb-3">
+                  <dt class="text-staal-500">Oppervlak</dt>
+                  <dd class="text-right font-semibold text-staal-900" data-uit="oppervlak">12,8 m2</dd>
+                </div>
+                <div class="flex justify-between gap-4 border-b border-staal-100 pb-3">
+                  <dt class="text-staal-500">Glas</dt>
+                  <dd class="text-right font-semibold text-staal-900" data-uit="glas">4 mm tuindersglas</dd>
+                </div>
+                <div class="flex justify-between gap-4">
+                  <dt class="shrink-0 text-staal-500">Erbij</dt>
+                  <dd class="text-right font-semibold text-staal-900" data-uit="opties">Geen</dd>
+                </div>
+              </dl>
+
+              <a href="#aanvraag" class="knop-vol mt-6 w-full justify-center" data-naaraanvraag>
+                Vraag een prijs aan
+              </a>
+              <p class="mt-3 text-center text-xs leading-relaxed text-staal-500">
+                Je zit nergens aan vast. We bellen je terug met een prijs en denken mee over je maat.
+              </p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Aanvraag -->
+      <div id="aanvraag" class="mt-8 scroll-mt-28 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(14,26,15,0.08)] sm:p-7 lg:max-w-[calc(100%-432px)]">
+        <div class="flex items-baseline gap-3">
+          <span class="font-kop text-2xl font-light text-blad-500">05</span>
+          <h2 class="text-2xl text-staal-900">Stuur het naar ons door</h2>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed text-staal-600">
+          Laat je gegevens achter, dan bellen we je terug met een prijs voor precies deze kas.
+        </p>
+
+        <form class="mt-6 grid gap-4 sm:grid-cols-2" data-formulier novalidate>
+          <div>
+            <label for="naam" class="text-sm font-semibold text-staal-700">Je naam</label>
+            <input id="naam" name="naam" type="text" required class="invoer mt-1.5" autocomplete="name" />
+          </div>
+          <div>
+            <label for="telefoon" class="text-sm font-semibold text-staal-700">Telefoonnummer</label>
+            <input id="telefoon" name="telefoon" type="tel" required class="invoer mt-1.5" autocomplete="tel" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="plaats" class="text-sm font-semibold text-staal-700">
+              Waar moet de kas komen te staan?
+            </label>
+            <input id="plaats" name="plaats" type="text" class="invoer mt-1.5" placeholder="Bijvoorbeeld Middelburg" />
+          </div>
+          <div class="sm:col-span-2">
+            <label for="vraag" class="text-sm font-semibold text-staal-700">
+              Iets wat we moeten weten? <span class="font-normal text-staal-400">Niet verplicht</span>
+            </label>
+            <textarea id="vraag" name="vraag" rows="3" class="invoer mt-1.5"></textarea>
+          </div>
+          <div class="sm:col-span-2 sm:flex sm:items-center sm:gap-5">
+            <button type="submit" class="knop-vol w-full justify-center sm:w-auto">
+              Verstuur mijn aanvraag
+            </button>
+            <p class="mt-3 text-xs text-staal-500 sm:mt-0">
+              Liever direct bellen? Dat kan op {bedrijf.telefoonToon}.
+            </p>
+          </div>
+        </form>
+
+        <div
+          class="mt-5 hidden rounded-xl border border-blad-200 bg-blad-50 p-4 text-sm text-blad-800"
+          data-melding
+          role="status"
+        >
+        </div>
+      </div>
+    </div>
+  </section>
+</Basis>
+
+<style>
+  /* De .keuze-regels staan in global.css: de modelkaarten worden door
+     script gemaakt en scoped styles raken die elementen niet. */
+  .schuif {
+    width: 100%;
+    height: 6px;
+    appearance: none;
+    border-radius: 999px;
+    background: var(--color-staal-200);
+    outline-offset: 6px;
+  }
+  .schuif::-webkit-slider-thumb {
+    appearance: none;
+    height: 24px;
+    width: 24px;
+    border-radius: 999px;
+    background: var(--color-blad-600);
+    border: 3px solid #fff;
+    box-shadow: 0 1px 6px rgba(14, 26, 15, 0.35);
+    cursor: pointer;
+  }
+  .schuif::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 999px;
+    background: var(--color-blad-600);
+    border: 3px solid #fff;
+    box-shadow: 0 1px 6px rgba(14, 26, 15, 0.35);
+    cursor: pointer;
+  }
+
+  .invoer {
+    display: block;
+    width: 100%;
+    border-radius: 0.7rem;
+    border: 1.5px solid var(--color-staal-200);
+    background: #fff;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+    color: var(--color-staal-900);
+    transition: border-color 0.18s ease;
+  }
+  .invoer:focus {
+    border-color: var(--color-blad-600);
+    outline: none;
+  }
+  .invoer::placeholder {
+    color: var(--color-staal-400);
+  }
+</style>
+
+<script>
+  type Model = {
+    naam: string;
+    tekst: string;
+    breedtes: number[];
+    minLengte: number;
+    maxLengte: number;
+    vorm: 'zadel' | 'steil' | 'muur' | 'pyra';
+  };
+
+  const modellen: Record<string, Model[]> = {
+    staal: [
+      {
+        naam: 'Venlo kas',
+        tekst: 'Het profiel uit de professionele kassenbouw. Rechte gevels, veel licht.',
+        breedtes: [3.4],
+        minLengte: 3.75,
+        maxLengte: 10,
+        vorm: 'zadel',
+      },
+      {
+        naam: 'Belgische kas',
+        tekst: 'Breder, met een steilere kap. Regen en vuil lopen sneller af.',
+        breedtes: [3.8],
+        minLengte: 4.5,
+        maxLengte: 10,
+        vorm: 'steil',
+      },
+      {
+        naam: 'Compact',
+        tekst: 'Onze kleine maten, met precies hetzelfde staal en glas.',
+        breedtes: [2.3, 2.8],
+        minLengte: 3.0,
+        maxLengte: 3.75,
+        vorm: 'zadel',
+      },
+      {
+        naam: 'Maatwerk',
+        tekst: 'Jouw formaat. We maken het glas zelf op maat, dus het kan bijna altijd.',
+        breedtes: [2.3, 2.8, 3.4, 3.8, 4.5, 5.0, 6.0],
+        minLengte: 2.5,
+        maxLengte: 20,
+        vorm: 'zadel',
+      },
+    ],
+    aluminium: [
+      {
+        naam: 'Euro-Micro',
+        tekst: 'De kleinste. Past langs een schutting en is nog steeds een volwaardige serre.',
+        breedtes: [1.61],
+        minLengte: 2.36,
+        maxLengte: 6,
+        vorm: 'zadel',
+      },
+      {
+        naam: 'Euro-Maxi',
+        tekst: 'De bestseller van Euroserre. Strak, veel glas, twee breedtes.',
+        breedtes: [2.36, 3.09],
+        minLengte: 2.36,
+        maxLengte: 8,
+        vorm: 'zadel',
+      },
+      {
+        naam: 'Euro-Rustiq',
+        tekst: 'Zelfde maten als de Maxi, landelijker profiel.',
+        breedtes: [2.36, 3.09],
+        minLengte: 2.36,
+        maxLengte: 8,
+        vorm: 'steil',
+      },
+      {
+        naam: 'Euro-Plus',
+        tekst: 'Vier breedtes tot ruim zes meter. Ruimte om echt in te werken.',
+        breedtes: [3.8, 4.57, 5.3, 6.04],
+        minLengte: 3.09,
+        maxLengte: 12,
+        vorm: 'zadel',
+      },
+      {
+        naam: 'Euro-Pyra',
+        tekst: 'Piramidekap die van alle kanten licht binnenlaat.',
+        breedtes: [3.09, 3.8],
+        minLengte: 3.09,
+        maxLengte: 6,
+        vorm: 'pyra',
+      },
+      {
+        naam: 'Euro-Muurserre',
+        tekst: 'Leunt tegen je gevel. Beter geïsoleerd, en water en stroom zijn zo aangesloten.',
+        breedtes: [2.33, 3.08],
+        minLengte: 3.08,
+        maxLengte: 8,
+        vorm: 'muur',
+      },
+    ],
+  };
+
+  const $ = <T extends Element>(s: string) => document.querySelector<T>(s);
+  const $$ = <T extends Element>(s: string) => Array.from(document.querySelectorAll<T>(s));
+
+  const staat = {
+    constructie: 'staal' as 'staal' | 'aluminium',
+    model: 0,
+    breedteIndex: 0,
+    lengte: 3.75,
+  };
+
+  const getal = (n: number) =>
+    n.toLocaleString('nl-NL', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  function huidigModel(): Model {
+    return modellen[staat.constructie][staat.model];
+  }
+
+  // Modelkeuzes opnieuw opbouwen als de constructie wisselt
+  function bouwModellen() {
+    const vak = $<HTMLDivElement>('[data-modellen]');
+    if (!vak) return;
+    vak.innerHTML = '';
+    modellen[staat.constructie].forEach((m, i) => {
+      const label = document.createElement('label');
+      label.className = 'keuze';
+      label.innerHTML = `
+        <input type="radio" name="model" class="sr-only" value="${i}" ${i === staat.model ? 'checked' : ''} />
+        <span class="keuze-kop">${m.naam}</span>
+        <span class="keuze-tekst">${m.tekst}</span>`;
+      label.querySelector('input')?.addEventListener('change', () => {
+        staat.model = i;
+        pasMatenAan(true);
+        teken();
+      });
+      vak.appendChild(label);
+    });
+  }
+
+  // Breedte- en lengtebereik volgen het gekozen model
+  function pasMatenAan(reset: boolean) {
+    const m = huidigModel();
+    const b = $<HTMLInputElement>('[data-veld="breedte"]');
+    const l = $<HTMLInputElement>('[data-veld="lengte"]');
+    if (!b || !l) return;
+
+    b.max = String(m.breedtes.length - 1);
+    b.disabled = m.breedtes.length === 1;
+    if (reset || staat.breedteIndex > m.breedtes.length - 1) staat.breedteIndex = 0;
+    b.value = String(staat.breedteIndex);
+
+    l.min = String(m.minLengte);
+    l.max = String(m.maxLengte);
+    if (reset || staat.lengte < m.minLengte || staat.lengte > m.maxLengte) {
+      staat.lengte = m.minLengte;
+    }
+    l.value = String(staat.lengte);
+
+    const bh = $('[data-hint="breedte"]');
+    if (bh) {
+      bh.textContent =
+        m.breedtes.length === 1
+          ? `Dit model heeft één vaste breedte van ${getal(m.breedtes[0])} m.`
+          : `Te kiezen: ${m.breedtes.map((x) => getal(x) + ' m').join(', ')}.`;
+    }
+    const lh = $('[data-hint="lengte"]');
+    if (lh) {
+      lh.textContent = `Tussen ${getal(m.minLengte)} m en ${getal(m.maxLengte)} m, in stappen van 25 cm.`;
+    }
+  }
+
+  // Schematische voorgevel, op echte verhoudingen. De schaal krimpt pas
+  // als een brede kas anders buiten het vlak zou vallen.
+  function tekenKas(breedte: number, vorm: Model['vorm']) {
+    const midden = 160;
+    const grond = 172;
+    const wandM = 2.0; // goothoogte in meters
+    const nokM = vorm === 'steil' ? 1.5 : vorm === 'pyra' ? 1.7 : 1.0;
+
+    // Past de kas in 290 px breed en 150 px hoog?
+    const schaal = Math.min(38, 290 / breedte, 150 / (wandM + nokM));
+    const halve = (breedte * schaal) / 2;
+    const wand = wandM * schaal;
+    const nok = nokM * schaal;
+
+    const links = midden - halve;
+    const rechts = midden + halve;
+    const goot = grond - wand;
+    const top = goot - nok;
+
+    // Muurserre: lessenaarsdak dat naar de muur rechts oploopt
+    const omtrek =
+      vorm === 'muur'
+        ? `${links},${grond} ${links},${goot} ${rechts},${top} ${rechts},${grond}`
+        : `${links},${grond} ${links},${goot} ${midden},${top} ${rechts},${goot} ${rechts},${grond}`;
+
+    $('[data-omtrek]')?.setAttribute('points', omtrek);
+    $('[data-glasvlak]')?.setAttribute('points', omtrek);
+
+    // Verticale roeden, ongeveer elke 80 cm
+    const stijlen = $('[data-stijlen]');
+    if (!stijlen) return;
+    stijlen.innerHTML = '';
+
+    const lijn = (x1: number, y1: number, x2: number, y2: number, streep?: string) => {
+      const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      l.setAttribute('x1', String(x1));
+      l.setAttribute('y1', String(y1));
+      l.setAttribute('x2', String(x2));
+      l.setAttribute('y2', String(y2));
+      if (streep) l.setAttribute('stroke-dasharray', streep);
+      stijlen.appendChild(l);
+      return l;
+    };
+
+    const aantal = Math.max(1, Math.round(breedte / 0.8) - 1);
+    for (let i = 1; i <= aantal; i++) {
+      const x = links + ((rechts - links) / (aantal + 1)) * i;
+      lijn(x, grond, x, goot);
+    }
+
+    // Goot en kapspanten
+    lijn(links, goot, rechts, goot, '3 3');
+    if (vorm === 'muur') {
+      lijn(midden, goot + (top - goot) / 2, midden, grond, '3 3');
+    } else {
+      lijn(midden, top, midden, goot, '3 3');
+    }
+
+    // Figuurtje van 1,75 m naast de kas, zodat je ziet hoe groot hij wordt.
+    // Het is 100 eenheden hoog getekend, dus schalen we naar 1,75 x schaal.
+    const mens = $('[data-mens]');
+    if (mens) {
+      const hoogte = 1.75 * schaal;
+      const x = rechts + 14;
+      mens.setAttribute('transform', `translate(${x}, ${grond - hoogte}) scale(${hoogte / 100})`);
+      mens.setAttribute('opacity', x + 12 > 314 ? '0' : '1');
+    }
+  }
+
+  function teken() {
+    const m = huidigModel();
+    const breedte = m.breedtes[staat.breedteIndex];
+    const opp = breedte * staat.lengte;
+
+    const zet = (naam: string, waarde: string) => {
+      const el = $(`[data-uit="${naam}"]`);
+      if (el) el.textContent = waarde;
+    };
+
+    zet('breedte', `${getal(breedte)} m`);
+    zet('lengte', `${getal(staat.lengte)} m`);
+    zet('titel', m.naam);
+    zet('constructie', staat.constructie === 'staal' ? 'Gegalvaniseerd staal' : 'Aluminium');
+    zet('afmeting', `${getal(breedte)} x ${getal(staat.lengte)} m`);
+    zet('oppervlak', `${opp.toLocaleString('nl-NL', { maximumFractionDigits: 1 })} m2`);
+    zet(
+      'glas',
+      staat.constructie === 'staal' ? '4 mm tuindersglas' : 'Veiligheidsglas van Euroserre'
+    );
+
+    const opties = $$<HTMLInputElement>('[data-optie]')
+      .filter((i) => i.checked)
+      .map((i) => i.value);
+    zet('opties', opties.length ? opties.join(', ') : 'Geen');
+
+    const label = $('[data-maatlabel]');
+    if (label) label.textContent = `${getal(breedte)} m breed`;
+    const titel = $('[data-tekening-titel]');
+    if (titel) {
+      titel.textContent = `Schets van de ${m.naam}, ${getal(breedte)} meter breed`;
+    }
+
+    tekenKas(breedte, m.vorm);
+  }
+
+  // Constructie wisselen
+  $$<HTMLInputElement>('[data-veld="constructie"]').forEach((el) => {
+    el.addEventListener('change', () => {
+      staat.constructie = el.value as 'staal' | 'aluminium';
+      staat.model = 0;
+      bouwModellen();
+      pasMatenAan(true);
+      teken();
+    });
+  });
+
+  $<HTMLInputElement>('[data-veld="breedte"]')?.addEventListener('input', (e) => {
+    staat.breedteIndex = Number((e.target as HTMLInputElement).value);
+    teken();
+  });
+
+  $<HTMLInputElement>('[data-veld="lengte"]')?.addEventListener('input', (e) => {
+    staat.lengte = Number((e.target as HTMLInputElement).value);
+    teken();
+  });
+
+  $$<HTMLInputElement>('[data-optie]').forEach((el) => el.addEventListener('change', teken));
+
+  // Aanvraag: dit is een demo, dus we tonen alleen een bevestiging
+  $<HTMLFormElement>('[data-formulier]')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = e.target as HTMLFormElement;
+    const melding = $<HTMLDivElement>('[data-melding]');
+    if (!melding) return;
+
+    const naam = (f.elements.namedItem('naam') as HTMLInputElement).value.trim();
+    const tel = (f.elements.namedItem('telefoon') as HTMLInputElement).value.trim();
+    if (!naam || !tel) {
+      melding.classList.remove('hidden', 'border-blad-200', 'bg-blad-50', 'text-blad-800');
+      melding.classList.add('border-amber-300', 'bg-amber-50', 'text-amber-900');
+      melding.textContent = 'Vul je naam en telefoonnummer in, dan kunnen we je terugbellen.';
+      return;
+    }
+
+    const m = huidigModel();
+    const breedte = m.breedtes[staat.breedteIndex];
+    melding.classList.remove('hidden', 'border-amber-300', 'bg-amber-50', 'text-amber-900');
+    melding.classList.add('border-blad-200', 'bg-blad-50', 'text-blad-800');
+    melding.textContent = `Bedankt ${naam}. Je aanvraag voor een ${m.naam} van ${getal(breedte)} bij ${getal(staat.lengte)} meter staat klaar. In deze demo wordt er nog niets verstuurd.`;
+    melding.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  bouwModellen();
+  pasMatenAan(true);
+  teken();
+</script>

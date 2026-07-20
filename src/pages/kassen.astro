@@ -1,0 +1,158 @@
+---
+import Basis from '../layouts/Basis.astro';
+import { Image } from 'astro:assets';
+import { bedrijf, eigenKassen } from '../data/aanbod';
+import polder from '../assets/fotos/kas-polder-brug.jpg';
+import najaar from '../assets/fotos/kas-najaar-blauwe-lucht.jpg';
+import weiland from '../assets/fotos/kas-weiland.jpg';
+import tuinbreed from '../assets/fotos/kas-tuin-breed.jpg';
+import bakken from '../assets/fotos/kas-moestuin-bakken.jpg';
+import PaginaKop from '../components/PaginaKop.astro';
+import kopfoto from '../assets/fotos/kas-tuin-hortensia.jpg';
+
+/* Eigen foto's van geplaatste kassen. Ze horen niet een-op-een bij een
+   specifiek model, dus de alt-tekst claimt dat ook niet. */
+const fotos = [
+  { src: polder, alt: 'Geplaatste kas van Tuinkassen Zeeland in het Zeeuwse landschap' },
+  { src: najaar, alt: 'Tuinkas met openstaande nokluchting op een heldere najaarsdag' },
+  { src: weiland, alt: 'Tuinkas op een ruim perceel, met moestuinbakken ernaast' },
+  { src: tuinbreed, alt: 'Ruime tuinkas in een achtertuin' },
+  { src: bakken, alt: 'Tuinkas met aangelegde moestuinbakken eromheen' },
+];
+---
+
+<Basis
+  titel={`Onze kassen | ${bedrijf.naam}`}
+  omschrijving="De tuinkassen van Tuinkassen Zeeland: Venlo, Belgische kas, twee compacte maten en maatwerk. Gebouwd van zwaar gegalvaniseerd staal en 4 mm tuindersglas."
+>
+  <PaginaKop
+    label="Onze eigen kassen"
+    titel="Staal en glas dat je aan je kinderen doorgeeft"
+    tekst="Voor onze tuinkassen gebruiken we vooral materiaal uit de professionele kassenbouw: zwaar gegalvaniseerd ijzer en tuindersglas van 4 mm dik. Daardoor maken we kassen die tegen een stootje kunnen en lang meegaan."
+    foto={kopfoto}
+    altTekst="Tuinkas van Tuinkassen Zeeland in een tuin, met hortensia's ernaast"
+  />
+
+  <!-- Maten -->
+  <section class="bg-white py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="space-y-16 sm:space-y-24">
+        {
+          eigenKassen.map((k, i) => (
+            <article
+              id={k.slug}
+              class="rijs grid scroll-mt-28 items-center gap-8 lg:grid-cols-2 lg:gap-14"
+            >
+              <div class:list={[i % 2 === 1 && 'lg:order-2']}>
+                <Image
+                  src={fotos[i].src}
+                  alt={fotos[i].alt}
+                  class="h-64 w-full rounded-2xl object-cover sm:h-96"
+                  widths={[400, 800]}
+                  sizes="(max-width: 1024px) 92vw, 45vw"
+                />
+              </div>
+              <div>
+                <p class="oogmerk text-blad-600">{k.type}</p>
+                <h2 class="mt-3 text-3xl text-staal-900 sm:text-4xl">{k.naam}</h2>
+                <dl class="mt-6 flex gap-10 border-y border-staal-200 py-4">
+                  <div>
+                    <dt class="text-xs uppercase tracking-wider text-staal-500">Breedte</dt>
+                    <dd class="mt-1 font-kop text-2xl text-staal-900">{k.breedte}</dd>
+                  </div>
+                  <div>
+                    <dt class="text-xs uppercase tracking-wider text-staal-500">Lengte</dt>
+                    <dd class="mt-1 font-kop text-2xl text-staal-900">{k.lengte}</dd>
+                  </div>
+                </dl>
+                <p class="mt-6 text-base leading-relaxed text-staal-600">{k.omschrijving}</p>
+                <p class="mt-4 text-sm leading-relaxed text-staal-500">
+                  <span class="font-semibold text-staal-700">Goed voor:</span> {k.voor}
+                </p>
+                <a
+                  href="/samenstellen/"
+                  class="mt-7 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
+                >
+                  Stel deze kas samen
+                  <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Glas -->
+  <section class="vlak-nacht py-16 text-white sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+        <div class="rijs">
+          <p class="oogmerk text-blad-300">Het glas</p>
+          <h2 class="mt-4 text-3xl text-white sm:text-4xl">Waarom we tuindersglas gebruiken</h2>
+          <p class="mt-5 text-base leading-relaxed text-staal-300">
+            Bij onze tuinkassen zit glas van tuinderskwaliteit van 4 mm. Dat is dikker en sterker
+            dan wat je normaal in een hobbykas vindt.
+          </p>
+        </div>
+        <div class="rijs grid gap-x-8 gap-y-6 sm:grid-cols-2">
+          <div class="border-t border-white/15 pt-4">
+            <h3 class="text-lg text-white">Veel licht</h3>
+            <p class="mt-2 text-sm leading-relaxed text-staal-300">
+              Glas laat veel licht door, en dat is goed voor je gewassen. Je ziet bovendien van
+              buitenaf hoe het ervoor staat in de kas.
+            </p>
+          </div>
+          <div class="border-t border-white/15 pt-4">
+            <h3 class="text-lg text-white">Bestand tegen hagel</h3>
+            <p class="mt-2 text-sm leading-relaxed text-staal-300">
+              Het sterke glas van tuinderskwaliteit houdt een hagelbui gewoon tegen.
+            </p>
+          </div>
+          <div class="border-t border-white/15 pt-4">
+            <h3 class="text-lg text-white">Goed schoon te houden</h3>
+            <p class="mt-2 text-sm leading-relaxed text-staal-300">
+              Door het geharde laagje blijft het glas makkelijk schoon te maken, ook met
+              schoonmaakmiddel.
+            </p>
+          </div>
+          <div class="border-t border-white/15 pt-4">
+            <h3 class="text-lg text-white">Duurzaam</h3>
+            <p class="mt-2 text-sm leading-relaxed text-staal-300">
+              Het is zeer bestand tegen krassen en tegen atmosferische en chemische invloeden. Het
+              blijft dus jarenlang helder.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Maatwerk -->
+  <section class="bg-klei-50 py-16 sm:py-24">
+    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
+      <h2 class="rijs text-3xl text-staal-900 sm:text-4xl">Zit je maat er niet bij?</h2>
+      <p class="rijs mt-5 text-base leading-relaxed text-staal-600">
+        Naast deze standaardmaten leveren we kassen in bijna ieder formaat dat je wenst, of het nu
+        rechthoekig, vierkant of rond is. Het glas maken we zelf op maat. Bel ons even, dan denken
+        we mee.
+      </p>
+      <div class="rijs mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/samenstellen/" class="knop-vol justify-center">Stel je kas samen</a>
+        <a
+          href={`tel:${bedrijf.telefoonNet}`}
+          class="inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-staal-300 px-6 py-3.5 font-semibold text-staal-800 transition-colors hover:bg-staal-100"
+        >
+          Bel {bedrijf.telefoonToon}
+        </a>
+      </div>
+    </div>
+  </section>
+</Basis>

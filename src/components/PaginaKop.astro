@@ -1,0 +1,67 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Redactionele paginakop. Vervangt de donkere balk die op elke subpagina
+ * hetzelfde was; die las als een template. Nu: grote kop links, foto die aan de
+ * rechterkant het scherm uitloopt. Zonder foto valt de rechterkolom weg en
+ * krijgt de kop de ruimte, dat is beter dan een zwak beeld erbij verzinnen.
+ *
+ * De foto loopt tot de schermrand via `mr-[calc(50%-50vw)]`: 50% van de eigen
+ * kolom min 50vw is precies de resterende marge plus de padding van de
+ * container, ongeacht de schermbreedte.
+ */
+interface Props {
+  label: string;
+  titel: string;
+  tekst?: string;
+  foto?: ImageMetadata;
+  altTekst?: string;
+}
+
+const { label, titel, tekst, foto, altTekst = '' } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-klei-50 pt-28 sm:pt-36">
+  {/* Zacht groen schijnsel linksboven, zodat het vlak niet dood crème is. */}
+  <div
+    class="pointer-events-none absolute -left-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgba(30,109,19,0.10),transparent_65%)]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6">
+    <div class:list={['grid items-end gap-10 pb-14 sm:pb-20', foto && 'lg:grid-cols-[1.05fr_0.95fr] lg:gap-14']}>
+      <div>
+        <p class="oogmerk flex items-center gap-2.5 text-blad-700">
+          <span class="h-3 w-1 rounded-full bg-blad-600" aria-hidden="true"></span>
+          {label}
+        </p>
+        <h1 class:list={['display mt-6 text-staal-900', !foto && 'max-w-4xl']}>
+          {titel}
+        </h1>
+        {
+          tekst && (
+            <p class="mt-7 max-w-xl text-lg leading-relaxed text-staal-600">{tekst}</p>
+          )
+        }
+      </div>
+
+      {
+        foto && (
+          <div class="lg:mr-[calc(50%-50vw)]">
+            <Image
+              src={foto}
+              alt={altTekst}
+              class="h-64 w-full rounded-2xl object-cover sm:h-80 lg:h-[26rem] lg:rounded-r-none"
+              widths={[600, 1100, 1600]}
+              sizes="(max-width: 1024px) 92vw, 48vw"
+              loading="eager"
+            />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+/* Huisstijl uit het logo van Tuinkassen Zeeland:
+   blad #1E6D13, met staal- en glastinten uit hun eigen kasfoto's.
+   Koppen in Oswald (het font van hun bestaande site).
+
+   De neutralen zijn warm en lopen naar een diep groenzwart, niet naar
+   blauwgrijs. Een koud grijs (#343a40) gaf de site een dashboard-uitstraling
+   en vloekte met het groen van het logo en het gras op hun eigen foto's. */
+@theme {
+  --color-blad-50: #f2f8ef;
+  --color-blad-100: #dfeed9;
+  --color-blad-200: #bfdcb4;
+  --color-blad-300: #92c081;
+  --color-blad-400: #5f9f4c;
+  --color-blad-500: #3a8228;
+  --color-blad-600: #1e6d13;
+  --color-blad-700: #185910;
+  --color-blad-800: #124310;
+  --color-blad-900: #0c2f0c;
+  --color-blad-950: #061a07;
+
+  --color-staal-50: #f7f7f4;
+  --color-staal-100: #efefea;
+  --color-staal-200: #e0e0d8;
+  --color-staal-300: #c3c6ba;
+  --color-staal-400: #9a9e92;
+  --color-staal-500: #757a6e;
+  --color-staal-600: #4f5449;
+  --color-staal-700: #3a3f36;
+  --color-staal-800: #232821;
+  --color-staal-900: #0e1a0f;
+
+  --color-klei-50: #faf7f0;
+  --color-klei-100: #f2ede1;
+
+  --font-kop: "Oswald", ui-sans-serif, system-ui, sans-serif;
+  --font-tekst: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+
+  /* De ingebouwde CSS-easings zijn slap. Deze curves geven beweging richting:
+     snel weg, rustig aankomen. */
+  --ease-uit: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-inuit: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-tekst);
+    color: var(--color-staal-900);
+    background: #ffffff;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-kop);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+  }
+  ::selection {
+    background: var(--color-blad-600);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-blad-600);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Bovenkaartje: kleine label boven een kop */
+  .oogmerk {
+    font-family: var(--font-kop);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+  }
+  /* Displaykop voor paginakoppen. Oswald is smal, dus die kan groot zonder dat
+     het schreeuwt. Schaalt mee met de viewport, geen losse breakpoints. */
+  .display {
+    font-family: var(--font-kop);
+    font-weight: 500;
+    font-size: clamp(2.5rem, 6vw, 5.25rem);
+    line-height: 0.98;
+    letter-spacing: -0.005em;
+  }
+
+  .knop-vol {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--color-blad-600);
+    color: #fff;
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.16s var(--ease-uit);
+  }
+  .knop-vol:hover {
+    background: var(--color-blad-700);
+  }
+  /* Indrukken moet voelbaar zijn: de knop reageert op de vinger. */
+  .knop-vol:active,
+  .knop-lijn:active {
+    transform: scale(0.97);
+  }
+  .knop-lijn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    color: #fff;
+    padding: 0.9rem 1.6rem;
+    border-radius: 999px;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease,
+      transform 0.16s var(--ease-uit);
+  }
+  .knop-lijn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: #fff;
+  }
+
+  /* Donkere vlakken (paginakoppen en accentsecties). Geen vlakke rechthoek maar
+     een diep groenzwart met een zachte gloed in hun eigen merkgroen, zodat de
+     band diepte krijgt en bij het groen van het logo hoort. */
+  .vlak-nacht {
+    background-color: var(--color-staal-900);
+    background-image:
+      radial-gradient(85% 130% at 12% 0%, rgba(30, 109, 19, 0.32), transparent 62%),
+      radial-gradient(65% 95% at 100% 105%, rgba(146, 192, 129, 0.12), transparent 58%);
+  }
+
+  /* Keuzekaarten van de configurator. Staan hier en niet in een scoped
+     <style>, omdat de modelkaarten door script worden aangemaakt en
+     scoped styles die elementen niet raken. */
+  .keuze {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    cursor: pointer;
+    border-radius: 0.9rem;
+    border: 1.5px solid var(--color-staal-200);
+    padding: 1rem 1.1rem;
+    transition: border-color 0.18s ease, background 0.18s ease;
+  }
+  .keuze:hover {
+    border-color: var(--color-blad-300);
+    background: var(--color-blad-50);
+  }
+  .keuze:has(input:checked) {
+    border-color: var(--color-blad-600);
+    background: var(--color-blad-50);
+  }
+  .keuze:has(input:focus-visible) {
+    outline: 2px solid var(--color-blad-600);
+    outline-offset: 2px;
+  }
+  .keuze-kop {
+    font-family: var(--font-kop);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-staal-900);
+  }
+  .keuze-tekst {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-staal-600);
+  }
+  .keuze-merk {
+    margin-top: 0.15rem;
+    font-family: var(--font-kop);
+    font-size: 0.65rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-blad-600);
+  }
+}
+
+/* Wegfilteren. Niet via Tailwind's `hidden`: die botst met `flex` op
+   hetzelfde element, want beide zetten display in dezelfde laag. */
+.weg {
+  display: none !important;
+}
+
+/* Rustige opkomst bij scrollen */
+.rijs {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease-uit), transform 0.6s var(--ease-uit);
+}
+.rijs.zichtbaar {
+  opacity: 1;
+  transform: none;
+}
+
+/* Beweging kan misselijk maken. Minder beweging betekent niet geen overgang:
+   de tekst verschijnt nog wel, hij schuift alleen niet meer. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .rijs {
+    transform: none;
+    transition: opacity 0.3s ease;
+  }
+  .knop-vol:active,
+  .knop-lijn:active {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rijs {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html { scroll-behavior: auto; }
+}

@@ -1,0 +1,67 @@
+---
+import { bedrijf } from '../data/aanbod';
+const jaar = new Date().getFullYear();
+---
+
+<footer class="vlak-nacht text-staal-300">
+  <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-20">
+    <div class="grid gap-10 md:grid-cols-3 md:gap-8">
+      <div>
+        <p class="oogmerk text-blad-300">{bedrijf.slogan}</p>
+        <h2 class="mt-3 text-3xl text-white">{bedrijf.naam}</h2>
+        <p class="mt-4 max-w-sm text-sm leading-relaxed">
+          Al jaren bouwen en plaatsen we kassen van gegalvaniseerd staal en tuindersglas, vanuit
+          onze loods in Ritthem. Daarnaast leveren we de aluminium serres van Euroserre.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-lg text-white">Waar je ons vindt</h3>
+        <address class="mt-4 space-y-1 text-sm not-italic leading-relaxed">
+          <p>{bedrijf.moeder}</p>
+          <p>{bedrijf.straat}</p>
+          <p>{bedrijf.postcode} {bedrijf.plaats}</p>
+        </address>
+        <a
+          href={`tel:${bedrijf.telefoonNet}`}
+          class="mt-4 inline-block font-semibold text-white transition-colors hover:text-blad-300"
+        >
+          {bedrijf.telefoonToon}
+        </a>
+        <p class="mt-3 text-sm">Langskomen kan, maak wel even een afspraak.</p>
+      </div>
+
+      <div>
+        <h3 class="text-lg text-white">Snel naar</h3>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li><a href="/kassen/" class="transition-colors hover:text-white">Onze kassen</a></li>
+          <li><a href="/euroserre/" class="transition-colors hover:text-white">Euroserre serres</a></li>
+          <li><a href="/samenstellen/" class="transition-colors hover:text-white">Stel je kas samen</a></li>
+          <li><a href="/accessoires/" class="transition-colors hover:text-white">Accessoires</a></li>
+          <li><a href="/service/" class="transition-colors hover:text-white">Service en reparatie</a></li>
+          <li><a href="/contact/" class="transition-colors hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>&copy; {jaar} {bedrijf.moeder}, {bedrijf.plaats}</p>
+      <p class="text-staal-300">Made By <span class="agensea-glow">Agensea</span></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* Huisstijlgroen van de klant. #1e6d13 zelf is te donker voor deze donkere
+     footer, dus de letters staan in een lichtere tint uit dezelfde reeks en de
+     glow bouwt terug naar het merkgroen. */
+  .agensea-glow {
+    color: #92c081;
+    font-weight: 600;
+    text-shadow:
+      0 0 6px rgba(95, 159, 76, 0.75),
+      0 0 16px rgba(30, 109, 19, 0.55);
+  }
+</style>
