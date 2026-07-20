@@ -8,6 +8,7 @@ import moestuin from '../assets/fotos/kas-tuin-hortensia.jpg';
 import zijgevel from '../assets/fotos/kas-najaar-blauwe-lucht.jpg';
 import frame from '../assets/fotos/kas-binnen-opbouw.jpg';
 import polder from '../assets/fotos/kas-polder-brug.jpg';
+import Uitnodiging from '../components/Uitnodiging.astro';
 
 const redenen = [
   {
@@ -302,19 +303,13 @@ const redenen = [
   </section>
 
   <!-- Slot -->
-  <section class="relative overflow-hidden bg-blad-800 py-20 sm:py-28">
-    <div class="relative mx-auto max-w-3xl px-4 text-center sm:px-6">
-      <h2 class="rijs text-4xl text-white sm:text-5xl">Kom eens langs en kijk zelf</h2>
-      <p class="rijs mt-5 text-base leading-relaxed text-blad-100">
-        Bekijk ons assortiment met eigen ogen. Graag wel eerst even een afspraak, dan zorgen we dat
-        er iemand voor je is. We verheugen ons op je komst.
-      </p>
-      <div class="rijs mt-9 flex flex-col justify-center gap-3 sm:flex-row">
-        <a href={`tel:${bedrijf.telefoonNet}`} class="knop-vol justify-center bg-white text-blad-700 hover:bg-blad-50">
-          Bel {bedrijf.telefoonToon}
-        </a>
-        <a href="/contact/" class="knop-lijn justify-center">Stuur een bericht</a>
-      </div>
-    </div>
-  </section>
+  <Uitnodiging
+    label="Langskomen in Ritthem"
+    titel="Sta een keer naast zo'n kas, dan zie je het verschil"
+    tekst="Staal voelt anders dan aluminium, dat merk je pas als je ernaast staat. Bel even voor een afspraak, dan staat de loods open en is er iemand voor je."
+    foto={polder}
+    altTekst="Tuinkas van Tuinkassen Zeeland op een perceel in het Zeeuwse landschap"
+    actieHref="/contact/"
+    actieTekst="Stuur liever een bericht"
+  />
 </Basis>

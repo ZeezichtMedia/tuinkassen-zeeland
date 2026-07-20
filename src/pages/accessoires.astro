@@ -5,6 +5,7 @@ import { bedrijf, accessoires } from '../data/aanbod';
 import luchtramen from '../assets/fotos/kas-nokluchting.jpg';
 import PaginaKop from '../components/PaginaKop.astro';
 import kopfoto from '../assets/fotos/kas-luchtraam-detail.jpg';
+import Uitnodiging from '../components/Uitnodiging.astro';
 ---
 
 <Basis
@@ -62,14 +63,13 @@ import kopfoto from '../assets/fotos/kas-luchtraam-detail.jpg';
     </div>
   </section>
 
-  <section class="bg-klei-50 py-16 sm:py-20">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-      <h2 class="rijs text-3xl text-staal-900 sm:text-4xl">Neem ze meteen mee in je aanvraag</h2>
-      <p class="rijs mt-4 text-base leading-relaxed text-staal-600">
-        In de configurator vink je aan wat je erbij wilt, dan rekenen we het in één keer voor je
-        door.
-      </p>
-      <a href="/samenstellen/" class="rijs knop-vol mt-7">Stel je kas samen</a>
-    </div>
-  </section>
+  <Uitnodiging
+    label="Accessoires"
+    titel="Neem ze meteen mee in je aanvraag"
+    tekst="In de configurator vink je aan wat je erbij wilt, dan rekenen we het in één keer voor je door."
+    foto={luchtramen}
+    altTekst="Geopende nokluchting bovenop een tuinkas"
+    actieHref="/samenstellen/"
+    actieTekst="Stel je kas samen"
+  />
 </Basis>

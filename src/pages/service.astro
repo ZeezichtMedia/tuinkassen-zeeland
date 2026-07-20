@@ -6,6 +6,7 @@ import frame from '../assets/fotos/kas-binnen-opbouw.jpg';
 import trekker from '../assets/fotos/landbouw-trekker.jpg';
 import PaginaKop from '../components/PaginaKop.astro';
 import kopfoto from '../assets/fotos/kas-weiland.jpg';
+import Uitnodiging from '../components/Uitnodiging.astro';
 
 const diensten = [
   {
@@ -109,18 +110,11 @@ const diensten = [
     </div>
   </section>
 
-  <section class="bg-blad-800 py-16 sm:py-20">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-      <h2 class="rijs text-3xl text-white sm:text-4xl">Iets kapot of iets nodig?</h2>
-      <p class="rijs mt-4 text-base leading-relaxed text-blad-100">
-        Bel ons even, dan maken we een afspraak. Ook als je kas niet van ons is.
-      </p>
-      <a
-        href={`tel:${bedrijf.telefoonNet}`}
-        class="rijs knop-vol mt-7 bg-white text-blad-700 hover:bg-blad-50"
-      >
-        Bel {bedrijf.telefoonToon}
-      </a>
-    </div>
-  </section>
+  <Uitnodiging
+    label="Service"
+    titel="Iets kapot, of moet er iets bij?"
+    tekst="Bel ons even, dan maken we een afspraak. Ook als je kas niet van ons is. Het glas maken we zelf op maat."
+    foto={frame}
+    altTekst="Kas in aanbouw, met de constructie nog open"
+  />
 </Basis>

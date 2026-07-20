@@ -9,6 +9,7 @@ import tuinbreed from '../assets/fotos/kas-tuin-breed.jpg';
 import bakken from '../assets/fotos/kas-moestuin-bakken.jpg';
 import PaginaKop from '../components/PaginaKop.astro';
 import kopfoto from '../assets/fotos/kas-tuin-hortensia.jpg';
+import Uitnodiging from '../components/Uitnodiging.astro';
 
 /* Eigen foto's van geplaatste kassen. Ze horen niet een-op-een bij een
    specifiek model, dus de alt-tekst claimt dat ook niet. */
@@ -136,23 +137,13 @@ const fotos = [
   </section>
 
   <!-- Maatwerk -->
-  <section class="bg-klei-50 py-16 sm:py-24">
-    <div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-      <h2 class="rijs text-3xl text-staal-900 sm:text-4xl">Zit je maat er niet bij?</h2>
-      <p class="rijs mt-5 text-base leading-relaxed text-staal-600">
-        Naast deze standaardmaten leveren we kassen in bijna ieder formaat dat je wenst, of het nu
-        rechthoekig, vierkant of rond is. Het glas maken we zelf op maat. Bel ons even, dan denken
-        we mee.
-      </p>
-      <div class="rijs mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-        <a href="/samenstellen/" class="knop-vol justify-center">Stel je kas samen</a>
-        <a
-          href={`tel:${bedrijf.telefoonNet}`}
-          class="inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-staal-300 px-6 py-3.5 font-semibold text-staal-800 transition-colors hover:bg-staal-100"
-        >
-          Bel {bedrijf.telefoonToon}
-        </a>
-      </div>
-    </div>
-  </section>
+  <Uitnodiging
+    label="Maatwerk"
+    titel="Zit je maat er niet bij?"
+    tekst="Naast deze standaardmaten leveren we kassen in bijna ieder formaat dat je wenst, of het nu rechthoekig, vierkant of rond is. Het glas maken we zelf op maat."
+    foto={weiland}
+    altTekst="Tuinkas op een ruim perceel, met moestuinbakken ernaast"
+    actieHref="/samenstellen/"
+    actieTekst="Stel je kas samen"
+  />
 </Basis>

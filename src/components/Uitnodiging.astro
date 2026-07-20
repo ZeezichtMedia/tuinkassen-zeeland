@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { bedrijf } from '../data/aanbod';
+
+/**
+ * Afsluitende uitnodiging onderaan een pagina.
+ *
+ * Verving vier bijna identieke CTA-banden: een dicht kleurvlak met een
+ * gecentreerde kop, gecentreerde tekst en gecentreerde knoppen eronder. Dat is
+ * het meest voorspelbare blok van een template, en het stond vier keer op de
+ * site.
+ *
+ * Nu: een echte foto over de volle breedte, alles links uitgelijnd, en het
+ * telefoonnummer als groot typografisch element in plaats van als knopje. Het
+ * nummer is de belangrijkste actie, dus het hoort ook het grootst te zijn.
+ */
+interface Props {
+  label: string;
+  titel: string;
+  tekst: string;
+  foto: ImageMetadata;
+  altTekst: string;
+  /** Optionele tweede actie naast bellen. */
+  actieHref?: string;
+  actieTekst?: string;
+}
+
+const { label, titel, tekst, foto, altTekst, actieHref, actieTekst } = Astro.props;
+---
+
+<section class="relative overflow-hidden">
+  <Image
+    src={foto}
+    alt={altTekst}
+    class="absolute inset-0 h-full w-full object-cover"
+    widths={[800, 1400, 2048]}
+    sizes="100vw"
+    loading="lazy"
+  />
+  {/* Het telefoonnummer staat rechts, dus ook die kant moet donker genoeg
+      blijven. Een tweede laag van onderaf vangt lichte plekken in de foto op. */}
+  <div class="absolute inset-0 bg-gradient-to-r from-staal-900 via-staal-900/88 to-staal-900/70"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-staal-900/70 to-transparent"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28">
+    <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end lg:gap-16">
+      <div>
+        <p class="oogmerk flex items-center gap-2.5 text-blad-300">
+          <span class="h-3 w-1 rounded-full bg-blad-400" aria-hidden="true"></span>
+          {label}
+        </p>
+        <h2 class="rijs mt-6 max-w-2xl font-kop text-4xl leading-[1.05] text-white sm:text-5xl">
+          {titel}
+        </h2>
+        <p class="rijs mt-6 max-w-xl text-base leading-relaxed text-staal-300">{tekst}</p>
+      </div>
+
+      <div class="rijs lg:pb-2">
+        <p class="text-xs uppercase tracking-[0.18em] text-staal-400">Bel ons</p>
+        <a
+          href={`tel:${bedrijf.telefoonNet}`}
+          class="mt-2 block font-kop text-4xl text-white transition-colors hover:text-blad-300 sm:text-5xl"
+        >
+          {bedrijf.telefoonToon}
+        </a>
+        {
+          actieHref && actieTekst && (
+            <a
+              href={actieHref}
+              class="mt-7 inline-flex items-center gap-2 border-b border-white/30 pb-1 font-semibold text-white transition-colors hover:border-blad-300 hover:text-blad-300"
+            >
+              {actieTekst}
+              <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
