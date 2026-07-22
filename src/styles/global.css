@@ -74,7 +74,7 @@
 
 @layer components {
   /* Bovenkaartje: kleine label boven een kop */
-  /* Eyebrow-label: in de tekst-sans i.p.v. de serif — een klein, getrackt
+  /* Eyebrow-label: in de tekst-sans i.p.v. de serif, een klein, getrackt
      serif-kapitaaltje oogt spichtig; een crisp sans-label past beter. */
   .oogmerk {
     font-family: var(--font-tekst);
@@ -236,7 +236,7 @@
    zodat deze regels de Tailwind-utilities overschrijven.
    ==================================================================== */
 
-/* Kleine tekst een maat groter — comfortabeler voor iedereen */
+/* Kleine tekst een maat groter, comfortabeler voor iedereen */
 .text-xs { font-size: 0.82rem; }
 .text-sm { font-size: 0.98rem; }
 .text-base { font-size: 1.0625rem; }
