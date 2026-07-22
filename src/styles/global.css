@@ -34,8 +34,10 @@
   --color-klei-50: #faf7f0;
   --color-klei-100: #f2ede1;
 
-  --font-kop: "Oswald", ui-sans-serif, system-ui, sans-serif;
-  --font-tekst: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  /* Koppen in Fraunces: een warme, ambachtelijke serif die bij kwaliteits-
+     kassenbouw past. Tekst in Work Sans: schoon en goed leesbaar. */
+  --font-kop: "Fraunces", ui-serif, Georgia, "Times New Roman", serif;
+  --font-tekst: "Work Sans", ui-sans-serif, system-ui, sans-serif;
 
   /* De ingebouwde CSS-easings zijn slap. Deze curves geven beweging richting:
      snel weg, rustig aankomen. */
@@ -56,8 +58,8 @@
   h1, h2, h3, h4 {
     font-family: var(--font-kop);
     font-weight: 500;
-    letter-spacing: 0.01em;
-    line-height: 1.1;
+    letter-spacing: -0.01em;
+    line-height: 1.14;
   }
   ::selection {
     background: var(--color-blad-600);
@@ -72,9 +74,11 @@
 
 @layer components {
   /* Bovenkaartje: kleine label boven een kop */
+  /* Eyebrow-label: in de tekst-sans i.p.v. de serif — een klein, getrackt
+     serif-kapitaaltje oogt spichtig; een crisp sans-label past beter. */
   .oogmerk {
-    font-family: var(--font-kop);
-    font-weight: 500;
+    font-family: var(--font-tekst);
+    font-weight: 600;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     font-size: 0.72rem;
@@ -84,9 +88,11 @@
   .display {
     font-family: var(--font-kop);
     font-weight: 500;
-    font-size: clamp(2.5rem, 6vw, 5.25rem);
-    line-height: 0.98;
-    letter-spacing: -0.005em;
+    /* Fraunces is niet condensed zoals Oswald, dus iets kleiner en met wat
+       strakkere tracking zodat de displaykop niet gaat overheersen. */
+    font-size: clamp(2.25rem, 5vw, 4.25rem);
+    line-height: 1.04;
+    letter-spacing: -0.015em;
   }
 
   .knop-vol {
@@ -173,7 +179,8 @@
   }
   .keuze-merk {
     margin-top: 0.15rem;
-    font-family: var(--font-kop);
+    font-family: var(--font-tekst);
+    font-weight: 600;
     font-size: 0.65rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -220,4 +227,30 @@
     transition: none;
   }
   html { scroll-behavior: auto; }
+}
+
+/* ====================================================================
+   Toegankelijkheid & leesbaarheid.
+   De eigenaar is een boer; de site moet voor iedereen te lezen zijn,
+   met behoud van de moderne look. Bewust ongelaagd (buiten @layer),
+   zodat deze regels de Tailwind-utilities overschrijven.
+   ==================================================================== */
+
+/* Kleine tekst een maat groter — comfortabeler voor iedereen */
+.text-xs { font-size: 0.82rem; }
+.text-sm { font-size: 0.98rem; }
+.text-base { font-size: 1.0625rem; }
+
+/* Rustiger leesbeeld voor lopende tekst */
+.leading-relaxed { line-height: 1.72; }
+
+/* Sterker contrast voor gedempte tekst op lichte vlakken (WCAG AA) */
+.text-staal-500 { color: #575d4f; }
+.text-staal-400 { color: #697060; }
+
+/* Duidelijk zichtbare focus voor toetsenbord-gebruikers */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-blad-600);
+  outline-offset: 3px;
 }

@@ -2,21 +2,122 @@
 import Basis from '../layouts/Basis.astro';
 import { bedrijf, euroSerres } from '../data/aanbod';
 import PaginaKop from '../components/PaginaKop.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+import fotoAvond from '../assets/fotos/euroserre-tuin-avond.webp';
+import fotoRozen from '../assets/fotos/euroserre-rozen-bank.webp';
+import fotoModern from '../assets/fotos/euroserre-modern-lounge.webp';
+import fotoVictorian from '../assets/fotos/euroserre-victorian-terras.webp';
+import fotoBaksteen from '../assets/fotos/euroserre-bakstenen-voet.webp';
+import fotoKinderen from '../assets/fotos/euroserre-kinderen.webp';
+import fotoMuur from '../assets/fotos/euroserre-muurserre.webp';
+
+// Productfoto's bij een greep uit de modellen. Bewust niet bij alle 16: dit is
+// de eerste demo, dit geeft alvast een beeld van wat er mogelijk is.
+import modelMaxi from '../assets/fotos/euroserre-model-maxi.webp';
+import modelRustiq from '../assets/fotos/euroserre-model-rustiq.webp';
+import modelCottage from '../assets/fotos/euroserre-model-cottage.webp';
+import modelPlus from '../assets/fotos/euroserre-model-plus.webp';
+import modelMuurserre from '../assets/fotos/euroserre-model-muurserre.webp';
+
+const modelFotos: Record<string, ImageMetadata> = {
+  'euro-maxi': modelMaxi,
+  'euro-rustiq': modelRustiq,
+  'euro-cottage': modelCottage,
+  'euro-plus': modelPlus,
+  'euro-muurserre': modelMuurserre,
+};
+
+// Voor deze eerste demo tonen we alleen de modellen waar we een foto bij hebben.
+const getoondeSerres = euroSerres.filter((s) => modelFotos[s.slug]);
 
 const categorieen = ['Alles', 'Vrijstaand', 'Tegen een muur'];
+
+/* Foto's van Euroserre zelf, zodat we hun modellen met hun eigen beeld laten
+   zien (en niet met onze stalen kassen, dat zou juist verwarrend zijn). */
+const galerij = [
+  {
+    src: fotoRozen,
+    alt: 'Een klassieke serre in een tuin met roze rozen ervoor en een wit bankje.',
+    tekst: 'De klassieke serre tussen de rozen, met een bankje om even te zitten.',
+  },
+  {
+    src: fotoModern,
+    alt: 'Een strakke moderne zwarte serre met een loungehoek ernaast.',
+    tekst: 'Een strak, modern model met een loungehoek er vlak naast.',
+  },
+  {
+    src: fotoVictorian,
+    alt: 'Een ruime groene serre met een terras en stoelen ervoor.',
+    tekst: 'Een ruime serre met terras — net zo goed een tuinkamer om in te zitten.',
+  },
+  {
+    src: fotoBaksteen,
+    alt: 'Een serre op een gemetselde bakstenen voet in de tuin.',
+    tekst: 'Op een gemetselde voet, mooi weggewerkt in de tuin.',
+  },
+  {
+    src: fotoKinderen,
+    alt: 'Twee kinderen in een serre die vol staat met opgekweekte plantjes.',
+    tekst: 'Ruimte zat om samen te kweken — het hele gezin geniet mee.',
+  },
+  {
+    src: fotoMuur,
+    alt: 'Een muurserre die tegen de gevel van een huis aan is gebouwd.',
+    tekst: 'Een muurserre tegen het huis — zo aangesloten op water en stroom.',
+  },
+];
 ---
 
 <Basis
   titel={`Euroserre aluminium serres | ${bedrijf.naam}`}
   omschrijving="Naast onze eigen stalen kassen leveren en plaatsen we de aluminium serres van Euroserre: van de Euro-Micro tot de Euro-Super, en muurserres."
 >
-  {/* Geen foto: dit zijn serres van Euroserre, en eigen kassen erbij zetten zou
-      suggereren dat het hun modellen zijn. Liever ruimte dan een foute foto. */}
+  {/* Beeld van Euroserre zelf: het zijn hun modellen, dus hun eigen foto's
+      horen erbij. Dat voorkomt juist verwarring met onze stalen kassen. */}
   <PaginaKop
     label="Ook bij ons te krijgen"
     titel="De aluminium serres van Euroserre"
     tekst="Wij bouwen zelf in staal, maar we snappen dat aluminium ook zo zijn voordelen heeft: lichter, onderhoudsarm en met slanke profielen. Daarom zijn we leverancier van Euroserre, dat al meer dan veertig jaar serres en tuinkamers maakt. Je koopt hem bij ons, en wij plaatsen hem ook."
+    foto={fotoAvond}
+    altTekst="Een aluminium serre van Euroserre in een tuin, in het avondlicht met bloemen en gras eromheen."
   />
+
+  <!-- Fotogalerij: Euroserre-serres zoals ze er in het echt bij staan -->
+  <section class="bg-white py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs max-w-2xl">
+        <p class="oogmerk text-blad-600">In het echt</p>
+        <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Zo staan ze straks bij de mensen in de tuin</h2>
+        <p class="mt-4 leading-relaxed text-staal-600">
+          Een paar voorbeelden van serres van Euroserre, zoals ze er in het echt bij staan. Van een
+          strak modern model tot een klassieke serre tussen de rozen — er is er altijd wel eentje die
+          bij jouw tuin past.
+        </p>
+      </div>
+
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          galerij.map((f) => (
+            <figure class="rijs overflow-hidden rounded-2xl bg-klei-50 shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
+              <Image
+                src={f.src}
+                alt={f.alt}
+                class="h-64 w-full object-cover sm:h-72"
+                widths={[400, 800]}
+                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
+                loading="lazy"
+              />
+              <figcaption class="px-5 py-4 text-sm leading-relaxed text-staal-600">{f.tekst}</figcaption>
+            </figure>
+          ))
+        }
+      </div>
+
+      <p class="mt-8 text-sm text-staal-500">Foto's: Euroserre.</p>
+    </div>
+  </section>
 
   <!-- Filter en modellen -->
   <section class="bg-white py-14 sm:py-20">
@@ -40,37 +141,52 @@ const categorieen = ['Alles', 'Vrijstaand', 'Tegen een muur'];
           ))
         }
         <p class="ml-auto text-sm text-staal-500" data-telling>
-          {euroSerres.length} modellen
+          {getoondeSerres.length} modellen
         </p>
       </div>
 
       <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {
-          euroSerres.map((s) => (
-            <article
-              data-serre
-              data-categorie={s.categorie}
-              class="rijs flex flex-col rounded-2xl bg-klei-50 p-6 transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-22px_rgba(14,26,15,0.4)]"
-            >
-              <div class="flex items-start justify-between gap-3">
-                <h2 class="text-2xl text-staal-900">{s.naam}</h2>
-                <span class="shrink-0 rounded-full bg-blad-50 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-blad-700">
-                  {s.categorie}
-                </span>
-              </div>
-              <p class="mt-3 flex-1 text-sm leading-relaxed text-staal-600">{s.omschrijving}</p>
-              <dl class="mt-5 flex gap-8 border-t border-staal-900/10 pt-4 text-sm">
-                <div>
-                  <dt class="text-staal-500">Breedte</dt>
-                  <dd class="mt-0.5 font-semibold text-staal-900">{s.breedte}</dd>
+          getoondeSerres.map((s) => {
+            const foto = modelFotos[s.slug];
+            return (
+              <article
+                data-serre
+                data-categorie={s.categorie}
+                class="rijs flex flex-col overflow-hidden rounded-2xl bg-klei-50 transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-22px_rgba(14,26,15,0.4)]"
+              >
+                {foto && (
+                  <Image
+                    src={foto}
+                    alt={`De ${s.naam} van Euroserre, opgesteld in een tuin.`}
+                    class="h-48 w-full object-cover"
+                    widths={[400, 800]}
+                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
+                    loading="lazy"
+                  />
+                )}
+                <div class="flex flex-1 flex-col p-6">
+                  <div class="flex items-start justify-between gap-3">
+                    <h2 class="text-2xl text-staal-900">{s.naam}</h2>
+                    <span class="shrink-0 rounded-full bg-blad-50 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-blad-700">
+                      {s.categorie}
+                    </span>
+                  </div>
+                  <p class="mt-3 flex-1 text-sm leading-relaxed text-staal-600">{s.omschrijving}</p>
+                  <dl class="mt-5 flex gap-8 border-t border-staal-900/10 pt-4 text-sm">
+                    <div>
+                      <dt class="text-staal-500">Breedte</dt>
+                      <dd class="mt-0.5 font-semibold text-staal-900">{s.breedte}</dd>
+                    </div>
+                    <div>
+                      <dt class="text-staal-500">Vanaf lengte</dt>
+                      <dd class="mt-0.5 font-semibold text-staal-900">{s.minLengte}</dd>
+                    </div>
+                  </dl>
                 </div>
-                <div>
-                  <dt class="text-staal-500">Vanaf lengte</dt>
-                  <dd class="mt-0.5 font-semibold text-staal-900">{s.minLengte}</dd>
-                </div>
-              </dl>
-            </article>
-          ))
+              </article>
+            );
+          })
         }
       </div>
     </div>
