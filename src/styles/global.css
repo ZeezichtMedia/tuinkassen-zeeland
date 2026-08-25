@@ -2,7 +2,9 @@
 
 /* Huisstijl uit het logo van Tuinkassen Zeeland:
    blad #1E6D13, met staal- en glastinten uit hun eigen kasfoto's.
-   Koppen in Oswald (het font van hun bestaande site).
+   Koppen in Fraunces, tekst in Work Sans (zie @theme hieronder). Hun
+   bestaande Strato-site gebruikt Oswald, maar dat bleek te smal en te
+   modern voor deze site.
 
    De neutralen zijn warm en lopen naar een diep groenzwart, niet naar
    blauwgrijs. Een koud grijs (#343a40) gaf de site een dashboard-uitstraling
@@ -83,8 +85,8 @@
     text-transform: uppercase;
     font-size: 0.72rem;
   }
-  /* Displaykop voor paginakoppen. Oswald is smal, dus die kan groot zonder dat
-     het schreeuwt. Schaalt mee met de viewport, geen losse breakpoints. */
+  /* Displaykop voor paginakoppen. Schaalt mee met de viewport, geen losse
+     breakpoints. */
   .display {
     font-family: var(--font-kop);
     font-weight: 500;
