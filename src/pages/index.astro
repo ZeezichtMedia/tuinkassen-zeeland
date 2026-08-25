@@ -1,7 +1,7 @@
 ---
 import Basis from '../layouts/Basis.astro';
 import { Image } from 'astro:assets';
-import { bedrijf, eigenKassen } from '../data/aanbod';
+import { bedrijf, eigenKassen, euroSerres } from '../data/aanbod';
 import hero from '../assets/fotos/kas-tuin-zomer.jpg';
 import staal from '../assets/fotos/kas-luchtraam-detail.jpg';
 import moestuin from '../assets/fotos/kas-tuin-hortensia.jpg';
@@ -9,6 +9,20 @@ import zijgevel from '../assets/fotos/kas-najaar-blauwe-lucht.jpg';
 import frame from '../assets/fotos/kas-binnen-opbouw.jpg';
 import polder from '../assets/fotos/kas-polder-brug.jpg';
 import Uitnodiging from '../components/Uitnodiging.astro';
+import serreAvond from '../assets/fotos/euroserre-tuin-avond.webp';
+import serreMaxi from '../assets/fotos/euroserre-model-maxi.webp';
+import serreRustiq from '../assets/fotos/euroserre-model-rustiq.webp';
+import serrePlus from '../assets/fotos/euroserre-model-plus.webp';
+import serreMuurserre from '../assets/fotos/euroserre-model-muurserre.webp';
+import type { ImageMetadata } from 'astro';
+
+const bestsellers = euroSerres.filter((s) => s.bestseller);
+const bestsellerFotos: Record<string, ImageMetadata> = {
+  'euro-maxi': serreMaxi,
+  'euro-rustiq': serreRustiq,
+  'euro-plus': serrePlus,
+  'euro-muurserre': serreMuurserre,
+};
 
 const redenen = [
   {
@@ -70,13 +84,13 @@ const redenen = [
         Een kas die blijft staan als het waait
       </h1>
       <p class="mt-6 max-w-xl text-base leading-relaxed text-staal-100 sm:text-lg">
-        Wij bouwen tuinkassen van zwaar gegalvaniseerd staal en 4 mm tuindersglas, met materiaal uit
-        de professionele kassenbouw. Zelf gemaakt in Ritthem, en door ons geplaatst. Daarnaast
-        leveren we de aluminium serres van Euroserre.
+        Twee lijnen onder één dak: onze eigen kassen van zwaar gegalvaniseerd staal, en de aluminium
+        serres van Euroserre in elke kleur die je wilt. Allebei door ons geleverd en geplaatst,
+        vanuit Ritthem.
       </p>
       <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <a href="/samenstellen/" class="knop-vol justify-center">
-          Stel je kas samen
+        <a href="/kassen/" class="knop-vol justify-center">
+          Bekijk onze stalen kassen
           <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
             <path
               fill-rule="evenodd"
@@ -84,7 +98,7 @@ const redenen = [
               clip-rule="evenodd"></path>
           </svg>
         </a>
-        <a href="/kassen/" class="knop-lijn justify-center">Bekijk het assortiment</a>
+        <a href="/euroserre/" class="knop-lijn justify-center">Of de serres van Euroserre</a>
       </div>
     </div>
   </section>
@@ -145,16 +159,121 @@ const redenen = [
     </div>
   </section>
 
-  <!-- Staal of aluminium -->
+  <!-- Staal of aluminium: de keuze die iedereen hier maakt -->
+  <section class="bg-klei-50 py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs max-w-2xl">
+        <p class="oogmerk text-blad-600">Twee lijnen</p>
+        <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Staal van ons, of aluminium van Euroserre</h2>
+        <p class="mt-5 text-base leading-relaxed text-staal-600">
+          Bijna iedereen die hier binnenloopt staat voor dezelfde keuze. Wij zijn er eerlijk over:
+          allebei zijn het goede kassen, ze passen alleen bij een andere wens. Zet ze naast elkaar
+          en je ziet meteen wat bij jou hoort.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-2">
+        <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
+          <Image
+            src={zijgevel}
+            alt="Stalen tuinkas van Tuinkassen Zeeland met openstaande nokluchting"
+            class="h-60 w-full object-cover sm:h-72"
+            widths={[600, 1200]}
+            sizes="(max-width: 1024px) 92vw, 46vw"
+          />
+          <div class="flex flex-1 flex-col p-7 sm:p-9">
+            <p class="oogmerk text-blad-600">Onze eigen bouw</p>
+            <h3 class="mt-3 text-3xl text-staal-900">Gegalvaniseerd staal</h3>
+            <ul class="mt-6 flex-1 space-y-3 text-base leading-relaxed text-staal-600">
+              <li class="flex gap-3">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
+                <span>Zwaar staal, geen diagonale verbindingen nodig, blijft staan als het waait</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
+                <span>4 mm tuindersglas, hetzelfde als in de professionele kassenbouw</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
+                <span>Zelf gemaakt in onze loods, ook in maten die niet in een folder staan</span>
+              </li>
+            </ul>
+            <a
+              href="/kassen/"
+              class="mt-8 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
+            >
+              Bekijk onze kassen
+              <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
+          <Image
+            src={serreAvond}
+            alt="Aluminium serre van Euroserre in een tuin in het avondlicht"
+            class="h-60 w-full object-cover sm:h-72"
+            widths={[600, 1200]}
+            sizes="(max-width: 1024px) 92vw, 46vw"
+            loading="lazy"
+          />
+          <div class="flex flex-1 flex-col p-7 sm:p-9">
+            <p class="oogmerk text-blad-600">Wij zijn hun leverancier</p>
+            <h3 class="mt-3 text-3xl text-staal-900">Aluminium van Euroserre</h3>
+            <ul class="mt-6 flex-1 space-y-3 text-base leading-relaxed text-staal-600">
+              <li class="flex gap-3">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
+                <span>In elke RAL-kleur: zwart, antraciet of een diep groen in plaats van grijs</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
+                <span>Standaard 4 mm veiligheidsglas, breekt in stompe korrels in plaats van scherven</span>
+              </li>
+              <li class="flex gap-3">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
+                <span>Slanke profielen en onderhoudsarm, van 1,6 tot ruim 12 meter breed</span>
+              </li>
+            </ul>
+            <a
+              href="/euroserre/"
+              class="mt-8 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
+            >
+              Bekijk de Euroserre serres
+              <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+                <path
+                  fill-rule="evenodd"
+                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                  clip-rule="evenodd"></path>
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <p class="rijs mt-8 max-w-3xl text-base leading-relaxed text-staal-600">
+        Twijfel je nog? Kom een keer langs in Ritthem, dan staan ze naast elkaar en voel je het
+        verschil met je hand. Bellen kan ook, op
+        <a href={`tel:${bedrijf.telefoonNet}`} class="font-semibold text-blad-700 hover:text-blad-800">
+          {bedrijf.telefoonToon}
+        </a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Waarom staal -->
   <section class="vlak-nacht py-20 text-white sm:py-28">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="max-w-2xl rijs">
-        <p class="oogmerk text-blad-300">Staal of aluminium</p>
-        <h2 class="mt-4 text-4xl text-white sm:text-5xl">Waarom wij voor staal kiezen</h2>
+        <p class="oogmerk text-blad-300">Onze keuze</p>
+        <h2 class="mt-4 text-4xl text-white sm:text-5xl">Waarom wij zelf in staal bouwen</h2>
         <p class="mt-5 text-base leading-relaxed text-staal-300">
-          Sta je voor de keuze om een kas aan te schaffen, dan kan je tegenwoordig ook kiezen voor
-          aluminium. Er zijn dan een paar dingen om af te wegen. Wij zijn eerlijk: beide kunnen,
-          maar dit is waarom wij zelf in staal bouwen.
+          Wij maken al onze eigen kassen in staal. Niet uit gewoonte, maar omdat we hier zelf boeren
+          en weten wat het weer met een constructie doet.
         </p>
       </div>
 
@@ -172,26 +291,6 @@ const redenen = [
             </div>
           ))
         }
-      </div>
-
-      <div class="mt-14 rounded-2xl border border-white/12 bg-white/5 p-6 rijs sm:p-8">
-        <p class="text-base leading-relaxed text-staal-200">
-          Wil je toch liever aluminium? Geen probleem. Wij zijn ook leverancier van
-          <span class="font-semibold text-white">Euroserre</span>, die al meer dan veertig jaar
-          aluminium serres maakt. Zo kan je bij ons allebei krijgen, en plaatsen doen we ze zelf.
-        </p>
-        <a
-          href="/euroserre/"
-          class="mt-5 inline-flex items-center gap-2 font-semibold text-blad-300 transition-colors hover:text-blad-200"
-        >
-          Bekijk de Euroserre serres
-          <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-            <path
-              fill-rule="evenodd"
-              d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-              clip-rule="evenodd"></path>
-          </svg>
-        </a>
       </div>
     </div>
   </section>
@@ -240,18 +339,18 @@ const redenen = [
         }
 
         <a
-          href="/samenstellen/"
+          href="/maat-en-prijs/"
           class="rijs group flex flex-col justify-between rounded-2xl bg-blad-600 p-6 text-white transition-colors hover:bg-blad-700"
         >
           <div>
-            <h3 class="text-2xl text-white">Zelf samenstellen</h3>
+            <h3 class="text-2xl text-white">Weet je je maat al?</h3>
             <p class="mt-4 text-sm leading-relaxed text-blad-50">
-              Kies je type, je maat en je opties, en zie meteen wat dat betekent voor je oppervlak
-              en je glas. Aan het eind stuur je het als aanvraag naar ons door.
+              Zet je breedte en lengte neer, dan zoeken wij de kas erbij en bellen we je met een
+              prijs. Twee bij drie of drie bij zes, alles kan.
             </p>
           </div>
           <span class="mt-8 inline-flex items-center gap-2 font-semibold">
-            Begin met samenstellen
+            Vraag een prijs op maat
             <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true">
               <path
                 fill-rule="evenodd"
@@ -260,6 +359,53 @@ const redenen = [
             </svg>
           </span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bestsellers van Euroserre -->
+  <section class="bg-white pt-20 sm:pt-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-xl">
+          <p class="oogmerk text-blad-600">Bestsellers van Euroserre</p>
+          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">De serres die het hardst lopen</h2>
+          <p class="mt-5 text-base leading-relaxed text-staal-600">
+            Wil je een serre in kleur, met veiligheidsglas erin? Dit zijn de vier modellen die het
+            meest gekozen worden. Wij leveren ze en zetten ze ook neer.
+          </p>
+        </div>
+        <a href="/euroserre/" class="shrink-0 font-semibold text-blad-700 hover:text-blad-800">
+          Alle serres bekijken
+        </a>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          bestsellers.map((b) => (
+            <a
+              href="/euroserre/"
+              class="rijs group overflow-hidden rounded-2xl bg-klei-50 transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-22px_rgba(14,26,15,0.4)]"
+            >
+              <Image
+                src={bestsellerFotos[b.slug]}
+                alt={`De ${b.naam} van Euroserre in een tuin`}
+                class="h-44 w-full object-cover"
+                widths={[400, 800]}
+                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 23vw"
+                loading="lazy"
+              />
+              <div class="p-5">
+                <h3 class="text-2xl text-staal-900 transition-colors group-hover:text-blad-700">
+                  {b.naam}
+                </h3>
+                <p class="mt-2 text-sm text-staal-600">
+                  {b.breedte} breed, vanaf {b.minLengte} lang
+                </p>
+              </div>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>

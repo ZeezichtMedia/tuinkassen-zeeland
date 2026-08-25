@@ -1,12 +1,13 @@
 ---
 import Basis from '../layouts/Basis.astro';
 import { Image } from 'astro:assets';
-import { bedrijf, eigenKassen } from '../data/aanbod';
+import { bedrijf, eigenKassen, standaard, bijTeKiezen } from '../data/aanbod';
 import polder from '../assets/fotos/kas-polder-brug.jpg';
 import najaar from '../assets/fotos/kas-najaar-blauwe-lucht.jpg';
 import weiland from '../assets/fotos/kas-weiland.jpg';
 import tuinbreed from '../assets/fotos/kas-tuin-breed.jpg';
 import bakken from '../assets/fotos/kas-moestuin-bakken.jpg';
+import luchtramen from '../assets/fotos/kas-nokluchting.jpg';
 import PaginaKop from '../components/PaginaKop.astro';
 import kopfoto from '../assets/fotos/kas-tuin-hortensia.jpg';
 import Uitnodiging from '../components/Uitnodiging.astro';
@@ -71,10 +72,10 @@ const fotos = [
                   <span class="font-semibold text-staal-700">Goed voor:</span> {k.voor}
                 </p>
                 <a
-                  href="/samenstellen/"
+                  href="/maat-en-prijs/"
                   class="mt-7 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
                 >
-                  Stel deze kas samen
+                  Vraag een prijs voor deze kas
                   <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
                     <path
                       fill-rule="evenodd"
@@ -136,6 +137,82 @@ const fotos = [
     </div>
   </section>
 
+  <!-- Erbij: wat standaard is en wat je bijkiest -->
+  <section class="bg-klei-50 py-16 sm:py-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs max-w-2xl">
+        <p class="oogmerk text-blad-600">Wat er bij hoort</p>
+        <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Compleet, zonder waslijst aan opties</h2>
+        <p class="mt-5 text-base leading-relaxed text-staal-600">
+          We houden het bewust overzichtelijk. Het meeste zit er gewoon bij, en er zijn drie dingen
+          die je erbij kunt kiezen. Weet je niet wat je nodig hebt? Bel ons, vertel wat je wilt
+          telen en hoe je tuin ligt, dan zeggen wij wel wat zinnig is.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+        <div class="grid gap-5 sm:grid-cols-2">
+          <div class="rijs rounded-2xl bg-white p-6 sm:col-span-2">
+            <h3 class="text-xl text-staal-900">Dit zit er standaard bij</h3>
+            <ul class="mt-5 space-y-4">
+              {
+                standaard.map((a) => (
+                  <li class="flex gap-3">
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="mt-1 h-5 w-5 shrink-0 text-blad-600" aria-hidden="true">
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                    <span>
+                      <span class="block font-semibold text-staal-900">{a.naam}</span>
+                      <span class="mt-1 block text-sm leading-relaxed text-staal-600">{a.omschrijving}</span>
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+
+          {
+            bijTeKiezen.map((a) => (
+              <div class="rijs rounded-2xl border border-staal-200 bg-white/60 p-6">
+                <h3 class="text-xl text-staal-900">{a.naam}</h3>
+                <p class="mt-2.5 text-sm leading-relaxed text-staal-600">{a.omschrijving}</p>
+              </div>
+            ))
+          }
+          <div class="rijs flex flex-col justify-between rounded-2xl bg-blad-600 p-6 text-white">
+            <div>
+              <h3 class="text-xl text-white">Iets anders nodig?</h3>
+              <p class="mt-2.5 text-sm leading-relaxed text-blad-50">
+                Vertel het gewoon. Kan het, dan doen we het, en zo niet dan zeggen we dat ook
+                eerlijk.
+              </p>
+            </div>
+            <a href={`tel:${bedrijf.telefoonNet}`} class="mt-6 font-semibold text-white underline underline-offset-4">
+              Bel {bedrijf.telefoonToon}
+            </a>
+          </div>
+        </div>
+
+        {/* Beeld vult de hele kolom: met een vaste hoogte bleef er onder de
+            foto een leeg vlak staan naast de langere linkerkolom. */}
+        <div class="rijs relative min-h-[18rem] overflow-hidden rounded-2xl">
+          <Image
+            src={luchtramen}
+            alt="Geopende nokluchting bovenop een tuinkas"
+            class="absolute inset-0 h-full w-full object-cover"
+            widths={[400, 800, 1200]}
+            sizes="(max-width: 1024px) 92vw, 40vw"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Maatwerk -->
   <Uitnodiging
     label="Maatwerk"
@@ -143,7 +220,7 @@ const fotos = [
     tekst="Naast deze standaardmaten leveren we kassen in bijna ieder formaat dat je wenst, of het nu rechthoekig, vierkant of rond is. Het glas maken we zelf op maat."
     foto={weiland}
     altTekst="Tuinkas op een ruim perceel, met moestuinbakken ernaast"
-    actieHref="/samenstellen/"
-    actieTekst="Stel je kas samen"
+    actieHref="/maat-en-prijs/"
+    actieTekst="Vraag een prijs op maat"
   />
 </Basis>
