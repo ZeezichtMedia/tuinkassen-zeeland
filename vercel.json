@@ -2,5 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "astro",
   "buildCommand": "npm run build",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/samenstellen", "destination": "/maat-en-prijs/", "permanent": true },
+    { "source": "/samenstellen/", "destination": "/maat-en-prijs/", "permanent": true },
+    { "source": "/accessoires", "destination": "/kassen/", "permanent": true },
+    { "source": "/accessoires/", "destination": "/kassen/", "permanent": true }
+  ]
 }
