@@ -1,6 +1,6 @@
 ---
 import Basis from '../layouts/Basis.astro';
-import { bedrijf, euroSerres, kleuren } from '../data/aanbod';
+import { bedrijf, euroSerres, kleuren, bestsellerJaar } from '../data/aanbod';
 import PaginaKop from '../components/PaginaKop.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -35,7 +35,6 @@ const bestsellers = euroSerres.filter((s) => s.bestseller);
 
 const categorieen = ['Alles', 'Vrijstaand', 'Tegen een muur'];
 
-const jaar = new Date().getFullYear();
 
 /* Foto's van Euroserre zelf, zodat we hun modellen met hun eigen beeld laten
    zien (en niet met onze stalen kassen, dat zou juist verwarrend zijn). */
@@ -82,7 +81,7 @@ const galerij = [
   <PaginaKop
     label="Euroserre bij ons"
     titel="Een serre in jouw kleur, met veiligheidsglas"
-    tekst="Wil je geen grijze kas maar een serre in het zwart, antraciet of groen, en het liefst met veiligheidsglas erin? Dan zit je bij Euroserre goed. Wij zijn hun leverancier in Zeeland: je koopt de serre bij ons, en wij zetten hem ook neer."
+    tekst="Wil je geen grijze kas maar een serre in het zwart of donkergroen, en het liefst met veiligheidsglas erin? Dan zit je bij Euroserre goed. Wij zijn hun leverancier in Zeeland: je koopt de serre bij ons, en wij zetten hem ook neer."
     foto={fotoAvond}
     altTekst="Een aluminium serre van Euroserre in een tuin, in het avondlicht met bloemen en gras eromheen."
   />
@@ -92,7 +91,7 @@ const galerij = [
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="rijs flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-2xl">
-          <p class="oogmerk text-blad-600">Bestsellers {jaar}</p>
+          <p class="oogmerk text-blad-600">Bestsellers {bestsellerJaar}</p>
           <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">
             Deze vier gaan het hardst
           </h2>
@@ -126,11 +125,22 @@ const galerij = [
               </div>
               <div class="flex flex-1 flex-col p-5">
                 <h3 class="text-2xl text-staal-900">{s.naam}</h3>
+                {s.typering && <p class="mt-1 text-sm text-blad-700">{s.typering}</p>}
                 <p class="mt-2 flex-1 text-sm leading-relaxed text-staal-600">{s.omschrijving}</p>
-                <p class="mt-4 border-t border-staal-900/10 pt-3 text-sm text-staal-600">
-                  <span class="font-semibold text-staal-900">{s.breedte}</span> breed, vanaf{' '}
-                  <span class="font-semibold text-staal-900">{s.minLengte}</span> lang
-                </p>
+                <dl class="mt-4 space-y-1.5 border-t border-staal-900/10 pt-3 text-sm">
+                  <div class="flex justify-between gap-3">
+                    <dt class="text-staal-500">Breedte</dt>
+                    <dd class="text-right font-semibold text-staal-900">{s.breedte}</dd>
+                  </div>
+                  <div class="flex justify-between gap-3">
+                    <dt class="text-staal-500">Lengte</dt>
+                    <dd class="text-right font-semibold text-staal-900">{s.lengtes}</dd>
+                  </div>
+                  <div class="flex justify-between gap-3">
+                    <dt class="text-staal-500">Nokhoogte</dt>
+                    <dd class="text-right font-semibold text-staal-900">{s.nokhoogte}</dd>
+                  </div>
+                </dl>
               </div>
             </article>
           ))
@@ -149,11 +159,11 @@ const galerij = [
             Niet iedereen wil nog een grijze kas
           </h2>
           <p class="mt-5 leading-relaxed text-staal-300">
-            Ongeveer de helft van de mensen die hier binnenloopt, wil zijn kas in een kleur. Zwart,
-            antraciet of een diep groen, zodat hij wegvalt tegen de tuin. Bij Euroserre kan dat: dit
-            zijn de kleuren die het meest gekozen worden, en in principe kunnen ze elke RAL-kleur
-            lakken. Een kleur buiten de standaard kost wel wat extra, dat rekenen we vooraf met je
-            door.
+            Ongeveer de helft van de mensen die hier binnenloopt, wil zijn kas in een kleur. Zwart of
+            een diep groen, zodat hij wegvalt tegen de tuin. Bij Euroserre kies je standaard uit
+            onbehandeld aluminium, zwart of donkergroen. Elke andere RAL-kleur kan ook, maar die
+            wordt dan speciaal voor je gelakt en dat kost meer. Wat precies, dat rekenen we vooraf
+            met je door.
           </p>
 
           <ul class="mt-8 flex flex-wrap gap-x-7 gap-y-5">
@@ -169,7 +179,10 @@ const galerij = [
                   />
                   <span class="text-sm leading-tight">
                     <span class="block font-semibold text-white">{k.naam}</span>
-                    <span class="block text-staal-300">{k.ral}</span>
+                    <span class="block text-staal-300">
+                      {k.ral}
+                      {!k.standaard && ' · meerprijs'}
+                    </span>
                   </span>
                 </li>
               ))

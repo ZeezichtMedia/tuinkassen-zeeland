@@ -76,7 +76,18 @@ export type Serre = {
      (euroserre.com/serres/bestsellers). Wim wil die lijst voorop, en hem elk
      jaar in februari kunnen verversen. */
   bestseller?: boolean;
+  /* Onderstaande velden komen uit het bestsellerboekje van Euroserre en staan
+     alleen bij de vier bestsellers. Prijzen laten we er bewust af: Wim wil dat
+     gesprek zelf voeren. */
+  typering?: string;
+  lengtes?: string;
+  glas?: string;
+  nokhoogte?: string;
 };
+
+/* Het jaar van de bestsellerlijst die nu op de site staat. Euroserre geeft in
+   februari een nieuw boekje uit; dan verzetten we deze vier en dit jaartal. */
+export const bestsellerJaar = 2026;
 
 export const euroSerres: Serre[] = [
   {
@@ -93,8 +104,12 @@ export const euroSerres: Serre[] = [
     bestseller: true,
     naam: 'Euro-Maxi',
     categorie: 'Vrijstaand',
+    typering: 'Basismodel',
     breedte: '2,36 m of 3,09 m',
-    minLengte: '2,36 m',
+    lengtes: '3,09 tot 6,04 m',
+    minLengte: '3,09 m',
+    glas: '4 mm gehard glas',
+    nokhoogte: '2,56 tot 2,70 m',
     omschrijving:
       'Het best verkochte model van Euroserre. Rechte lijnen, veel glas en in twee breedtes te krijgen.',
   },
@@ -103,10 +118,14 @@ export const euroSerres: Serre[] = [
     bestseller: true,
     naam: 'Euro-Rustiq',
     categorie: 'Vrijstaand',
+    typering: 'Model met 45 graden dak',
     breedte: '2,36 m of 3,09 m',
-    minLengte: '2,36 m',
+    lengtes: '3,09 tot 6,04 m',
+    minLengte: '3,09 m',
+    glas: '4 mm gehard glas',
+    nokhoogte: '2,80 tot 3,15 m',
     omschrijving:
-      'Zelfde maatvoering als de Maxi, maar met een landelijker profiel. Staat mooi bij een oudere woning of een boerderij.',
+      'Zelfde maten als de Maxi, maar met een dak van 45 graden. Dat geeft hoogte in de nok en staat mooi bij een oudere woning of een boerderij.',
   },
   {
     slug: 'euro-cottage',
@@ -131,10 +150,14 @@ export const euroSerres: Serre[] = [
     bestseller: true,
     naam: 'Euro-Plus',
     categorie: 'Vrijstaand',
-    breedte: '3,80 m tot 6,04 m',
-    minLengte: '3,09 m',
+    typering: 'Extra breed model',
+    breedte: '3,80 m of 4,57 m',
+    lengtes: '3,80 tot 6,04 m',
+    minLengte: '3,80 m',
+    glas: '4 mm gehard glas',
+    nokhoogte: '2,92 tot 3,15 m',
     omschrijving:
-      'Vier breedtes tot ruim zes meter. Hier kan je echt in rondlopen en werken, ook met kruiwagen.',
+      'De brede uit de reeks. Hier kan je echt in rondlopen en werken, ook met een kruiwagen. In de breedte van 4,57 m zit een brede schuifdeur.',
   },
   {
     slug: 'euro-super',
@@ -195,8 +218,12 @@ export const euroSerres: Serre[] = [
     bestseller: true,
     naam: 'Euro-Muurserre',
     categorie: 'Tegen een muur',
+    typering: 'Aanbouwmodel',
     breedte: '2,33 m of 3,08 m',
-    minLengte: '3,08 m',
+    lengtes: '3,09 tot 6,04 m',
+    minLengte: '3,09 m',
+    glas: 'Dak polycarbonaat, zijkant 4 mm gehard glas',
+    nokhoogte: '2,56 tot 2,64 m',
     omschrijving:
       'Leunt tegen je gevel aan. Dat scheelt in isolatie, en water, stroom en verwarming zijn zo aangesloten.',
   },
@@ -280,14 +307,17 @@ export type Kleur = {
   ral: string;
   hex: string;
   rand?: boolean;
+  /* Euroserre levert standaard onbehandeld aluminium, of gelakt in RAL 6009 of
+     RAL 9005. Elke andere RAL-kleur kan, maar kost meer. */
+  standaard?: boolean;
 };
 
 export const kleuren: Kleur[] = [
-  { naam: 'Zwart', ral: 'RAL 9005', hex: '#0e0e0e' },
+  { naam: 'Zwart', ral: 'RAL 9005', hex: '#0e0e0e', standaard: true },
+  { naam: 'Donkergroen', ral: 'RAL 6009', hex: '#27352a', standaard: true },
+  { naam: 'Onbehandeld aluminium', ral: 'Blank', hex: '#b9bdbb', standaard: true },
   { naam: 'Antraciet', ral: 'RAL 7016', hex: '#383e42' },
-  { naam: 'Donkergroen', ral: 'RAL 6009', hex: '#27352a' },
   { naam: 'Wit', ral: 'RAL 9010', hex: '#f1f0ea', rand: true },
-  { naam: 'Naturel aluminium', ral: 'Blank', hex: '#b9bdbb' },
 ];
 
 export const bedrijf = {
