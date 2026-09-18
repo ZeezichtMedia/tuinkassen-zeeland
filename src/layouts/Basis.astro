@@ -36,6 +36,8 @@ const donkereHero = pad === '/';
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
     />
+    <!-- Vercel Web Analytics: bezoekers meten zonder cookies, alleen op productie -->
+    {import.meta.env.PROD && <script is:inline defer src="/_vercel/insights/script.js"></script>}
   </head>
   <body class="antialiased">
     <a
