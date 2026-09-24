@@ -1,0 +1,184 @@
+---
+/**
+ * De fotokijker: één voor de hele site. Klik op een foto met `data-kijker`
+ * (zie KlikFoto.astro) en hij opent groot, met de andere foto's uit dezelfde
+ * groep erbij. Pijltjes, Escape en vegen op de telefoon werken.
+ *
+ * Gebouwd op <dialog>, dus focus en de Escape-toets regelt de browser, en
+ * voor een schermlezer is het meteen een echt venster.
+ */
+---
+
+<dialog id="fotokijker" class="kijker" aria-label="Foto groot bekijken">
+  <div class="kijker-binnen">
+    <figure class="kijker-figuur">
+      <img class="kijker-foto" alt="" />
+      <figcaption class="kijker-onderschrift">
+        <span class="kijker-tekst"></span>
+        <span class="kijker-teller"></span>
+      </figcaption>
+    </figure>
+    <button type="button" class="kijker-knop kijker-sluit" aria-label="Sluiten">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"></path></svg>
+    </button>
+    <button type="button" class="kijker-knop kijker-vorige" aria-label="Vorige foto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+    <button type="button" class="kijker-knop kijker-volgende" aria-label="Volgende foto">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+    </button>
+  </div>
+</dialog>
+
+<style is:global>
+  .kijker {
+    width: 100vw;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #fff;
+  }
+  .kijker::backdrop {
+    background: rgba(8, 16, 9, 0.92);
+    backdrop-filter: blur(6px);
+  }
+  .kijker[open] {
+    animation: kijker-in 0.28s var(--ease-uit);
+  }
+  @keyframes kijker-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .kijker-binnen {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 4.5rem 1rem 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .kijker-binnen { padding: 4.5rem 5.5rem 2rem; }
+  }
+  .kijker-figuur {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .kijker-foto {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100dvh - 10rem);
+    width: auto;
+    height: auto;
+    border-radius: 0.75rem;
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7);
+    transition: opacity 0.2s ease;
+  }
+  .kijker-foto.laadt { opacity: 0.35; }
+  .kijker-onderschrift {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 48rem;
+    text-align: center;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.86);
+  }
+  .kijker-teller {
+    font-variant-numeric: tabular-nums;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.85rem;
+  }
+  .kijker-knop {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: background 0.2s ease, transform 0.16s var(--ease-uit);
+  }
+  .kijker-knop:hover { background: rgba(255, 255, 255, 0.2); }
+  .kijker-knop:active { transform: scale(0.94); }
+  .kijker-knop svg { width: 1.35rem; height: 1.35rem; }
+  .kijker-knop[hidden] { display: none; }
+  .kijker-sluit { top: 1rem; right: 1rem; }
+  .kijker-vorige, .kijker-volgende { top: 50%; margin-top: -1.5rem; }
+  .kijker-vorige { left: 1rem; }
+  .kijker-volgende { right: 1rem; }
+  /* Op de telefoon staan de pijltjes onderin, weg van de foto en onder de duim. */
+  @media (max-width: 767px) {
+    .kijker-vorige, .kijker-volgende { top: auto; bottom: 1rem; margin-top: 0; }
+    .kijker-onderschrift { padding-bottom: 3.5rem; }
+  }
+</style>
+
+<script>
+  const kijker = document.getElementById('fotokijker') as HTMLDialogElement | null;
+  if (kijker) {
+    const foto = kijker.querySelector('.kijker-foto') as HTMLImageElement;
+    const tekst = kijker.querySelector('.kijker-tekst') as HTMLElement;
+    const teller = kijker.querySelector('.kijker-teller') as HTMLElement;
+    const vorige = kijker.querySelector('.kijker-vorige') as HTMLButtonElement;
+    const volgende = kijker.querySelector('.kijker-volgende') as HTMLButtonElement;
+    const sluit = kijker.querySelector('.kijker-sluit') as HTMLButtonElement;
+
+    let reeks: HTMLAnchorElement[] = [];
+    let plek = 0;
+
+    const toon = (i: number) => {
+      plek = (i + reeks.length) % reeks.length;
+      const a = reeks[plek];
+      foto.classList.add('laadt');
+      foto.onload = () => foto.classList.remove('laadt');
+      foto.src = a.href;
+      foto.alt = a.dataset.tekst ?? '';
+      tekst.textContent = a.dataset.tekst ?? '';
+      teller.textContent = reeks.length > 1 ? `${plek + 1} van ${reeks.length}` : '';
+      vorige.hidden = volgende.hidden = reeks.length < 2;
+      // De volgende alvast ophalen, dan bladert het zonder wachten.
+      if (reeks.length > 1) new Image().src = reeks[(plek + 1) % reeks.length].href;
+    };
+
+    document.addEventListener('click', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-kijker]');
+      if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+      e.preventDefault();
+      reeks = [...document.querySelectorAll<HTMLAnchorElement>(`a[data-kijker="${a.dataset.kijker}"]`)];
+      toon(reeks.indexOf(a));
+      kijker.showModal();
+    });
+
+    vorige.addEventListener('click', () => toon(plek - 1));
+    volgende.addEventListener('click', () => toon(plek + 1));
+    sluit.addEventListener('click', () => kijker.close());
+    // Klikken naast de foto sluit hem, zoals mensen dat verwachten.
+    kijker.addEventListener('click', (e) => {
+      if (e.target === kijker || (e.target as HTMLElement).classList.contains('kijker-binnen')) kijker.close();
+    });
+    kijker.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') toon(plek - 1);
+      if (e.key === 'ArrowRight') toon(plek + 1);
+    });
+
+    let startX = 0;
+    kijker.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+    kijker.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 50 && reeks.length > 1) toon(plek + (dx < 0 ? 1 : -1));
+    });
+  }
+</script>

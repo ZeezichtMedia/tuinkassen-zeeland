@@ -1,0 +1,187 @@
+---
+/**
+ * Lijntekening van een serre, in de kleur van het frame.
+ *
+ * Waarom een tekening en geen foto: Euroserre heeft de verdelers in 2026
+ * gevraagd alle foto's van fotograaf Herbert Bleijenberg van hun sites te
+ * halen, en een extern kantoor (Pixsy) stuurt rekeningen voor wat er nog
+ * online staat. Van geen enkele Euroserre-foto weten we zeker onder welke
+ * licentie hij valt, dus we gebruiken er geen. Deze tekeningen zijn ons eigen
+ * werk. Levert Wim later foto's aan uit de verdelersgalerij van Euroserre
+ * (met lopende licentie) of van serres die hij zelf heeft gezet, dan kunnen
+ * die hier naast.
+ *
+ * De kleur komt uit de CSS-variabele --frame, zodat een kleurknop op de
+ * pagina hem live kan veranderen.
+ */
+interface Props {
+  model?: 'maxi' | 'rustiq' | 'plus' | 'muur';
+  kleur?: string;
+  class?: string;
+  titel?: string;
+}
+
+const { model = 'maxi', kleur = '#1b1b1b', class: klasse = '', titel } = Astro.props;
+
+type P = [number, number];
+const pt = (p: P) => `${p[0].toFixed(1)},${p[1].toFixed(1)}`;
+const poly = (...ps: P[]) => ps.map(pt).join(' ');
+const plus = (a: P, b: P): P => [a[0] + b[0], a[1] + b[1]];
+const mix = (a: P, b: P, t: number): P => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+
+// Maten per model, in tekeningeenheden. Verhoudingen naar de echte modellen:
+// Rustiq heeft een dak van 45 graden, de Plus is breed, de muurserre leunt.
+const maten = {
+  maxi: { W: 116, H: 72, R: 104, D: 150, vakken: 5 },
+  rustiq: { W: 110, H: 66, R: 121, D: 150, vakken: 5 },
+  plus: { W: 156, H: 76, R: 122, D: 140, vakken: 5 },
+  muur: { W: 92, H: 70, R: 118, D: 150, vakken: 5 },
+}[model];
+
+const { W, H, R, D, vakken } = maten;
+const diep: P = [D * 0.56, -D * 0.26];
+const x0 = (320 - (W + diep[0])) / 2 + (model === 'muur' ? 8 : 0);
+const y0 = 196;
+
+const Fbl: P = [x0, y0];
+const Fbr: P = [x0 + W, y0];
+const Bbl = plus(Fbl, diep);
+const Bbr = plus(Fbr, diep);
+
+let vlakken: { punten: string; soort: 'glas' | 'muur' }[] = [];
+let lijnen: [P, P][] = [];
+let muurLijnen: [P, P][] = [];
+let raam: string | null = null;
+let deur: string;
+let schaduw: string;
+
+if (model !== 'muur') {
+  const Ftl: P = [x0, y0 - H];
+  const Ftr: P = [x0 + W, y0 - H];
+  const Fnok: P = [x0 + W / 2, y0 - R];
+  const Btl = plus(Ftl, diep);
+  const Btr = plus(Ftr, diep);
+  const Bnok = plus(Fnok, diep);
+
+  vlakken = [
+    { punten: poly(Ftl, Fnok, Bnok, Btl), soort: 'glas' },
+    { punten: poly(Fbr, Bbr, Btr, Ftr), soort: 'glas' },
+    { punten: poly(Ftr, Btr, Bnok, Fnok), soort: 'glas' },
+    { punten: poly(Fbl, Fbr, Ftr, Fnok, Ftl), soort: 'glas' },
+  ];
+  // Stijlen en roeden in de zijwand en het dak
+  for (let i = 1; i < vakken; i++) {
+    const t = i / vakken;
+    const onder = mix(Fbr, Bbr, t);
+    const goot = mix(Ftr, Btr, t);
+    lijnen.push([onder, goot], [goot, mix(Fnok, Bnok, t)]);
+  }
+  lijnen.push([mix(Fbr, Ftr, 0.44), mix(Bbr, Btr, 0.44)]);
+  // Voorgevel: stijlen, een regel op borsthoogte en de deur in het midden
+  const dakY = (x: number) => {
+    const rel = Math.abs(x - (x0 + W / 2)) / (W / 2);
+    return y0 - H - (1 - rel) * (R - H);
+  };
+  for (const f of [0.18, 0.82]) {
+    const x = x0 + W * f;
+    lijnen.push([[x, y0], [x, dakY(x)]]);
+  }
+  lijnen.push([[x0, y0 - H * 0.44], [x0 + W * 0.34, y0 - H * 0.44]]);
+  lijnen.push([[x0 + W * 0.66, y0 - H * 0.44], [x0 + W, y0 - H * 0.44]]);
+  const dw = W * 0.3;
+  const dx = x0 + (W - dw) / 2;
+  deur = poly([dx, y0], [dx + dw, y0], [dx + dw, y0 - H * 0.92], [dx, y0 - H * 0.92]);
+  lijnen.push([[x0 + W / 2, y0 - H * 0.92], [x0 + W / 2, dakY(x0 + W / 2)]]);
+  // Een dakraam dat openstaat, zoals de luchtramen op een zomerdag
+  const a = mix(Fnok, Bnok, 0.52);
+  const b = mix(Fnok, Bnok, 0.74);
+  const c = mix(Ftr, Btr, 0.74);
+  const d = mix(Ftr, Btr, 0.52);
+  const opTil: P = [2, -9];
+  raam = poly(a, b, plus(mix(b, c, 0.55), opTil), plus(mix(a, d, 0.55), opTil));
+  schaduw = `M ${pt([x0 - 10, y0 + 2])} L ${pt(plus(Bbl, [-6, 2]))} L ${pt(plus(Bbr, [18, 2]))} L ${pt([x0 + W + 22, y0 + 2])} Z`;
+} else {
+  // Muurserre: een schuin dak van de gevel naar voren
+  const Ftl: P = [x0, y0 - R];
+  const Ftr: P = [x0 + W, y0 - H];
+  const Btl = plus(Ftl, diep);
+  const Btr = plus(Ftr, diep);
+  // De gevel van het huis: een vlak langs de lange kant, iets voorbij de
+  // serre aan beide kanten, zodat je ziet dat hij ertegenaan staat.
+  const muurTop = R + 30;
+  const mVoor = mix(Fbl, Bbl, -0.12);
+  const mAchter = mix(Fbl, Bbl, 1.12);
+  vlakken = [
+    { punten: poly(mVoor, mAchter, plus(mAchter, [0, -muurTop]), plus(mVoor, [0, -muurTop])), soort: 'muur' },
+    { punten: poly(Fbr, Bbr, Btr, Ftr), soort: 'glas' },
+    { punten: poly(Ftl, Ftr, Btr, Btl), soort: 'glas' },
+    { punten: poly(Fbl, Fbr, Ftr, Ftl), soort: 'glas' },
+  ];
+  for (let i = 1; i < vakken; i++) {
+    const t = i / vakken;
+    const goot = mix(Ftr, Btr, t);
+    lijnen.push([mix(Fbr, Bbr, t), goot], [goot, mix(Ftl, Btl, t)]);
+  }
+  lijnen.push([mix(Fbr, Ftr, 0.44), mix(Bbr, Btr, 0.44)]);
+  for (let j = 1; j < 9; j++) {
+    const op: P = [0, -(muurTop / 9) * j];
+    muurLijnen.push([plus(mVoor, op), plus(mAchter, op)]);
+  }
+  const dw = W * 0.34;
+  const dx = x0 + W * 0.46;
+  deur = poly([dx, y0], [dx + dw, y0], [dx + dw, y0 - H * 0.9], [dx, y0 - H * 0.9]);
+  const a = mix(Ftl, Btl, 0.5);
+  const b = mix(Ftl, Btl, 0.72);
+  const c = mix(Ftr, Btr, 0.72);
+  const d = mix(Ftr, Btr, 0.5);
+  raam = poly(a, b, plus(mix(b, c, 0.5), [2, -8]), plus(mix(a, d, 0.5), [2, -8]));
+  schaduw = `M ${pt([x0, y0 + 2])} L ${pt(plus(Bbl, [0, 2]))} L ${pt(plus(Bbr, [18, 2]))} L ${pt([x0 + W + 22, y0 + 2])} Z`;
+}
+
+const id = `glas-${model}-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+<svg
+  viewBox="0 0 320 220"
+  class:list={['serre-tekening', klasse]}
+  style={`--frame: ${kleur}`}
+  role={titel ? 'img' : undefined}
+  aria-label={titel}
+  aria-hidden={titel ? undefined : 'true'}
+>
+  <defs>
+    <linearGradient id={id} x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.75"></stop>
+      <stop offset="1" stop-color="#cfe0cf" stop-opacity="0.35"></stop>
+    </linearGradient>
+  </defs>
+  <path d={schaduw} fill="rgba(14,26,15,0.10)"></path>
+  {
+    vlakken.map((v) =>
+      v.soort === 'muur' ? (
+        <g>
+          <polygon points={v.punten} fill="#ddd0bd" stroke="#bda98e" stroke-width="1.2"></polygon>
+          {muurLijnen.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="#c7b499" stroke-width="0.9"></line>)}
+        </g>
+      ) : (
+        <polygon points={v.punten} fill={`url(#${id})`} class="serre-frame" stroke-width="2.6" stroke-linejoin="round"></polygon>
+      )
+    )
+  }
+  {lijnen.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} class="serre-frame" stroke-width="1.5"></line>)}
+  <polygon points={deur} fill="none" class="serre-frame" stroke-width="2.2"></polygon>
+  {raam && <polygon points={raam} fill={`url(#${id})`} class="serre-frame" stroke-width="1.8" stroke-linejoin="round"></polygon>}
+</svg>
+
+<style is:global>
+  .serre-tekening .serre-frame {
+    stroke: var(--frame);
+    transition: stroke 0.35s ease;
+  }
+  /* Een wit frame verdwijnt tegen een lichte achtergrond; een haarfijne
+     schaduw houdt het leesbaar. */
+  .serre-tekening {
+    overflow: visible;
+    filter: drop-shadow(0 0.6px 0.4px rgba(14, 26, 15, 0.28));
+  }
+</style>

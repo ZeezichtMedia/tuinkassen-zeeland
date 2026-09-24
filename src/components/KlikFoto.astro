@@ -1,0 +1,66 @@
+---
+import { Image, getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Een foto waar je op kunt klikken om hem groot te zien. Foto's met dezelfde
+ * `groep` horen bij elkaar: in de kijker blader je daar met de pijltjes
+ * doorheen. De kijker zelf staat één keer in de layout (Fotokijker.astro).
+ *
+ * De grote versie maken we hier alvast klaar, zodat de kijker niet het
+ * volle origineel hoeft te laden.
+ */
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  groep: string;
+  /** Klassen voor de foto zelf (hoogte, afronding). */
+  class?: string;
+  /** Klassen voor de klikbare omlijsting. */
+  lijst?: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  quality?: number;
+}
+
+const {
+  src,
+  alt,
+  groep,
+  class: fotoKlasse = '',
+  lijst = '',
+  widths = [400, 800],
+  sizes = '(max-width: 1024px) 92vw, 45vw',
+  loading = 'lazy',
+  quality = 72,
+} = Astro.props;
+
+const groot = await getImage({ src, width: Math.min(1600, src.width), format: 'webp', quality: 78 });
+---
+
+<a
+  href={groot.src}
+  data-kijker={groep}
+  data-tekst={alt}
+  class:list={['kijk-foto group relative block overflow-hidden', lijst]}
+  aria-label={`${alt}. Bekijk groot`}
+>
+  <Image
+    src={src}
+    alt={alt}
+    class:list={['transition-transform duration-700 ease-out group-hover:scale-[1.03]', fotoKlasse]}
+    widths={widths}
+    sizes={sizes}
+    loading={loading}
+    quality={quality}
+  />
+  <span
+    class="pointer-events-none absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full bg-white/90 text-staal-900 opacity-0 shadow-sm transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100"
+    aria-hidden="true"
+  >
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" class="h-4 w-4">
+      <path d="M12 3h5v5M8 17H3v-5M17 3l-6 6M3 17l6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </span>
+</a>

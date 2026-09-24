@@ -1,29 +1,60 @@
 ---
 import Basis from '../layouts/Basis.astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { bedrijf, eigenKassen, euroSerres } from '../data/aanbod';
-import hero from '../assets/fotos/kas-tuin-zomer.jpg';
+import KlikFoto from '../components/KlikFoto.astro';
+import KomLangs from '../components/KomLangs.astro';
+import SerreTekening from '../components/SerreTekening.astro';
+
+import hero from '../assets/fotos/kassen/hero-compact-zon.webp';
 import staal from '../assets/fotos/kas-luchtraam-detail.jpg';
 import moestuin from '../assets/fotos/kas-tuin-hortensia.jpg';
-import venloAkker from '../assets/fotos/kassen/venlo-340x585-dubbele-deur-akker.webp';
-import opbouw from '../assets/fotos/kassen/compact-280x370-opbouw.webp';
-import frame from '../assets/fotos/kas-binnen-opbouw.jpg';
-import polder from '../assets/fotos/kas-polder-brug.jpg';
-import Uitnodiging from '../components/Uitnodiging.astro';
-import serreGewoon from '../assets/fotos/euroserre-kinderen.webp';
-import serreMaxi from '../assets/fotos/euroserre-model-maxi.webp';
-import serreRustiq from '../assets/fotos/euroserre-model-rustiq.webp';
-import serrePlus from '../assets/fotos/euroserre-model-plus.webp';
-import serreMuurserre from '../assets/fotos/euroserre-model-muurserre.webp';
-import type { ImageMetadata } from 'astro';
 
-const bestsellers = euroSerres.filter((s) => s.bestseller);
-const bestsellerFotos: Record<string, ImageMetadata> = {
-  'euro-maxi': serreMaxi,
-  'euro-rustiq': serreRustiq,
-  'euro-plus': serrePlus,
-  'euro-muurserre': serreMuurserre,
+// Per model de foto voor de kaart
+import fCompact from '../assets/fotos/kassen/compact-230x370-zijkant.webp';
+import fVenlo from '../assets/fotos/kassen/venlo-340x585-dubbele-deur-akker.webp';
+import fBelgisch from '../assets/fotos/kassen/belgische-380x510-kopgevel.webp';
+import fDubbel from '../assets/fotos/kassen/dubbelkap-660x600-schuin.webp';
+import fMaat from '../assets/fotos/kassen/muurkas-maatwerk-bloementuin.webp';
+
+// Galerij: kassen die Wim heeft gezet
+import g1 from '../assets/fotos/kassen/venlo-op-muur-kopgevel.webp';
+import g2 from '../assets/fotos/kassen/compact-280x370-schuin.webp';
+import g3 from '../assets/fotos/kassen/dubbelkap-660x600-kopgevel.webp';
+import g4 from '../assets/fotos/kassen/venlo-340x585-dubbele-deur-bij-huis.webp';
+import g5 from '../assets/fotos/kassen/compact-230x300-voorkant.webp';
+import g6 from '../assets/fotos/kassen/belgische-380x510-schuin.webp';
+import g7 from '../assets/fotos/kassen/compact-280x370-opbouw.webp';
+import g8 from '../assets/fotos/kassen/muurkas-maatwerk-voorkant.webp';
+
+const kaartFoto: Record<string, ImageMetadata> = {
+  compact: fCompact,
+  venlo: fVenlo,
+  belgische: fBelgisch,
+  dubbelkap: fDubbel,
+  maatwerk: fMaat,
 };
+
+/* Bento-indeling: een paar grote foto's, de rest klein. Zo voelt het als een
+   echte verzameling en niet als een raster uit een sjabloon. */
+const galerij = [
+  { src: g1, alt: 'Venlo kas op een gemetselde muur, met een witte boerderij erachter', groot: true },
+  { src: g2, alt: 'Compact kas van 2,80 bij 3,70 m, schuin van voren' },
+  { src: g3, alt: 'Dubbelkap van 6,60 m breed, twee puntgevels naast elkaar' },
+  { src: g4, alt: 'Venlo kas met dubbele deur in een tuin bij het woonhuis', breed: true },
+  { src: g5, alt: 'Compact kas van 2,30 bij 3,00 m, van voren met de deur' },
+  { src: g6, alt: 'Belgische kas met schuine gevels, schuin van voren' },
+  { src: g7, alt: 'Een Compact kas wordt in een tuin in elkaar gezet' },
+  { src: g8, alt: 'Kas op maat tegen een schuur, tussen de bloemen' },
+];
+
+const beloftes = [
+  { kop: 'Gebouwd in Ritthem', tekst: 'In onze eigen loods, niet uit een folder' },
+  { kop: 'Staal dat ruim 30 jaar meegaat', tekst: 'Gegalvaniseerd en gemaakt om te blijven' },
+  { kop: 'Wij zetten hem neer', tekst: 'Of je plaatst de Compact makkelijk zelf' },
+  { kop: 'Ook na de bouw', tekst: 'Een ruit, een deur of een uitbreiding' },
+];
 
 const redenen = [
   {
@@ -33,50 +64,55 @@ const redenen = [
   },
   {
     kop: 'Dertig jaar en verder',
-    tekst:
-      'Het staal is verzinkt. Een kas gaat er tientallen jaren tegenaan, en dertig jaar is geen uitzondering.',
+    tekst: 'Het staal is verzinkt. Een kas gaat er tientallen jaren tegenaan, en dertig jaar is geen uitzondering.',
   },
   {
     kop: 'Glas van tuindersklasse',
-    tekst:
-      'Vier millimeter tuindersglas, hetzelfde als in de professionele kassenbouw. Het laat veel licht door, is hagelbestendig en blijft goed schoon te maken.',
+    tekst: 'Vier millimeter tuindersglas, hetzelfde als in de kassenbouw. Het laat veel licht door, is hagelbestendig en blijft goed schoon te maken.',
   },
   {
     kop: 'Recht uit onze eigen loods',
-    tekst:
-      'We bouwen en plaatsen alles zelf, vanuit onze loods in Ritthem. Geen tussenhandel, dus je krijgt een eerlijke prijs voor een degelijke kas.',
+    tekst: 'We bouwen en plaatsen alles zelf, vanuit onze loods in Ritthem. Geen tussenhandel, dus je krijgt een eerlijke prijs voor een degelijke kas.',
   },
 ];
+
+const stappen = [
+  { kop: 'Bel of app', tekst: 'Vertel wat je wilt kweken en hoeveel ruimte je hebt. Geen formulier, gewoon even praten.' },
+  { kop: 'Kom kijken', tekst: 'In Ritthem loop je door de kassen heen en zie je het staal en het glas van dichtbij.' },
+  { kop: 'Wij maken hem', tekst: 'We bouwen je kas in onze loods, in de maat die bij jouw tuin past.' },
+  { kop: 'Wij zetten hem neer', tekst: 'Compleet aangereden of bij je opgebouwd. En daarna blijven we bereikbaar.' },
+];
+
+const bestsellers = euroSerres.filter((s) => s.bestseller);
+const tekeningPer: Record<string, 'maxi' | 'rustiq' | 'plus' | 'muur'> = {
+  'euro-maxi': 'maxi',
+  'euro-rustiq': 'rustiq',
+  'euro-plus': 'plus',
+  'euro-muurserre': 'muur',
+};
+const tekeningKleur = ['#1b1b1b', '#27352a', '#8f9592', '#1b1b1b'];
 ---
 
 <Basis
   titel={`${bedrijf.naam} | Stalen tuinkassen en Euroserre serres uit Ritthem`}
-  omschrijving="Tuinkassen Zeeland bouwt kassen van gegalvaniseerd staal en 4 mm tuindersglas, en levert de aluminium serres van Euroserre. Zelf gebouwd en geplaatst vanuit Ritthem."
+  omschrijving="Tuinkassen Zeeland bouwt kassen van gegalvaniseerd staal en 4 mm tuindersglas, en levert de aluminium serres van Euroserre. Zelf gebouwd en geplaatst vanuit Ritthem. Kom kijken."
 >
-  <!-- Hero -->
-  <section class="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden">
+  <!-- Hero: een zonnige kas in een gewone tuin, geen luxe plaatje -->
+  <section class="relative flex h-[100svh] min-h-[620px] items-end overflow-hidden">
     <Image
       src={hero}
-      alt="Tuinkas van Tuinkassen Zeeland in een tuin, met openstaande luchtramen"
-      class="absolute inset-0 h-full w-full scale-105 object-cover"
+      alt="Compact kas van Tuinkassen Zeeland in een zonnige tuin, met de luchtramen open"
+      class="absolute inset-0 h-full w-full object-cover object-[60%_50%]"
       loading="eager"
       fetchpriority="high"
-      widths={[800, 1200, 1600, 2048]}
+      widths={[800, 1200, 1600, 2000]}
       sizes="100vw"
+      quality={76}
     />
-    {/* Twee lagen: een verloop van onderaf voor de leesbaarheid van de tekst, en
-        een zachte vignet zodat de foto naar de randen toe rustig wordt. De
-        oude scrim lag als een dichte deken over de hele foto. */}
-    <div
-      class="absolute inset-0 bg-gradient-to-t from-staal-900 via-staal-900/55 to-staal-900/5"
-    >
-    </div>
-    <div
-      class="absolute inset-0 bg-[radial-gradient(120%_85%_at_75%_25%,transparent_35%,rgba(14,26,15,0.45)_100%)]"
-    >
-    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-staal-900/95 via-staal-900/35 to-staal-900/0"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-staal-900/70 via-staal-900/20 to-transparent"></div>
 
-    <div class="relative mx-auto w-full max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24">
+    <div class="relative mx-auto w-full max-w-7xl px-4 pb-14 sm:px-6 sm:pb-20">
       <p class="oogmerk flex items-center gap-2.5 text-white">
         <span class="h-3 w-1 rounded-full bg-blad-400" aria-hidden="true"></span>
         {bedrijf.slogan}
@@ -85,13 +121,12 @@ const redenen = [
         Een kas die blijft staan als het waait
       </h1>
       <p class="mt-6 max-w-xl text-base leading-relaxed text-staal-100 sm:text-lg">
-        Twee lijnen onder één dak: onze eigen kassen van gegalvaniseerd staal, en de aluminium
-        serres van Euroserre in elke kleur die je wilt. Allebei door ons geleverd en geplaatst,
-        vanuit Ritthem.
+        Stalen kassen die we zelf bouwen in Ritthem, en de aluminium serres van Euroserre. Kom ze
+        bekijken, dan loop je er even doorheen.
       </p>
       <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <a href="/kassen/" class="knop-vol justify-center">
-          Bekijk onze stalen kassen
+        <a href="#langskomen" class="knop-vol justify-center">
+          Kom kijken in Ritthem
           <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
             <path
               fill-rule="evenodd"
@@ -99,205 +134,32 @@ const redenen = [
               clip-rule="evenodd"></path>
           </svg>
         </a>
-        <a href="/euroserre/" class="knop-lijn justify-center">Of de serres van Euroserre</a>
+        <a href="/kassen/" class="knop-lijn justify-center">Bekijk onze kassen</a>
       </div>
-    </div>
-  </section>
-
-  <!-- Welkom -->
-  <section class="bg-white py-20 sm:py-28">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div class="rijs">
-          <p class="oogmerk text-blad-600">Welkom bij Tuinkassen Zeeland</p>
-          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">
-            Wij telen zelf, dus we weten wat een kas moet doen
-          </h2>
-          <div class="mt-6 space-y-4 text-base leading-relaxed text-staal-600">
-            <p>
-              {bedrijf.moeder} bouwt en levert tuinkassen. Daarnaast telen we granen, peulvruchten,
-              oliehoudende zaden, aardappels, suikerbieten en andere wortel- en knolgewassen. Dat
-              land is niet los te zien van de kassen: we weten uit ervaring wat weer en wind hier
-              met een constructie doen.
-            </p>
-            <p>
-              We verkopen kwaliteitsproducten en onderscheiden ons met solide materialen en een
-              uitstekende klantenservice. Het is niet voor niets dat de meeste van onze klanten
-              steeds weer bij ons terugkomen.
-            </p>
-          </div>
-          <a
-            href="/contact/"
-            class="mt-8 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
-          >
-            Kom eens langs in Ritthem
-            <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-              <path
-                fill-rule="evenodd"
-                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                clip-rule="evenodd"></path>
-            </svg>
-          </a>
-        </div>
-
-        <div class="rijs grid grid-cols-2 gap-4">
-          <Image
-            src={staal}
-            alt="Openstaande luchtramen in het dak van een kas, van binnenuit gezien"
-            class="h-56 w-full rounded-2xl object-cover sm:h-72"
-            widths={[400, 800]}
-            sizes="(max-width: 640px) 45vw, 25vw"
-          />
-          <Image
-            src={moestuin}
-            alt="Tuinkas in een tuin, met hortensia's ernaast"
-            class="mt-8 h-56 w-full rounded-2xl object-cover sm:h-72"
-            widths={[400, 800]}
-            sizes="(max-width: 640px) 45vw, 25vw"
-          />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Staal of aluminium: de keuze die iedereen hier maakt -->
-  <section class="bg-klei-50 py-20 sm:py-28">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <div class="rijs max-w-2xl">
-        <p class="oogmerk text-blad-600">Twee lijnen</p>
-        <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Staal van ons, of aluminium van Euroserre</h2>
-        <p class="mt-5 text-base leading-relaxed text-staal-600">
-          Bijna iedereen die hier binnenloopt staat voor dezelfde keuze. Wij zijn er eerlijk over:
-          allebei zijn het goede kassen, ze passen alleen bij een andere wens. Zet ze naast elkaar
-          en je ziet meteen wat bij jou hoort.
-        </p>
-      </div>
-
-      <div class="mt-12 grid gap-6 lg:grid-cols-2">
-        <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
-          <Image
-            src={venloAkker}
-            alt="Venlo kas van Tuinkassen Zeeland met dubbele deur, met een akker erachter"
-            class="h-60 w-full object-cover sm:h-72"
-            widths={[600, 1200]}
-            sizes="(max-width: 1024px) 92vw, 46vw"
-          />
-          <div class="flex flex-1 flex-col p-7 sm:p-9">
-            <p class="oogmerk text-blad-600">Onze eigen bouw</p>
-            <h3 class="mt-3 text-3xl text-staal-900">Gegalvaniseerd staal</h3>
-            <ul class="mt-6 flex-1 space-y-3 text-base leading-relaxed text-staal-600">
-              <li class="flex gap-3">
-                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>Stevig staal, geen diagonale verbindingen nodig, blijft staan als het waait</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>4 mm tuindersglas: nieuwe kas, hergebruikt glas</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>Zelf gemaakt in onze loods, ook in maten die niet in een folder staan</span>
-              </li>
-            </ul>
-            <a
-              href="/kassen/"
-              class="mt-8 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
-            >
-              Bekijk onze kassen
-              <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-                <path
-                  fill-rule="evenodd"
-                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
-          <Image
-            src={serreGewoon}
-            alt="Groene aluminium serre van Euroserre in een tuin, vol opgekweekte plantjes"
-            class="h-60 w-full object-cover sm:h-72"
-            widths={[600, 1200]}
-            sizes="(max-width: 1024px) 92vw, 46vw"
-            loading="lazy"
-          />
-          <div class="flex flex-1 flex-col p-7 sm:p-9">
-            <p class="oogmerk text-blad-600">Wij zijn hun leverancier</p>
-            <h3 class="mt-3 text-3xl text-staal-900">Aluminium van Euroserre</h3>
-            <ul class="mt-6 flex-1 space-y-3 text-base leading-relaxed text-staal-600">
-              <li class="flex gap-3">
-                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>Standaard in zwart of donkergroen in plaats van grijs, elke andere RAL-kleur kan ook</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>Standaard 4 mm veiligheidsglas, breekt in stompe korrels in plaats van scherven</span>
-              </li>
-              <li class="flex gap-3">
-                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>Slanke profielen en onderhoudsarm, van 1,6 tot ruim 12 meter breed</span>
-              </li>
-            </ul>
-            <a
-              href="/euroserre/"
-              class="mt-8 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800"
-            >
-              Bekijk de Euroserre serres
-              <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-                <path
-                  fill-rule="evenodd"
-                  d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
-                  clip-rule="evenodd"></path>
-              </svg>
-            </a>
-          </div>
-        </article>
-      </div>
-
-      <p class="rijs mt-8 max-w-3xl text-base leading-relaxed text-staal-600">
-        Twijfel je nog? Kom een keer langs in Ritthem, dan staan ze naast elkaar en zie je zelf
-        wat je mooier vindt. Bellen kan ook, op
-        <a href={`tel:${bedrijf.telefoonNet}`} class="font-semibold text-blad-700 hover:text-blad-800">
-          {bedrijf.telefoonToon}
-        </a>.
+      <p class="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-staal-200">
+        <span>{bedrijf.straat}, {bedrijf.plaats}</span>
+        <span aria-hidden="true" class="text-staal-400">·</span>
+        <a href={`tel:${bedrijf.telefoonNet}`} class="font-semibold text-white hover:text-blad-200">{bedrijf.telefoonToon}</a>
       </p>
     </div>
   </section>
 
-  <!-- Waarom staal -->
-  <section class="vlak-nacht py-20 text-white sm:py-28">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <div class="max-w-2xl rijs">
-        <p class="oogmerk text-blad-300">Onze keuze</p>
-        <h2 class="mt-4 text-4xl text-white sm:text-5xl">Waarom wij zelf in staal bouwen</h2>
-        <p class="mt-5 text-base leading-relaxed text-staal-300">
-          Wij maken al onze eigen kassen in staal. Niet uit gewoonte, maar omdat we hier zelf boeren
-          en weten wat het weer met een constructie doet.
-        </p>
-      </div>
-
-      <div class="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2">
-        {
-          redenen.map((r, i) => (
-            <div class="rijs flex gap-5">
-              <span class="font-kop text-3xl font-light text-blad-400 tabular-nums">
-                0{i + 1}
-              </span>
-              <div class="border-t border-white/15 pt-3">
-                <h3 class="text-xl text-white">{r.kop}</h3>
-                <p class="mt-2.5 text-sm leading-relaxed text-staal-300">{r.tekst}</p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
+  <!-- Beloftes: vier dingen die kloppen, in één rustige strook -->
+  <section class="border-b border-staal-200 bg-white">
+    <div class="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-staal-200 lg:grid-cols-4">
+      {
+        beloftes.map((b) => (
+          <div class="bg-white px-4 py-7 sm:px-6 sm:py-9">
+            <p class="font-kop text-lg leading-snug text-staal-900 sm:text-xl">{b.kop}</p>
+            <p class="mt-1.5 text-sm leading-relaxed text-staal-500">{b.tekst}</p>
+          </div>
+        ))
+      }
     </div>
   </section>
 
-  <!-- Maten -->
-  <section class="bg-klei-50 py-20 sm:py-28">
+  <!-- De modellen, met foto -->
+  <section class="bg-white py-20 sm:py-28">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="rijs flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-xl">
@@ -305,13 +167,10 @@ const redenen = [
           <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Vier modellen, en verder op maat</h2>
           <p class="mt-5 text-base leading-relaxed text-staal-600">
             Begin bij de Compact, die zet je makkelijk zelf neer. De Venlo, de Belgische kas en de
-            Dubbelkap maken we zo lang als je wilt. Zit je maat er niet bij, dan bouwen we hem
-            gewoon op maat.
+            Dubbelkap maken we zo lang als je wilt.
           </p>
         </div>
-        <a href="/kassen/" class="shrink-0 font-semibold text-blad-700 hover:text-blad-800">
-          Alle kassen bekijken
-        </a>
+        <a href="/kassen/" class="shrink-0 font-semibold text-blad-700 hover:text-blad-800">Alle kassen bekijken</a>
       </div>
 
       <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -319,40 +178,44 @@ const redenen = [
           eigenKassen.map((k) => (
             <a
               href={`/kassen/#${k.slug}`}
-              class="rijs group rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(14,26,15,0.08)] transition-shadow hover:shadow-[0_16px_40px_-16px_rgba(14,26,15,0.3)]"
+              class="rijs group flex flex-col overflow-hidden rounded-2xl bg-klei-50 ring-1 ring-staal-900/5 transition-shadow duration-300 hover:shadow-[0_24px_50px_-28px_rgba(14,26,15,0.45)]"
             >
-              <h3 class="text-2xl text-staal-900 transition-colors group-hover:text-blad-700">
-                {k.naam}
-              </h3>
-              <p class="mt-1 text-sm text-staal-500">{k.type}</p>
-              <dl class="mt-5 flex gap-8 border-t border-staal-200 pt-4 text-sm">
-                <div>
-                  <dt class="text-staal-500">Breedte</dt>
-                  <dd class="mt-0.5 font-semibold text-staal-900">{k.breedte}</dd>
-                </div>
-                <div>
-                  <dt class="text-staal-500">Lengte</dt>
-                  <dd class="mt-0.5 font-semibold text-staal-900">{k.lengte}</dd>
-                </div>
-              </dl>
-              <p class="mt-4 text-sm leading-relaxed text-staal-600">{k.omschrijving}</p>
+              <div class="relative h-56 overflow-hidden sm:h-60">
+                <Image
+                  src={kaartFoto[k.slug]}
+                  alt={`${k.naam} van Tuinkassen Zeeland`}
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  widths={[400, 800]}
+                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 31vw"
+                  loading="lazy"
+                  quality={72}
+                />
+              </div>
+              <div class="p-6">
+                <p class="oogmerk text-blad-600">{k.type}</p>
+                <h3 class="mt-2 text-2xl text-staal-900 transition-colors group-hover:text-blad-700">{k.naam}</h3>
+                <p class="mt-2 text-sm text-staal-600">
+                  <span class="font-semibold text-staal-900">{k.breedte}</span> breed ·{' '}
+                  <span class="font-semibold text-staal-900">{k.lengte}</span> lang
+                </p>
+              </div>
             </a>
           ))
         }
-
         <a
-          href="/contact/"
-          class="rijs group flex flex-col justify-between rounded-2xl bg-blad-600 p-6 text-white transition-colors hover:bg-blad-700"
+          href="#langskomen"
+          class="rijs group flex flex-col justify-between rounded-2xl bg-blad-600 p-7 text-white transition-colors hover:bg-blad-700"
         >
           <div>
-            <h3 class="text-2xl text-white">Kom eens langs in Ritthem</h3>
-            <p class="mt-4 text-sm leading-relaxed text-blad-50">
-              Bel even voordat je komt, dan lopen we samen langs de kassen die hier staan. Zo zie je
-              met eigen ogen wat je krijgt, en weet je meteen waar je aan toe bent.
+            <p class="oogmerk text-blad-100">Twijfel je?</p>
+            <h3 class="mt-3 text-2xl text-white">Kom ernaast staan</h3>
+            <p class="mt-3 text-sm leading-relaxed text-blad-50">
+              Op een foto is een kas altijd kleiner of groter dan je denkt. In Ritthem zie je het
+              meteen. Neem de maat van je tuin mee.
             </p>
           </div>
           <span class="mt-8 inline-flex items-center gap-2 font-semibold">
-            Bel of kom langs
+            Kom langs
             <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true">
               <path
                 fill-rule="evenodd"
@@ -365,99 +228,173 @@ const redenen = [
     </div>
   </section>
 
-  <!-- Bestsellers van Euroserre -->
-  <section class="bg-white pt-20 sm:pt-28">
+  <!-- Welkom: wie we zijn -->
+  <section class="bg-klei-50 py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div class="rijs grid grid-cols-2 gap-4">
+          <KlikFoto
+            src={staal}
+            alt="Openstaande luchtramen in het dak van een kas, van binnenuit gezien"
+            groep="welkom"
+            class="h-56 w-full object-cover sm:h-80"
+            lijst="rounded-2xl"
+            sizes="(max-width: 640px) 45vw, 25vw"
+          />
+          <KlikFoto
+            src={moestuin}
+            alt="Tuinkas in een tuin, met hortensia's ernaast"
+            groep="welkom"
+            class="h-56 w-full object-cover sm:h-80"
+            lijst="mt-10 rounded-2xl"
+            sizes="(max-width: 640px) 45vw, 25vw"
+          />
+        </div>
+        <div class="rijs">
+          <p class="oogmerk text-blad-600">Welkom bij {bedrijf.naam}</p>
+          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Wij telen zelf, dus we weten wat een kas moet doen</h2>
+          <div class="mt-6 space-y-4 text-base leading-relaxed text-staal-600">
+            <p>
+              {bedrijf.moeder} bouwt en levert tuinkassen. Daarnaast telen we granen, peulvruchten,
+              oliehoudende zaden, aardappels, suikerbieten en andere wortel- en knolgewassen. We weten
+              dus uit ervaring wat weer en wind hier met een constructie doen.
+            </p>
+            <p>
+              We verkopen kwaliteitsproducten en onderscheiden ons met solide materialen en een goede
+              service. Het is niet voor niets dat veel van onze klanten steeds weer bij ons terugkomen.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galerij -->
+  <section class="bg-white py-20 sm:py-28">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="rijs flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-xl">
-          <p class="oogmerk text-blad-600">Bestsellers van Euroserre</p>
-          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">De serres die het hardst lopen</h2>
-          <p class="mt-5 text-base leading-relaxed text-staal-600">
-            Wil je een serre in kleur, met veiligheidsglas erin? Dit zijn de vier modellen die het
-            meest gekozen worden. Wij leveren ze en zetten ze ook neer.
-          </p>
+          <p class="oogmerk text-blad-600">Geplaatst in Zeeland</p>
+          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Zo staan ze bij de mensen in de tuin</h2>
         </div>
-        <a href="/euroserre/" class="shrink-0 font-semibold text-blad-700 hover:text-blad-800">
-          Alle serres bekijken
-        </a>
+        <p class="max-w-sm text-sm leading-relaxed text-staal-500">Klik op een foto om hem groot te bekijken.</p>
       </div>
 
-      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-12 grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:gap-4 lg:grid-cols-4">
         {
-          bestsellers.map((b) => (
-            <a
-              href="/euroserre/"
-              class="rijs group overflow-hidden rounded-2xl bg-klei-50 transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-22px_rgba(14,26,15,0.4)]"
-            >
-              <Image
-                src={bestsellerFotos[b.slug]}
-                alt={`De ${b.naam} van Euroserre in een tuin`}
-                class="h-44 w-full object-cover"
-                widths={[400, 800]}
-                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 23vw"
-                loading="lazy"
-              />
-              <div class="p-5">
-                <h3 class="text-2xl text-staal-900 transition-colors group-hover:text-blad-700">
-                  {b.naam}
-                </h3>
-                <p class="mt-2 text-sm text-staal-600">
-                  {b.breedte} breed, vanaf {b.minLengte} lang
-                </p>
-              </div>
-            </a>
+          galerij.map((f, i) => (
+            <KlikFoto
+              src={f.src}
+              alt={f.alt}
+              groep="galerij"
+              class="h-full w-full object-cover"
+              lijst={[
+                'rijs h-full rounded-2xl',
+                f.groot && 'col-span-2 row-span-2',
+                f.breed && 'col-span-2',
+              ]
+                .filter(Boolean)
+                .join(' ')}
+              sizes={f.groot || f.breed ? '(max-width: 1024px) 92vw, 46vw' : '(max-width: 1024px) 46vw, 23vw'}
+              widths={f.groot ? [600, 1000] : [400, 700]}
+            />
           ))
         }
       </div>
     </div>
   </section>
 
-  <!-- Werk -->
-  <section class="bg-white py-20 sm:py-28">
+  <!-- Waarom staal -->
+  <section class="vlak-nacht py-20 text-white sm:py-28">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <div class="rijs max-w-xl">
-        <p class="oogmerk text-blad-600">Uit onze loods</p>
-        <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Zo ziet ons werk eruit</h2>
-        <p class="mt-5 text-base leading-relaxed text-staal-600">
-          In onze loods in Ritthem zetten we je kas in elkaar. Is hij transportabel, dan komt hij
-          compleet aanrijden. Is hij dat niet, dan bouwen we hem bij jou ter plaatse op.
+      <div class="rijs max-w-2xl">
+        <p class="oogmerk text-blad-300">Onze keuze</p>
+        <h2 class="mt-4 text-4xl text-white sm:text-5xl">Waarom wij zelf in staal bouwen</h2>
+        <p class="mt-5 text-base leading-relaxed text-staal-300">
+          Wij maken al onze eigen kassen in staal. Niet uit gewoonte, maar omdat we hier zelf boeren
+          en weten wat het weer met een constructie doet.
         </p>
       </div>
-
-      <div class="mt-12 grid gap-4 sm:grid-cols-3">
-        <Image
-          src={frame}
-          alt="Kas in aanbouw, gezien vanuit de binnenkant"
-          class="rijs h-64 w-full rounded-2xl object-cover sm:h-80"
-          widths={[400, 800]}
-          sizes="(max-width: 640px) 92vw, 30vw"
-        />
-        <Image
-          src={opbouw}
-          alt="Een van onze mensen zet een Compact kas in elkaar in een tuin"
-          class="rijs h-64 w-full rounded-2xl object-cover sm:h-80"
-          widths={[400, 800]}
-          sizes="(max-width: 640px) 92vw, 30vw"
-        />
-        <Image
-          src={polder}
-          alt="Tuinkas op een perceel in het Zeeuwse landschap"
-          class="rijs h-64 w-full rounded-2xl object-cover sm:h-80"
-          widths={[400, 800]}
-          sizes="(max-width: 640px) 92vw, 30vw"
-        />
+      <div class="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2">
+        {
+          redenen.map((r, i) => (
+            <div class="rijs flex gap-5">
+              <span class="font-kop text-3xl font-light text-blad-400 tabular-nums">0{i + 1}</span>
+              <div class="border-t border-white/15 pt-3">
+                <h3 class="text-xl text-white">{r.kop}</h3>
+                <p class="mt-2.5 text-sm leading-relaxed text-staal-300">{r.tekst}</p>
+              </div>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <!-- Slot -->
-  <Uitnodiging
-    label="Langskomen in Ritthem"
-    titel="Sta een keer naast zo'n kas, dan zie je het verschil"
-    tekst="Staal voelt anders dan aluminium, dat merk je pas als je ernaast staat. Bel even voor een afspraak, dan staat de loods open en is er iemand voor je."
-    foto={polder}
-    altTekst="Tuinkas van Tuinkassen Zeeland op een perceel in het Zeeuwse landschap"
-    actieHref="/contact/"
-    actieTekst="Stuur liever een bericht"
-  />
+  <!-- Euroserre: de tweede lijn -->
+  <section class="bg-klei-50 py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+        <div class="rijs">
+          <p class="oogmerk text-blad-600">Liever aluminium?</p>
+          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">De serres van Euroserre, in jouw kleur</h2>
+          <p class="mt-5 text-base leading-relaxed text-staal-600">
+            Naast onze eigen stalen kassen leveren we de aluminium serres van Euroserre. Standaard in
+            zwart, donkergroen of aluminium, met 4 mm veiligheidsglas. Wij zetten ze voor je neer.
+          </p>
+          <a href="/euroserre/" class="mt-8 inline-flex items-center gap-2 font-semibold text-blad-700 transition-colors hover:text-blad-800">
+            Bekijk de serres van Euroserre
+            <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
+              <path
+                fill-rule="evenodd"
+                d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                clip-rule="evenodd"></path>
+            </svg>
+          </a>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          {
+            bestsellers.map((b, i) => (
+              <a
+                href="/euroserre/#bestsellers"
+                class="rijs group rounded-2xl bg-white p-4 ring-1 ring-staal-900/5 transition-shadow duration-300 hover:shadow-[0_20px_44px_-28px_rgba(14,26,15,0.45)] sm:p-5"
+              >
+                <div class="rounded-xl bg-[linear-gradient(180deg,#eef3ec_0%,#e2eadf_100%)] px-2 pt-4">
+                  <SerreTekening model={tekeningPer[b.slug]} kleur={tekeningKleur[i]} class="w-full transition-transform duration-500 group-hover:scale-[1.04]" />
+                </div>
+                <p class="mt-3 font-kop text-xl text-staal-900">{b.naam}</p>
+                <p class="text-sm text-staal-500">{b.typering}</p>
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Zo gaat het -->
+  <section class="bg-white py-20 sm:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs max-w-2xl">
+        <p class="oogmerk text-blad-600">Zo gaat het</p>
+        <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Van een telefoontje tot een kas in je tuin</h2>
+      </div>
+      <ol class="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+        {
+          stappen.map((s, i) => (
+            <li class="rijs relative">
+              <div class="flex items-center gap-4">
+                <span class="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-blad-600 font-kop text-xl text-white">{i + 1}</span>
+                {i < stappen.length - 1 && <span class="hidden h-px flex-1 bg-staal-200 lg:block" aria-hidden="true"></span>}
+              </div>
+              <h3 class="mt-5 text-2xl text-staal-900">{s.kop}</h3>
+              <p class="mt-2 text-base leading-relaxed text-staal-600">{s.tekst}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <KomLangs />
 </Basis>

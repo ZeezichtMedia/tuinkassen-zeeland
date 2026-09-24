@@ -1,106 +1,109 @@
 ---
 import Basis from '../layouts/Basis.astro';
 import { bedrijf, euroSerres, kleuren, bestsellerJaar } from '../data/aanbod';
-import PaginaKop from '../components/PaginaKop.astro';
-import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import SerreTekening from '../components/SerreTekening.astro';
+import KomLangs from '../components/KomLangs.astro';
 
-import fotoAvond from '../assets/fotos/euroserre-tuin-avond.webp';
-import fotoRozen from '../assets/fotos/euroserre-rozen-bank.webp';
-import fotoModern from '../assets/fotos/euroserre-modern-lounge.webp';
-import fotoVictorian from '../assets/fotos/euroserre-victorian-terras.webp';
-import fotoBaksteen from '../assets/fotos/euroserre-bakstenen-voet.webp';
-import fotoKinderen from '../assets/fotos/euroserre-kinderen.webp';
-import fotoMuur from '../assets/fotos/euroserre-muurserre.webp';
+/* Geen foto's van Euroserre op deze pagina. In 2026 vroeg Euroserre de
+   verdelers om alle beelden van fotograaf Herbert Bleijenberg te verwijderen;
+   een extern kantoor (Pixsy) spoort ze op en stuurt meteen een rekening. We
+   weten van geen enkele foto van hun site zeker onder welke licentie hij valt,
+   dus we tonen er geen en tekenen de modellen zelf (SerreTekening.astro).
+   Foto's kunnen er later weer bij, maar alleen: van serres die Wim zelf heeft
+   gezet, of uit de verdelersgalerij van Euroserre met een lopende licentie. */
 
-// Productfoto's bij een greep uit de modellen. Bewust niet bij alle 16: dit is
-// de eerste demo, dit geeft alvast een beeld van wat er mogelijk is.
-import modelMaxi from '../assets/fotos/euroserre-model-maxi.webp';
-import modelRustiq from '../assets/fotos/euroserre-model-rustiq.webp';
-import modelCottage from '../assets/fotos/euroserre-model-cottage.webp';
-import modelPlus from '../assets/fotos/euroserre-model-plus.webp';
-import modelMuurserre from '../assets/fotos/euroserre-model-muurserre.webp';
-
-const modelFotos: Record<string, ImageMetadata> = {
-  'euro-maxi': modelMaxi,
-  'euro-rustiq': modelRustiq,
-  'euro-cottage': modelCottage,
-  'euro-plus': modelPlus,
-  'euro-muurserre': modelMuurserre,
+const bestsellers = euroSerres.filter((s) => s.bestseller);
+const tekeningPer: Record<string, { model: 'maxi' | 'rustiq' | 'plus' | 'muur'; kleur: string }> = {
+  'euro-maxi': { model: 'maxi', kleur: '#1b1b1b' },
+  'euro-rustiq': { model: 'rustiq', kleur: '#27352a' },
+  'euro-plus': { model: 'plus', kleur: '#8f9592' },
+  'euro-muurserre': { model: 'muur', kleur: '#1b1b1b' },
 };
 
-// Voor deze eerste demo tonen we alleen de modellen waar we een foto bij hebben.
-const getoondeSerres = euroSerres.filter((s) => modelFotos[s.slug]);
-const bestsellers = euroSerres.filter((s) => s.bestseller);
+const vrijstaand = euroSerres.filter((s) => s.categorie === 'Vrijstaand');
+const muur = euroSerres.filter((s) => s.categorie === 'Tegen een muur');
 
-const categorieen = ['Alles', 'Vrijstaand', 'Tegen een muur'];
-
-
-/* Foto's van Euroserre zelf, zodat we hun modellen met hun eigen beeld laten
-   zien (en niet met onze stalen kassen, dat zou juist verwarrend zijn). */
-const galerij = [
-  {
-    src: fotoRozen,
-    alt: 'Een klassieke serre in een tuin met roze rozen ervoor en een wit bankje.',
-    tekst: 'De klassieke serre tussen de rozen, met een bankje om even te zitten.',
-  },
-  {
-    src: fotoModern,
-    alt: 'Een strakke moderne zwarte serre met een loungehoek ernaast.',
-    tekst: 'Een strak, modern model met een loungehoek er vlak naast.',
-  },
-  {
-    src: fotoVictorian,
-    alt: 'Een ruime groene serre met een terras en stoelen ervoor.',
-    tekst: 'Een ruime serre met terras, net zo goed een tuinkamer om in te zitten.',
-  },
-  {
-    src: fotoBaksteen,
-    alt: 'Een serre op een gemetselde bakstenen voet in de tuin.',
-    tekst: 'Op een gemetselde voet, mooi weggewerkt in de tuin.',
-  },
-  {
-    src: fotoAvond,
-    alt: 'Een serre op een gemetselde voet in een bloeiende tuin, in de zon.',
-    tekst: 'Midden in een bloeiende tuin, op een gemetselde voet.',
-  },
-  {
-    src: fotoMuur,
-    alt: 'Een muurserre die tegen de gevel van een huis aan is gebouwd.',
-    tekst: 'Een muurserre tegen het huis, zo aangesloten op water en stroom.',
-  },
+const stappen = [
+  { kop: 'Teken je serre', tekst: 'Kies model, maat, kleur en opties. Dat gaat het best op een computer.' },
+  { kop: 'Maak een foto van je tekening', tekst: 'Een schermafbeelding is prima, of een foto met je telefoon.' },
+  { kop: `App hem naar ${bedrijf.telefoonToon}`, tekst: 'Wij bellen je terug met een prijs en een datum.' },
 ];
 ---
 
 <Basis
   titel={`Euroserre aluminium serres | ${bedrijf.naam}`}
-  omschrijving="Wij zijn leverancier van Euroserre. Aluminium serres in elke RAL-kleur, met 4 mm veiligheidsglas. Van de Euro-Micro tot de Euro-Super, geleverd en geplaatst vanuit Ritthem."
+  omschrijving="Wij leveren en plaatsen de aluminium serres van Euroserre in Zeeland. Standaard in zwart, donkergroen of aluminium, met 4 mm veiligheidsglas. Kom kijken in Ritthem."
 >
-  {/* Beeld van Euroserre zelf: het zijn hun modellen, dus hun eigen foto's
-      horen erbij. Bovenaan bewust een gewone serre op de grond en geen luxe
-      exemplaar op een gemetselde voet: Wim wil niet dat mensen bij binnenkomst
-      denken dat het te duur voor ze is. De luxere foto's staan verderop. */}
-  <PaginaKop
-    label="Euroserre bij ons"
-    titel="Een serre in jouw kleur, met veiligheidsglas"
-    tekst="Wil je geen grijze kas maar een serre in het zwart of donkergroen, en het liefst met veiligheidsglas erin? Dan zit je bij Euroserre goed. Wij zijn hun leverancier in Zeeland: je koopt de serre bij ons, en wij zetten hem ook neer."
-    foto={fotoKinderen}
-    altTekst="Een groene aluminium serre van Euroserre in een tuin, met twee kinderen tussen de opgekweekte plantjes."
-  />
+  <!-- Kop: een getekende serre die je zelf een kleur geeft -->
+  <section class="relative overflow-hidden bg-klei-50 pt-28 sm:pt-36">
+    <div
+      class="pointer-events-none absolute -left-40 -top-40 h-[32rem] w-[32rem] rounded-full bg-[radial-gradient(circle,rgba(30,109,19,0.10),transparent_65%)]"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 pb-16 sm:px-6 sm:pb-24">
+      <div class="grid items-center gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        <div>
+          <p class="oogmerk flex items-center gap-2.5 text-blad-700">
+            <span class="h-3 w-1 rounded-full bg-blad-600" aria-hidden="true"></span>
+            Euroserre bij ons
+          </p>
+          <h1 class="display mt-5 text-staal-900">Een serre in jouw kleur, met veiligheidsglas</h1>
+          <p class="mt-6 max-w-xl text-base leading-relaxed text-staal-600 sm:text-lg">
+            Wil je geen grijze kas maar een serre in het zwart of donkergroen, met veiligheidsglas
+            erin? Dan zit je bij Euroserre goed. Wij leveren ze in Zeeland, en zetten hem ook voor je
+            neer.
+          </p>
+          <div class="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a href="#langskomen" class="knop-vol justify-center">Kom kijken in Ritthem</a>
+            <a
+              href="#bestsellers"
+              class="inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-staal-300 px-6 py-3.5 font-semibold text-staal-800 transition-colors hover:border-staal-400 hover:bg-white"
+            >
+              Bekijk de bestsellers
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-[1.75rem] bg-[linear-gradient(180deg,#eef3ec_0%,#e2eadf_100%)] p-6 shadow-[0_30px_80px_-50px_rgba(14,26,15,0.5)] sm:p-9" data-kleurkiezer>
+          <SerreTekening model="rustiq" kleur={kleuren[0].hex} class="w-full" titel="Tekening van een serre in de gekozen kleur" />
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-staal-900/10 pt-5">
+            <div role="group" aria-label="Kies een kleur voor het frame" class="flex gap-2.5">
+              {
+                kleuren.map((k, i) => (
+                  <button
+                    type="button"
+                    data-kleur={k.hex}
+                    data-naam={k.naam}
+                    data-info={`${k.ral}${k.standaard ? ', standaard' : ', tegen meerprijs'}`}
+                    aria-pressed={i === 0 ? 'true' : 'false'}
+                    aria-label={`${k.naam}, ${k.ral}`}
+                    class="kleur-knop h-10 w-10 rounded-full ring-1 ring-inset ring-staal-900/20"
+                    style={`background:${k.hex}`}
+                  />
+                ))
+              }
+            </div>
+            <p class="text-sm leading-tight text-staal-600" aria-live="polite">
+              <span class="block font-semibold text-staal-900" data-kleurnaam>{kleuren[0].naam}</span>
+              <span data-kleurinfo>{kleuren[0].ral}, standaard</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Bestsellers: de lijst die Euroserre zelf voert, jaarlijks te verversen -->
-  <section class="bg-white py-16 sm:py-24">
+  <section id="bestsellers" class="scroll-mt-24 bg-white py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="rijs flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-2xl">
           <p class="oogmerk text-blad-600">Bestsellers {bestsellerJaar}</p>
-          <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">
-            Deze vier gaan het hardst
-          </h2>
+          <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Deze vier gaan het hardst</h2>
           <p class="mt-4 leading-relaxed text-staal-600">
-            Dit zijn de modellen die Euroserre zelf als bestseller voert, en die wij hier het
-            vaakst neerzetten. Er staat er ook regelmatig eentje bij ons in de showroom, dus je
-            kan er gewoon even naast gaan staan.
+            Dit zijn de modellen die Euroserre zelf als bestseller voert. Wil je er eentje in het
+            echt zien? Bel even, dan kijken we of er een bij ons in Ritthem staat.
           </p>
         </div>
         <a href="#modellen" class="shrink-0 font-semibold text-blad-700 hover:text-blad-800">
@@ -110,16 +113,13 @@ const galerij = [
 
       <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {
-          bestsellers.map((s, i) => (
-            <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-klei-50 shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
-              <div class="relative">
-                <Image
-                  src={modelFotos[s.slug]}
-                  alt={`De ${s.naam} van Euroserre, opgesteld in een tuin.`}
-                  class="h-44 w-full object-cover"
-                  widths={[400, 800]}
-                  sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 23vw"
-                  loading={i < 2 ? 'eager' : 'lazy'}
+          bestsellers.map((s) => (
+            <article class="rijs group flex flex-col overflow-hidden rounded-2xl bg-klei-50 ring-1 ring-staal-900/5 transition-shadow duration-300 hover:shadow-[0_24px_50px_-30px_rgba(14,26,15,0.45)]">
+              <div class="relative bg-[linear-gradient(180deg,#eef3ec_0%,#e2eadf_100%)] px-4 pb-2 pt-8">
+                <SerreTekening
+                  model={tekeningPer[s.slug].model}
+                  kleur={tekeningPer[s.slug].kleur}
+                  class="w-full transition-transform duration-500 group-hover:scale-[1.03]"
                 />
                 <span class="absolute left-3 top-3 rounded-full bg-blad-600 px-3 py-1 text-[0.7rem] font-semibold uppercase tracking-wider text-white">
                   Bestseller
@@ -148,18 +148,19 @@ const galerij = [
           ))
         }
       </div>
+      <p class="mt-5 text-xs text-staal-500">
+        Tekeningen ter indruk. Hoe jouw serre er precies uitziet, laten we je graag in het echt zien.
+      </p>
     </div>
   </section>
 
-  <!-- Kleur en glas: precies waar mensen om vragen -->
+  <!-- Kleur en glas -->
   <section class="vlak-nacht py-16 text-white sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
         <div class="rijs">
           <p class="oogmerk text-blad-300">Kleur en glas</p>
-          <h2 class="mt-4 text-3xl text-white sm:text-4xl">
-            Niet iedereen wil nog een grijze kas
-          </h2>
+          <h2 class="mt-4 text-3xl text-white sm:text-4xl">Niet iedereen wil nog een grijze kas</h2>
           <p class="mt-5 leading-relaxed text-staal-300">
             Ongeveer de helft van de mensen die hier binnenloopt, wil zijn kas in een kleur. Zwart of
             een diep groen, zodat hij wegvalt tegen de tuin. Bij Euroserre kies je standaard uit
@@ -167,18 +168,11 @@ const galerij = [
             wordt dan speciaal voor je gelakt en dat kost meer. Wat precies, dat rekenen we vooraf
             met je door.
           </p>
-
           <ul class="mt-8 flex flex-wrap gap-x-7 gap-y-5">
             {
               kleuren.map((k) => (
                 <li class="flex items-center gap-3">
-                  {/* Ring om elke swatch: zonder rand valt zwart weg tegen
-                      het donkergroene vlak. */}
-                  <span
-                    class="h-9 w-9 shrink-0 rounded-full ring-1 ring-inset ring-white/45"
-                    style={`background:${k.hex}`}
-                    aria-hidden="true"
-                  />
+                  <span class="h-9 w-9 shrink-0 rounded-full ring-1 ring-inset ring-white/45" style={`background:${k.hex}`} aria-hidden="true" />
                   <span class="text-sm leading-tight">
                     <span class="block font-semibold text-white">{k.naam}</span>
                     <span class="block text-staal-300">
@@ -195,19 +189,15 @@ const galerij = [
         <div class="rijs rounded-2xl border border-white/12 bg-white/5 p-7 sm:p-9">
           <h3 class="text-2xl text-white">Standaard veiligheidsglas</h3>
           <p class="mt-4 leading-relaxed text-staal-300">
-            Elke Euroserre komt met 4 mm gehard veiligheidsglas. Dat laat zo'n 90 procent van het
-            licht door, en als het toch een keer breekt, valt het uit elkaar in kleine, stompe
-            korrels in plaats van scherven. Dat scheelt, zeker als er kinderen in de tuin spelen.
+            Elke Euroserre komt met 4 mm gehard veiligheidsglas. Als het toch een keer breekt, valt
+            het uit elkaar in kleine, stompe korrels in plaats van scherven. Dat scheelt, zeker als
+            er kinderen in de tuin spelen.
           </p>
           <p class="mt-4 leading-relaxed text-staal-300">
-            Wij zetten in onze eigen stalen kassen 4 mm tuindersglas, hetzelfde glas als in de
-            professionele kassenbouw. Wil je liever veiligheidsglas, dan is een Euroserre de
-            makkelijkste route.
+            In onze eigen stalen kassen zit 4 mm tuindersglas, hetzelfde glas als in de kassenbouw.
+            Wil je liever veiligheidsglas, dan is een Euroserre de makkelijkste route.
           </p>
-          <a
-            href="/kassen/"
-            class="mt-6 inline-flex items-center gap-2 font-semibold text-blad-300 transition-colors hover:text-blad-200"
-          >
+          <a href="/kassen/" class="mt-6 inline-flex items-center gap-2 font-semibold text-blad-300 transition-colors hover:text-blad-200">
             Vergelijk met onze stalen kassen
             <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
               <path
@@ -221,242 +211,161 @@ const galerij = [
     </div>
   </section>
 
-  <!-- Teken je eigen serre bij Euroserre -->
-  <section class="bg-klei-50 py-16 sm:py-24">
+  <!-- Het tekenprogramma van Euroserre -->
+  <section class="bg-white py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <div class="rijs overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
-        <div class="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
-          <div class="p-7 sm:p-10">
+      <div class="rijs overflow-hidden rounded-[1.75rem] ring-1 ring-staal-900/8">
+        <div class="grid lg:grid-cols-[1.1fr_0.9fr]">
+          <div class="p-7 sm:p-10 lg:p-12">
             <p class="oogmerk text-blad-600">Het tekenprogramma</p>
-            <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">
-              Zie je serre voor je? Teken hem zelf
-            </h2>
+            <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Zie je serre voor je? Teken hem zelf</h2>
             <p class="mt-5 leading-relaxed text-staal-600">
               Euroserre heeft een tekenprogramma waarin je je serre helemaal zelf samenstelt: model,
-              maat, kleur en opties. Je ziet meteen hoe hij eruit komt te zien. Klaar? Maak een foto
-              of schermafbeelding van je tekening en app die naar {bedrijf.telefoonToon}. Dan bellen
-              wij je met een prijs en een datum.
+              maat, kleur en opties. Je ziet meteen hoe hij eruit komt te zien.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a
-                href={bedrijf.euroserreConfigurator}
-                target="_blank"
-                rel="noopener"
-                class="knop-vol justify-center"
-              >
+              <a href={bedrijf.euroserreConfigurator} target="_blank" rel="noopener" class="knop-vol justify-center">
                 Open het tekenprogramma
                 <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
-                  <path
-                    d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
-                  ></path>
-                  <path
-                    d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
-                  ></path>
+                  <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
+                  <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path>
                 </svg>
-              </a>
-              <a href="/contact/" class="font-semibold text-blad-700 hover:text-blad-800">
-                Liever samen doorlopen? Bel ons
               </a>
             </div>
             <p class="mt-5 text-sm text-staal-500">
-              Het tekenprogramma werkt het best op een computer. Kom je er niet uit? Kom langs in
-              Ritthem, dan tekenen we hem samen.
+              Kom je er niet uit? Kom langs in Ritthem, dan tekenen we hem samen.
             </p>
           </div>
-          <div class="relative min-h-[16rem]">
-            <Image
-              src={fotoModern}
-              alt="Een strakke moderne zwarte serre met een loungehoek ernaast."
-              class="absolute inset-0 h-full w-full object-cover"
-              widths={[400, 900]}
-              sizes="(max-width: 1024px) 92vw, 40vw"
-              loading="lazy"
-            />
+          <div class="bg-blad-600 p-7 text-white sm:p-10 lg:p-12">
+            <p class="oogmerk text-blad-100">Zo komt je tekening bij ons</p>
+            <ol class="mt-6 space-y-6">
+              {
+                stappen.map((s, i) => (
+                  <li class="flex gap-4">
+                    <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white/15 font-kop text-lg">{i + 1}</span>
+                    <span>
+                      <span class="block text-lg font-semibold">{s.kop}</span>
+                      <span class="mt-1 block text-sm leading-relaxed text-blad-50">{s.tekst}</span>
+                    </span>
+                  </li>
+                ))
+              }
+            </ol>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Fotogalerij: Euroserre-serres zoals ze er in het echt bij staan -->
-  <section class="bg-white py-16 sm:py-24">
+  <!-- Alle modellen: rustig overzicht, gegroepeerd -->
+  <section id="modellen" class="scroll-mt-24 bg-klei-50 py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="rijs max-w-2xl">
-        <p class="oogmerk text-blad-600">In het echt</p>
-        <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Zo staan ze straks bij de mensen in de tuin</h2>
-        <p class="mt-4 leading-relaxed text-staal-600">
-          Een paar voorbeelden van serres van Euroserre, zoals ze er in het echt bij staan. Van een
-          strak modern model tot een klassieke serre tussen de rozen, er is er altijd wel eentje die
-          bij jouw tuin past.
-        </p>
-      </div>
-
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          galerij.map((f) => (
-            <figure class="rijs overflow-hidden rounded-2xl bg-klei-50 shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
-              <Image
-                src={f.src}
-                alt={f.alt}
-                class="h-64 w-full object-cover sm:h-72"
-                widths={[400, 800]}
-                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
-                loading="lazy"
-              />
-              <figcaption class="px-5 py-4 text-sm leading-relaxed text-staal-600">{f.tekst}</figcaption>
-            </figure>
-          ))
-        }
-      </div>
-
-      <p class="mt-8 text-sm text-staal-500">Foto's: Euroserre.</p>
-    </div>
-  </section>
-
-  <!-- Filter en modellen -->
-  <section id="modellen" class="scroll-mt-28 bg-white pb-14 sm:pb-20">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <div class="rijs mb-8 max-w-2xl">
         <p class="oogmerk text-blad-600">Alle modellen</p>
         <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Vrijstaand of tegen een muur</h2>
-      </div>
-
-      <div class="flex flex-wrap items-center gap-2" role="group" aria-label="Filter op type serre">
-        {
-          categorieen.map((c, i) => (
-            <button
-              type="button"
-              data-filter={c}
-              class:list={[
-                'rounded-full px-5 py-2.5 text-sm font-semibold transition-colors',
-                i === 0
-                  ? 'bg-blad-600 text-white'
-                  : 'bg-staal-100 text-staal-700 hover:bg-staal-200',
-              ]}
-              aria-pressed={i === 0 ? 'true' : 'false'}
-            >
-              {c}
-            </button>
-          ))
-        }
-        <p class="ml-auto text-sm text-staal-500" data-telling>
-          {getoondeSerres.length} modellen
+        <p class="mt-4 leading-relaxed text-staal-600">
+          Naast de bestsellers kunnen we de hele reeks van Euroserre leveren. Welke het beste bij jouw
+          tuin past, bespreken we graag aan de keukentafel.
         </p>
       </div>
 
-      <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          getoondeSerres.map((s) => {
-            const foto = modelFotos[s.slug];
-            return (
-              <article
-                data-serre
-                data-categorie={s.categorie}
-                class="rijs flex flex-col overflow-hidden rounded-2xl bg-klei-50 transition-[transform,box-shadow] duration-200 ease-out hover:-translate-y-1 hover:shadow-[0_20px_44px_-22px_rgba(14,26,15,0.4)]"
-              >
-                {foto && (
-                  <Image
-                    src={foto}
-                    alt={`De ${s.naam} van Euroserre, opgesteld in een tuin.`}
-                    class="h-48 w-full object-cover"
-                    widths={[400, 800]}
-                    sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 30vw"
-                    loading="lazy"
-                  />
-                )}
-                <div class="flex flex-1 flex-col p-6">
-                  <div class="flex items-start justify-between gap-3">
-                    <h3 class="text-2xl text-staal-900">{s.naam}</h3>
-                    <span class="shrink-0 rounded-full bg-blad-50 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-blad-700">
-                      {s.categorie}
-                    </span>
+      {
+        [
+          { titel: 'Vrijstaand', lijst: vrijstaand, model: 'maxi' as const },
+          { titel: 'Tegen een muur', lijst: muur, model: 'muur' as const },
+        ].map((groep) => (
+          <div class="mt-12">
+            <div class="rijs flex items-center gap-4">
+              <SerreTekening model={groep.model} kleur="#1e6d13" class="h-12 w-auto" />
+              <h3 class="text-2xl text-staal-900">
+                {groep.titel} <span class="text-base text-staal-500">({groep.lijst.length})</span>
+              </h3>
+            </div>
+            <div
+              class:list={[
+                'mt-5 grid gap-px overflow-hidden rounded-2xl bg-staal-900/8 ring-1 ring-staal-900/8 sm:grid-cols-2',
+                groep.lijst.length % 3 === 0 ? 'lg:grid-cols-3' : 'lg:grid-cols-4',
+              ]}
+            >
+              {groep.lijst.map((s) => (
+                <article class="rijs flex flex-col bg-white p-6">
+                  <div class="flex items-baseline justify-between gap-3">
+                    <h4 class="text-xl text-staal-900">{s.naam}</h4>
+                    {s.bestseller && (
+                      <span class="shrink-0 rounded-full bg-blad-50 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-blad-700">
+                        Bestseller
+                      </span>
+                    )}
                   </div>
-                  <p class="mt-3 flex-1 text-sm leading-relaxed text-staal-600">{s.omschrijving}</p>
-                  <dl class="mt-5 flex gap-8 border-t border-staal-900/10 pt-4 text-sm">
-                    <div>
-                      <dt class="text-staal-500">Breedte</dt>
-                      <dd class="mt-0.5 font-semibold text-staal-900">{s.breedte}</dd>
-                    </div>
-                    <div>
-                      <dt class="text-staal-500">Vanaf lengte</dt>
-                      <dd class="mt-0.5 font-semibold text-staal-900">{s.minLengte}</dd>
-                    </div>
-                  </dl>
-                </div>
-              </article>
-            );
-          })
-        }
-      </div>
+                  <p class="mt-2 flex-1 text-sm leading-relaxed text-staal-600">{s.omschrijving}</p>
+                  <p class="mt-4 text-sm text-staal-500">
+                    <span class="font-semibold text-staal-800">{s.breedte}</span> breed, vanaf{' '}
+                    <span class="font-semibold text-staal-800">{s.minLengte}</span> lang
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        ))
+      }
     </div>
   </section>
 
   <!-- Zelfbouw of plaatsen -->
-  <section class="bg-klei-50 py-16 sm:py-24">
+  <section class="bg-white py-16 sm:py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="rijs max-w-xl">
         <p class="oogmerk text-blad-600">Twee manieren</p>
         <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Zelf bouwen of door ons laten zetten</h2>
       </div>
       <div class="mt-10 grid gap-5 sm:grid-cols-2">
-        <div class="rijs rounded-2xl bg-white p-7">
+        <div class="rijs rounded-2xl bg-klei-50 p-7 sm:p-9">
           <h3 class="text-2xl text-staal-900">Zelfbouwpakket</h3>
-          <p class="mt-3 text-sm leading-relaxed text-staal-600">
+          <p class="mt-3 leading-relaxed text-staal-600">
             Je krijgt de serre compleet aangeleverd met een handleiding, en zet hem zelf in elkaar.
-            Handig als je graag klust en het budget scherp wilt houden.
+            Handig als je graag klust.
           </p>
         </div>
-        <div class="rijs rounded-2xl bg-blad-600 p-7 text-white">
+        <div class="rijs rounded-2xl bg-blad-600 p-7 text-white sm:p-9">
           <h3 class="text-2xl text-white">Wij plaatsen hem</h3>
-          <p class="mt-3 text-sm leading-relaxed text-blad-50">
-            Wij zetten je serre vakkundig neer, net als onze eigen kassen. Inclusief fundering en
-            afvoer als je dat wilt. Je hoeft er zelf niets voor te doen.
+          <p class="mt-3 leading-relaxed text-blad-50">
+            Wij zetten je serre neer, net als onze eigen kassen. Met fundering en afvoer als je dat
+            wilt. Je hoeft er zelf niets voor te doen.
           </p>
         </div>
-      </div>
-
-      <div class="rijs mt-10 flex flex-col gap-3 sm:flex-row">
-        <a href="/contact/" class="knop-vol justify-center">Kom langs of stuur een bericht</a>
-        <a
-          href={`tel:${bedrijf.telefoonNet}`}
-          class="inline-flex items-center justify-center gap-2 rounded-full border-[1.5px] border-staal-300 px-6 py-3.5 font-semibold text-staal-800 transition-colors hover:bg-staal-100"
-        >
-          Bel {bedrijf.telefoonToon} voor advies
-        </a>
       </div>
     </div>
   </section>
+
+  <KomLangs />
 </Basis>
 
+<style>
+  .kleur-knop {
+    transition: transform 0.18s var(--ease-uit), box-shadow 0.2s ease;
+  }
+  .kleur-knop:hover {
+    transform: scale(1.08);
+  }
+  .kleur-knop[aria-pressed='true'] {
+    box-shadow: 0 0 0 3px #fff, 0 0 0 5px var(--color-blad-600);
+  }
+</style>
+
 <script>
-  const knoppen = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
-  const kaarten = Array.from(document.querySelectorAll<HTMLElement>('[data-serre]'));
-  const telling = document.querySelector('[data-telling]');
-
-  knoppen.forEach((k) => {
-    k.addEventListener('click', () => {
-      const keuze = k.dataset.filter;
-
-      knoppen.forEach((b) => {
-        const actief = b === k;
-        b.setAttribute('aria-pressed', String(actief));
-        b.classList.toggle('bg-blad-600', actief);
-        b.classList.toggle('text-white', actief);
-        b.classList.toggle('bg-staal-100', !actief);
-        b.classList.toggle('text-staal-700', !actief);
-        b.classList.toggle('hover:bg-staal-200', !actief);
-      });
-
-      let zichtbaar = 0;
-      kaarten.forEach((kaart) => {
-        const tonen = keuze === 'Alles' || kaart.dataset.categorie === keuze;
-        kaart.classList.toggle('weg', !tonen);
-        if (tonen) zichtbaar++;
-      });
-
-      if (telling) {
-        telling.textContent = zichtbaar === 1 ? '1 model' : `${zichtbaar} modellen`;
-      }
-    });
+  // De kleurknoppen kleuren de getekende serre live mee.
+  document.querySelectorAll<HTMLElement>('[data-kleurkiezer]').forEach((kiezer) => {
+    const tekening = kiezer.querySelector<SVGElement>('.serre-tekening');
+    const naam = kiezer.querySelector('[data-kleurnaam]');
+    const info = kiezer.querySelector('[data-kleurinfo]');
+    const knoppen = [...kiezer.querySelectorAll<HTMLButtonElement>('[data-kleur]')];
+    knoppen.forEach((knop) =>
+      knop.addEventListener('click', () => {
+        tekening?.style.setProperty('--frame', knop.dataset.kleur ?? '');
+        knoppen.forEach((k) => k.setAttribute('aria-pressed', String(k === knop)));
+        if (naam) naam.textContent = knop.dataset.naam ?? '';
+        if (info) info.textContent = knop.dataset.info ?? '';
+      })
+    );
   });
 </script>
