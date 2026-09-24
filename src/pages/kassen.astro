@@ -109,21 +109,22 @@ const fotos: Record<string, Foto[]> = {
                 <KlikFoto
                   src={hoofd.src}
                   alt={hoofd.alt}
-                  groep={k.slug}
+                  groep="kassen"
                   class="h-64 w-full object-cover sm:h-[26rem]"
                   lijst="rounded-2xl"
                   widths={[500, 900]}
                   sizes="(max-width: 1024px) 92vw, 45vw"
                   loading={i === 0 ? 'eager' : 'lazy'}
                 />
-                {/* De andere foto's van hetzelfde model klein eronder, zodat je
-                    de kas van meer kanten ziet zonder dat de pagina lang wordt. */}
+                {/* De andere foto's van hetzelfde model klein eronder. In de
+                    fotokijker lopen alle modellen door in één reeks, dus na de
+                    Compact blader je zo door naar de Venlo. */}
                 <div class="mt-3 grid grid-cols-3 gap-3">
                   {rest.map((f) => (
                     <KlikFoto
                       src={f.src}
                       alt={f.alt}
-                      groep={k.slug}
+                      groep="kassen"
                       class="h-20 w-full object-cover sm:h-28"
                       lijst="rounded-xl"
                       widths={[300, 600]}
@@ -145,6 +146,19 @@ const fotos: Record<string, Foto[]> = {
                     <dd class="mt-1 font-kop text-2xl text-staal-900">{k.lengte}</dd>
                   </div>
                 </dl>
+                {k.maten && (
+                  <div class="mt-5">
+                    <p class="text-xs uppercase tracking-wider text-staal-500">De vier maten</p>
+                    <div class="mt-2 grid gap-2 sm:grid-cols-2">
+                      {k.maten.map((m) => (
+                        <div class="rounded-xl bg-klei-50 px-4 py-3 ring-1 ring-staal-900/5">
+                          <p class="font-kop text-lg text-staal-900">{m.breedte}</p>
+                          <p class="mt-0.5 text-sm text-staal-600">{m.lengtes.join(' of ')} lang</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
                 <p class="mt-6 text-base leading-relaxed text-staal-600">{k.omschrijving}</p>
                 <ul class="mt-5 space-y-2.5">
                   {k.kenmerken.map((kenmerk) => (

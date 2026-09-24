@@ -13,6 +13,9 @@ export type EigenKas = {
      weten belt toch. */
   kenmerken: string[];
   voor: string;
+  /* Vaste maten, als een model die heeft (de Compact). Wim noemt ze zo: eerst
+     de breedte, dan de twee lengtes die daarbij horen. */
+  maten?: { breedte: string; lengtes: string[] }[];
 };
 
 /* De volgorde is die van Wim: de Compact bovenaan, dan van klein naar groot.
@@ -23,28 +26,32 @@ export const eigenKassen: EigenKas[] = [
     slug: 'compact',
     naam: 'Compact',
     type: 'Makkelijk zelf te plaatsen',
-    breedte: '2,30 of 2,80 m',
+    breedte: 'Vanaf 2,30 m',
     lengte: '3,00 of 3,70 m',
     omschrijving:
       'Onze kleinste kas, die we hier in de schuur maken. Hij is zo gebouwd dat je hem makkelijk zelf neerzet. Liever dat wij het doen? Dat kan natuurlijk ook.',
     kenmerken: [
       'De deur kan op bijna elke plek',
       'Een extra breed luchtraam in het dak',
-      'In twee breedtes en twee lengtes',
+      'In vier vaste maten',
+    ],
+    maten: [
+      { breedte: '2,30 m breed', lengtes: ['3,00 m', '3,70 m'] },
+      { breedte: '2,80 m breed', lengtes: ['3,00 m', '3,70 m'] },
     ],
     voor: 'Een gewone achtertuin, en wie de kas zelf wil neerzetten.',
   },
   {
     slug: 'venlo',
     naam: 'Venlo kas',
-    type: 'Op maat in de lengte',
+    type: 'Vaak op maat gemaakt',
     breedte: '3,40 m',
     lengte: 'Vanaf 4 m',
     omschrijving:
-      'De Venlo kas maken we zo lang als je wilt: per vak van 73 cm komt er een stuk bij. Met een enkele of een dubbele deur, en hij kan ook op een gemetselde muur.',
+      'De Venlo kas is vaak echt maatwerk. Vanaf 4 meter maken we hem zo lang als je wilt: per vak van 73 cm komt er een stuk bij. Met een enkele of een dubbele deur, en hij kan ook op een gemetselde muur.',
     kenmerken: [
       'Twee extra brede luchtramen in het dak',
-      'Lengte naar wens, per vak van 73 cm',
+      'Vanaf 4 m, langer per vak van 73 cm',
       'Enkele of dubbele deur',
     ],
     voor: 'Wie meer ruimte wil, in precies de lengte die in de tuin past.',
