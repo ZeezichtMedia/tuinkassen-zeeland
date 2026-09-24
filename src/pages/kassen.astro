@@ -1,36 +1,76 @@
 ---
 import Basis from '../layouts/Basis.astro';
 import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import { bedrijf, eigenKassen, standaard, bijTeKiezen } from '../data/aanbod';
-import polder from '../assets/fotos/kas-polder-brug.jpg';
-import najaar from '../assets/fotos/kas-najaar-blauwe-lucht.jpg';
 import weiland from '../assets/fotos/kas-weiland.jpg';
-import tuinbreed from '../assets/fotos/kas-tuin-breed.jpg';
-import bakken from '../assets/fotos/kas-moestuin-bakken.jpg';
-import luchtramen from '../assets/fotos/kas-nokluchting.jpg';
+import luchtramen from '../assets/fotos/kassen/compact-230x370-zijkant.webp';
 import PaginaKop from '../components/PaginaKop.astro';
 import kopfoto from '../assets/fotos/kas-tuin-hortensia.jpg';
 import Uitnodiging from '../components/Uitnodiging.astro';
 
-/* Eigen foto's van geplaatste kassen. Ze horen niet een-op-een bij een
-   specifiek model, dus de alt-tekst claimt dat ook niet. */
-const fotos = [
-  { src: polder, alt: 'Geplaatste kas van Tuinkassen Zeeland in het Zeeuwse landschap' },
-  { src: najaar, alt: 'Tuinkas met openstaande nokluchting op een heldere najaarsdag' },
-  { src: weiland, alt: 'Tuinkas op een ruim perceel, met moestuinbakken ernaast' },
-  { src: tuinbreed, alt: 'Ruime tuinkas in een achtertuin' },
-  { src: bakken, alt: 'Tuinkas met aangelegde moestuinbakken eromheen' },
-];
+// Foto's van Wim zelf, per model. De eerste is de grote, de rest staat er klein onder.
+import compact1 from '../assets/fotos/kassen/compact-280x370-luchtramen-open.webp';
+import compact2 from '../assets/fotos/kassen/compact-230x300-voorkant.webp';
+import compact3 from '../assets/fotos/kassen/compact-230x300-zijkant.webp';
+import compact4 from '../assets/fotos/kassen/compact-280x370-schuin.webp';
+import venlo1 from '../assets/fotos/kassen/venlo-340x585-dubbele-deur-akker.webp';
+import venlo2 from '../assets/fotos/kassen/venlo-340x585-dubbele-deur-voorkant.webp';
+import venlo3 from '../assets/fotos/kassen/venlo-enkele-deur-kopgevel.webp';
+import venlo4 from '../assets/fotos/kassen/venlo-op-muur-zijkant.webp';
+import belgisch1 from '../assets/fotos/kassen/belgische-380x510-kopgevel.webp';
+import belgisch2 from '../assets/fotos/kassen/belgische-380x510-schuin.webp';
+import belgisch3 from '../assets/fotos/kassen/belgische-380x510-zijkant.webp';
+import dubbel1 from '../assets/fotos/kassen/dubbelkap-660x600-schuin.webp';
+import dubbel2 from '../assets/fotos/kassen/dubbelkap-660x600-kopgevel.webp';
+import dubbel3 from '../assets/fotos/kassen/dubbelkap-660x600-goot-detail.webp';
+import dubbel4 from '../assets/fotos/kassen/dubbelkap-660x600-zijkant.webp';
+import muur1 from '../assets/fotos/kassen/muurkas-maatwerk-bloementuin.webp';
+import muur2 from '../assets/fotos/kassen/muurkas-maatwerk-voorkant.webp';
+import muur3 from '../assets/fotos/kassen/muurkas-maatwerk-kopgevel.webp';
+
+type Foto = { src: ImageMetadata; alt: string };
+
+const fotos: Record<string, Foto[]> = {
+  compact: [
+    { src: compact1, alt: 'Compact kas van 2,80 bij 3,70 m in een tuin, met de luchtramen open' },
+    { src: compact2, alt: 'Compact kas van 2,30 bij 3,00 m, van voren met de deur' },
+    { src: compact3, alt: 'Compact kas van 2,30 bij 3,00 m van opzij, met de luchtramen open' },
+    { src: compact4, alt: 'Compact kas van 2,80 bij 3,70 m, schuin van voren' },
+  ],
+  venlo: [
+    { src: venlo1, alt: 'Venlo kas van 3,40 bij 5,85 m met dubbele deur, met een akker erachter' },
+    { src: venlo2, alt: 'Venlo kas met dubbele deur, recht van voren met beide deuren open' },
+    { src: venlo3, alt: 'Lange Venlo kas met enkele deur, bij een boerderij met een akker erachter' },
+    { src: venlo4, alt: 'Venlo kas op een gemetselde muur, van opzij' },
+  ],
+  belgische: [
+    { src: belgisch1, alt: 'Belgische kas van 3,80 bij 5,10 m van voren, met de schuine gevels' },
+    { src: belgisch2, alt: 'Belgische kas schuin van voren, met deur en luchtramen' },
+    { src: belgisch3, alt: 'Belgische kas van opzij, tegen een groene haag' },
+  ],
+  dubbelkap: [
+    { src: dubbel1, alt: 'Dubbelkap van 6,60 bij 6,00 m, met beide kappen in beeld' },
+    { src: dubbel2, alt: 'Dubbelkap van voren, twee puntgevels naast elkaar' },
+    { src: dubbel3, alt: 'De goot tussen de twee kappen van een dubbelkap' },
+    { src: dubbel4, alt: 'Dubbelkap schuin van opzij, naast een schuur' },
+  ],
+  maatwerk: [
+    { src: muur1, alt: 'Kas op maat tegen een schuur, met een bloementuin ervoor' },
+    { src: muur2, alt: 'Kas op maat tegen een schuur, van voren met de deur' },
+    { src: muur3, alt: 'Kas op maat tegen een bakstenen muur, de kopgevel' },
+  ],
+};
 ---
 
 <Basis
   titel={`Onze kassen | ${bedrijf.naam}`}
-  omschrijving="De tuinkassen van Tuinkassen Zeeland: Venlo, Belgische kas, twee compacte maten en maatwerk. Gebouwd van zwaar gegalvaniseerd staal en 4 mm tuindersglas."
+  omschrijving="De tuinkassen van Tuinkassen Zeeland: Compact, Venlo kas, Belgische kas, Dubbelkap en maatwerk. Gebouwd van gegalvaniseerd staal en 4 mm tuindersglas."
 >
   <PaginaKop
     label="Onze eigen kassen"
-    titel="Zwaar staal en dik glas"
-    tekst="Voor onze tuinkassen gebruiken we vooral materiaal uit de professionele kassenbouw: zwaar gegalvaniseerd ijzer en tuindersglas van 4 mm dik. Daardoor maken we kassen die tegen een stootje kunnen en lang meegaan."
+    titel="Gegalvaniseerd staal en tuindersglas"
+    tekst="Voor onze kassen gebruiken we materiaal uit de kassenbouw: gegalvaniseerd staal en tuindersglas van 4 mm. Daardoor kunnen ze tegen een stootje en gaan ze lang mee. Vier modellen, en verder maken we hem op maat."
     foto={kopfoto}
     altTekst="Tuinkas van Tuinkassen Zeeland in een tuin, met hortensia's ernaast"
   />
@@ -40,19 +80,38 @@ const fotos = [
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
       <div class="space-y-16 sm:space-y-24">
         {
-          eigenKassen.map((k, i) => (
+          eigenKassen.map((k, i) => {
+            const [hoofd, ...rest] = fotos[k.slug];
+            return (
             <article
               id={k.slug}
               class="rijs grid scroll-mt-28 items-center gap-8 lg:grid-cols-2 lg:gap-14"
             >
               <div class:list={[i % 2 === 1 && 'lg:order-2']}>
                 <Image
-                  src={fotos[i].src}
-                  alt={fotos[i].alt}
+                  src={hoofd.src}
+                  alt={hoofd.alt}
                   class="h-64 w-full rounded-2xl object-cover sm:h-96"
                   widths={[400, 800]}
                   sizes="(max-width: 1024px) 92vw, 45vw"
+                  quality={72}
+                  loading={i === 0 ? 'eager' : 'lazy'}
                 />
+                {/* De andere foto's van hetzelfde model klein eronder, zodat je
+                    de kas van meer kanten ziet zonder dat de pagina lang wordt. */}
+                <div class="mt-3 grid grid-cols-3 gap-3">
+                  {rest.map((f) => (
+                    <Image
+                      src={f.src}
+                      alt={f.alt}
+                      class="h-20 w-full rounded-xl object-cover sm:h-28"
+                      widths={[300, 600]}
+                      sizes="(max-width: 1024px) 30vw, 15vw"
+                      quality={70}
+                      loading="lazy"
+                    />
+                  ))}
+                </div>
               </div>
               <div>
                 <p class="oogmerk text-blad-600">{k.type}</p>
@@ -68,7 +127,21 @@ const fotos = [
                   </div>
                 </dl>
                 <p class="mt-6 text-base leading-relaxed text-staal-600">{k.omschrijving}</p>
-                <p class="mt-4 text-sm leading-relaxed text-staal-500">
+                <ul class="mt-5 space-y-2.5">
+                  {k.kenmerken.map((kenmerk) => (
+                    <li class="flex gap-3 text-base text-staal-700">
+                      <svg viewBox="0 0 20 20" fill="currentColor" class="mt-1 h-5 w-5 shrink-0 text-blad-600" aria-hidden="true">
+                        <path
+                          fill-rule="evenodd"
+                          d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 111.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      <span>{kenmerk}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p class="mt-5 text-sm leading-relaxed text-staal-500">
                   <span class="font-semibold text-staal-700">Goed voor:</span> {k.voor}
                 </p>
                 <a
@@ -86,7 +159,8 @@ const fotos = [
                 </a>
               </div>
             </article>
-          ))
+            );
+          })
         }
       </div>
     </div>
@@ -100,8 +174,8 @@ const fotos = [
           <p class="oogmerk text-blad-300">Het glas</p>
           <h2 class="mt-4 text-3xl text-white sm:text-4xl">Waarom we tuindersglas gebruiken</h2>
           <p class="mt-5 text-base leading-relaxed text-staal-300">
-            Bij onze tuinkassen zit glas van tuinderskwaliteit van 4 mm. Dat is dikker en sterker
-            dan wat je normaal in een hobbykas vindt.
+            Bij onze kassen zit glas van tuinderskwaliteit van 4 mm, hetzelfde glas als in de
+            kassenbouw. De kas zelf is nieuw, het glas is hergebruikt.
           </p>
         </div>
         <div class="rijs grid gap-x-8 gap-y-6 sm:grid-cols-2">
@@ -126,10 +200,11 @@ const fotos = [
             </p>
           </div>
           <div class="border-t border-white/15 pt-4">
-            <h3 class="text-lg text-white">Duurzaam</h3>
+            <h3 class="text-lg text-white">Nieuwe kas, hergebruikt glas</h3>
             <p class="mt-2 text-sm leading-relaxed text-staal-300">
-              Het is zeer bestand tegen krassen en tegen atmosferische en chemische invloeden. Het
-              blijft dus jarenlang helder.
+              Het glas is gebruikt tuindersglas. Dat gaat bij jou nog jaren mee, en we werken het
+              netjes af met een zwarte strip. Het blijft ook helder: het kan goed tegen krassen en
+              tegen weer en wind.
             </p>
           </div>
         </div>
@@ -202,7 +277,7 @@ const fotos = [
         <div class="rijs relative min-h-[18rem] overflow-hidden rounded-2xl">
           <Image
             src={luchtramen}
-            alt="Geopende nokluchting bovenop een tuinkas"
+            alt="Compact kas met de luchtramen in het dak open"
             class="absolute inset-0 h-full w-full object-cover"
             widths={[400, 800, 1200]}
             sizes="(max-width: 1024px) 92vw, 40vw"

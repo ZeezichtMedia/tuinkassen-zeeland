@@ -60,9 +60,9 @@ const galerij = [
     tekst: 'Op een gemetselde voet, mooi weggewerkt in de tuin.',
   },
   {
-    src: fotoKinderen,
-    alt: 'Twee kinderen in een serre die vol staat met opgekweekte plantjes.',
-    tekst: 'Ruimte zat om samen te kweken, het hele gezin geniet mee.',
+    src: fotoAvond,
+    alt: 'Een serre op een gemetselde voet in een bloeiende tuin, in de zon.',
+    tekst: 'Midden in een bloeiende tuin, op een gemetselde voet.',
   },
   {
     src: fotoMuur,
@@ -77,13 +77,15 @@ const galerij = [
   omschrijving="Wij zijn leverancier van Euroserre. Aluminium serres in elke RAL-kleur, met 4 mm veiligheidsglas. Van de Euro-Micro tot de Euro-Super, geleverd en geplaatst vanuit Ritthem."
 >
   {/* Beeld van Euroserre zelf: het zijn hun modellen, dus hun eigen foto's
-      horen erbij. Dat voorkomt juist verwarring met onze stalen kassen. */}
+      horen erbij. Bovenaan bewust een gewone serre op de grond en geen luxe
+      exemplaar op een gemetselde voet: Wim wil niet dat mensen bij binnenkomst
+      denken dat het te duur voor ze is. De luxere foto's staan verderop. */}
   <PaginaKop
     label="Euroserre bij ons"
     titel="Een serre in jouw kleur, met veiligheidsglas"
     tekst="Wil je geen grijze kas maar een serre in het zwart of donkergroen, en het liefst met veiligheidsglas erin? Dan zit je bij Euroserre goed. Wij zijn hun leverancier in Zeeland: je koopt de serre bij ons, en wij zetten hem ook neer."
-    foto={fotoAvond}
-    altTekst="Een aluminium serre van Euroserre in een tuin, in het avondlicht met bloemen en gras eromheen."
+    foto={fotoKinderen}
+    altTekst="Een groene aluminium serre van Euroserre in een tuin, met twee kinderen tussen de opgekweekte plantjes."
   />
 
   <!-- Bestsellers: de lijst die Euroserre zelf voert, jaarlijks te verversen -->
@@ -225,15 +227,15 @@ const galerij = [
       <div class="rijs overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
         <div class="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
           <div class="p-7 sm:p-10">
-            <p class="oogmerk text-blad-600">Teken hem zelf</p>
+            <p class="oogmerk text-blad-600">Het tekenprogramma</p>
             <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">
-              Zie je serre voor je? Teken hem in de configurator
+              Zie je serre voor je? Teken hem zelf
             </h2>
             <p class="mt-5 leading-relaxed text-staal-600">
               Euroserre heeft een tekenprogramma waarin je je serre helemaal zelf samenstelt: model,
-              maat, kleur en opties. Je ziet meteen wat je krijgt. Zet ons erbij als jouw bouwer,
-              dan komt je tekening bij ons in Ritthem terecht en bellen wij je met een prijs en een
-              datum.
+              maat, kleur en opties. Je ziet meteen hoe hij eruit komt te zien. Klaar? Maak een foto
+              of schermafbeelding van je tekening en app die naar {bedrijf.telefoonToon}. Dan bellen
+              wij je met een prijs en een datum.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <a
@@ -242,7 +244,7 @@ const galerij = [
                 rel="noopener"
                 class="knop-vol justify-center"
               >
-                Open de configurator
+                Open het tekenprogramma
                 <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
                   <path
                     d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"
@@ -253,12 +255,12 @@ const galerij = [
                 </svg>
               </a>
               <a href="/contact/" class="font-semibold text-blad-700 hover:text-blad-800">
-                Liever samen doorlopen? Bel of mail ons
+                Liever samen doorlopen? Bel ons
               </a>
             </div>
             <p class="mt-5 text-sm text-staal-500">
-              Kom je er niet uit, geen probleem. Bel {bedrijf.telefoonToon}, dan lopen we het aan de
-              keukentafel door.
+              Het tekenprogramma werkt het best op een computer. Kom je er niet uit? Kom langs in
+              Ritthem, dan tekenen we hem samen.
             </p>
           </div>
           <div class="relative min-h-[16rem]">

@@ -108,8 +108,8 @@ import kopfoto from '../assets/fotos/kas-tuin-zomer.jpg';
         <div class="rijs rounded-2xl bg-klei-50 p-6 sm:p-8">
           <h2 class="text-3xl text-staal-900">Stuur een bericht</h2>
           <p class="mt-3 text-base leading-relaxed text-staal-600">
-            Gebruik dit formulier voor al je vragen of verzoeken. Je krijgt direct een bevestiging
-            in je mailbox, en wij reageren meestal binnen een werkdag.
+            Schrijf gewoon op wat je wilt weten. Wij bellen of mailen je meestal binnen een
+            werkdag terug.
           </p>
 
           <form class="mt-7 grid gap-4 sm:grid-cols-2" data-formulier novalidate>
@@ -127,33 +127,9 @@ import kopfoto from '../assets/fotos/kas-tuin-zomer.jpg';
               </label>
               <input id="email" name="email" type="email" class="invoer mt-1.5" autocomplete="email" />
             </div>
+            {/* Wim wil geen onderwerp- en maatveld: mensen moeten vrij kunnen
+                schrijven wat ze willen. Waar de kas komt helpt hem wel. */}
             <div class="sm:col-span-2">
-              <label for="onderwerp" class="text-sm font-semibold text-staal-700">Waar gaat het over?</label>
-              <select id="onderwerp" name="onderwerp" class="invoer mt-1.5">
-                <option>Een stalen kas van Tuinkassen Zeeland</option>
-                <option>Een aluminium serre van Euroserre</option>
-                <option>Ik weet het nog niet, ik wil me oriënteren</option>
-                <option>Reparatie, glasschade of nazorg</option>
-                <option>Een afspraak maken om langs te komen</option>
-                <option>Iets anders</option>
-              </select>
-            </div>
-            {/* Wim krijgt de maat het liefst meteen mee: mensen bellen toch al
-                met "twee bij drie" in hun hoofd. */}
-            <div>
-              <label for="maat" class="text-sm font-semibold text-staal-700">
-                Welke maat heb je ongeveer in gedachten?
-                <span class="font-normal text-staal-400">Niet verplicht</span>
-              </label>
-              <input
-                id="maat"
-                name="maat"
-                type="text"
-                class="invoer mt-1.5"
-                placeholder="Bijvoorbeeld 3 x 6 meter"
-              />
-            </div>
-            <div>
               <label for="plaats" class="text-sm font-semibold text-staal-700">
                 Waar komt de kas te staan? <span class="font-normal text-staal-400">Niet verplicht</span>
               </label>
@@ -230,8 +206,7 @@ import kopfoto from '../assets/fotos/kas-tuin-zomer.jpg';
     melding.classList.remove('hidden', 'border-amber-300', 'bg-amber-50', 'text-amber-900');
     melding.classList.add('border-blad-200', 'bg-blad-50', 'text-blad-800');
     melding.textContent =
-      `Bedankt ${naam}, je bericht is binnen. Je krijgt meteen een bevestiging per mail, ` +
-      'en wij komen er zo snel mogelijk bij je op terug. ' +
+      `Bedankt ${naam}, je bericht is binnen. We komen er zo snel mogelijk bij je op terug. ` +
       'Let op: dit is een demo, er wordt nog niets echt verstuurd.';
   });
 </script>

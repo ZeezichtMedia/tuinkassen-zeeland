@@ -5,11 +5,12 @@ import { bedrijf, eigenKassen, euroSerres } from '../data/aanbod';
 import hero from '../assets/fotos/kas-tuin-zomer.jpg';
 import staal from '../assets/fotos/kas-luchtraam-detail.jpg';
 import moestuin from '../assets/fotos/kas-tuin-hortensia.jpg';
-import zijgevel from '../assets/fotos/kas-najaar-blauwe-lucht.jpg';
+import venloAkker from '../assets/fotos/kassen/venlo-340x585-dubbele-deur-akker.webp';
+import opbouw from '../assets/fotos/kassen/compact-280x370-opbouw.webp';
 import frame from '../assets/fotos/kas-binnen-opbouw.jpg';
 import polder from '../assets/fotos/kas-polder-brug.jpg';
 import Uitnodiging from '../components/Uitnodiging.astro';
-import serreAvond from '../assets/fotos/euroserre-tuin-avond.webp';
+import serreGewoon from '../assets/fotos/euroserre-kinderen.webp';
 import serreMaxi from '../assets/fotos/euroserre-model-maxi.webp';
 import serreRustiq from '../assets/fotos/euroserre-model-rustiq.webp';
 import serrePlus from '../assets/fotos/euroserre-model-plus.webp';
@@ -28,12 +29,12 @@ const redenen = [
   {
     kop: 'Staal buigt niet mee',
     tekst:
-      'Ons gegalvaniseerde staal is zwaar en stevig. Daardoor heeft de kas geen diagonale verbindingen nodig en blijft hij staan als het hard waait. Dat merk je hier aan de kust.',
+      'Ons gegalvaniseerde staal is stevig. Daardoor heeft de kas geen diagonale verbindingen nodig en blijft hij staan als het hard waait. Dat merk je hier aan de kust.',
   },
   {
     kop: 'Dertig jaar en verder',
     tekst:
-      'Het staal is zwaar verzinkt. Een kas gaat er tientallen jaren tegenaan, en dertig jaar is geen uitzondering.',
+      'Het staal is verzinkt. Een kas gaat er tientallen jaren tegenaan, en dertig jaar is geen uitzondering.',
   },
   {
     kop: 'Glas van tuindersklasse',
@@ -50,7 +51,7 @@ const redenen = [
 
 <Basis
   titel={`${bedrijf.naam} | Stalen tuinkassen en Euroserre serres uit Ritthem`}
-  omschrijving="Tuinkassen Zeeland bouwt kassen van zwaar gegalvaniseerd staal en 4 mm tuindersglas, en levert de aluminium serres van Euroserre. Zelf gebouwd en geplaatst vanuit Ritthem."
+  omschrijving="Tuinkassen Zeeland bouwt kassen van gegalvaniseerd staal en 4 mm tuindersglas, en levert de aluminium serres van Euroserre. Zelf gebouwd en geplaatst vanuit Ritthem."
 >
   <!-- Hero -->
   <section class="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden">
@@ -84,7 +85,7 @@ const redenen = [
         Een kas die blijft staan als het waait
       </h1>
       <p class="mt-6 max-w-xl text-base leading-relaxed text-staal-100 sm:text-lg">
-        Twee lijnen onder één dak: onze eigen kassen van zwaar gegalvaniseerd staal, en de aluminium
+        Twee lijnen onder één dak: onze eigen kassen van gegalvaniseerd staal, en de aluminium
         serres van Euroserre in elke kleur die je wilt. Allebei door ons geleverd en geplaatst,
         vanuit Ritthem.
       </p>
@@ -175,8 +176,8 @@ const redenen = [
       <div class="mt-12 grid gap-6 lg:grid-cols-2">
         <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
           <Image
-            src={zijgevel}
-            alt="Stalen tuinkas van Tuinkassen Zeeland met openstaande nokluchting"
+            src={venloAkker}
+            alt="Venlo kas van Tuinkassen Zeeland met dubbele deur, met een akker erachter"
             class="h-60 w-full object-cover sm:h-72"
             widths={[600, 1200]}
             sizes="(max-width: 1024px) 92vw, 46vw"
@@ -187,11 +188,11 @@ const redenen = [
             <ul class="mt-6 flex-1 space-y-3 text-base leading-relaxed text-staal-600">
               <li class="flex gap-3">
                 <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>Zwaar staal, geen diagonale verbindingen nodig, blijft staan als het waait</span>
+                <span>Stevig staal, geen diagonale verbindingen nodig, blijft staan als het waait</span>
               </li>
               <li class="flex gap-3">
                 <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
-                <span>4 mm tuindersglas, hetzelfde als in de professionele kassenbouw</span>
+                <span>4 mm tuindersglas: nieuwe kas, hergebruikt glas</span>
               </li>
               <li class="flex gap-3">
                 <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blad-500" aria-hidden="true"></span>
@@ -215,8 +216,8 @@ const redenen = [
 
         <article class="rijs flex flex-col overflow-hidden rounded-2xl bg-white shadow-[0_1px_3px_rgba(14,26,15,0.08)]">
           <Image
-            src={serreAvond}
-            alt="Aluminium serre van Euroserre in een tuin in het avondlicht"
+            src={serreGewoon}
+            alt="Groene aluminium serre van Euroserre in een tuin, vol opgekweekte plantjes"
             class="h-60 w-full object-cover sm:h-72"
             widths={[600, 1200]}
             sizes="(max-width: 1024px) 92vw, 46vw"
@@ -301,10 +302,11 @@ const redenen = [
       <div class="rijs flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="max-w-xl">
           <p class="oogmerk text-blad-600">Onze eigen kassen</p>
-          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Vijf maten om mee te beginnen</h2>
+          <h2 class="mt-4 text-4xl text-staal-900 sm:text-5xl">Vier modellen, en verder op maat</h2>
           <p class="mt-5 text-base leading-relaxed text-staal-600">
-            Dit zijn de standaardmaten die we kunnen leveren. Zit je maat er niet bij, dan bouwen we
-            hem gewoon: rechthoekig, vierkant of rond, in bijna elk formaat dat je wilt.
+            Begin bij de Compact, die zet je makkelijk zelf neer. De Venlo, de Belgische kas en de
+            Dubbelkap maken we zo lang als je wilt. Zit je maat er niet bij, dan bouwen we hem
+            gewoon op maat.
           </p>
         </div>
         <a href="/kassen/" class="shrink-0 font-semibold text-blad-700 hover:text-blad-800">
@@ -431,8 +433,8 @@ const redenen = [
           sizes="(max-width: 640px) 92vw, 30vw"
         />
         <Image
-          src={zijgevel}
-          alt="Geplaatste tuinkas met openstaande nokluchting"
+          src={opbouw}
+          alt="Een van onze mensen zet een Compact kas in elkaar in een tuin"
           class="rijs h-64 w-full rounded-2xl object-cover sm:h-80"
           widths={[400, 800]}
           sizes="(max-width: 640px) 92vw, 30vw"

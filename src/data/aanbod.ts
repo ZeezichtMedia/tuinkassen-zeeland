@@ -1,5 +1,5 @@
 // Aanbod van Tuinkassen Zeeland.
-// Eigen kassen: maten van hun bestaande site (tuinkassenzeeland.nl/PRODUCTEN).
+// Eigen kassen: modellen en maten zoals Wim ze opgaf (gesprek 4 september 2026 en zijn aantekeningen).
 // Euroserre: modellen en maten van euroserre.com, geleverd en geplaatst door Markusse.
 
 export type EigenKas = {
@@ -9,58 +9,89 @@ export type EigenKas = {
   breedte: string;
   lengte: string;
   omschrijving: string;
+  /* Wat Wim bij dit model zelf als eerste noemt. Kort, want wie meer wil
+     weten belt toch. */
+  kenmerken: string[];
   voor: string;
 };
 
+/* De volgorde is die van Wim: de Compact bovenaan, dan van klein naar groot.
+   Maten zoals hij ze op 4 september 2026 opnoemde en in zijn aantekeningen
+   bevestigde. Een prieel bouwt hij niet meer, dus die staat er niet bij. */
 export const eigenKassen: EigenKas[] = [
+  {
+    slug: 'compact',
+    naam: 'Compact',
+    type: 'Makkelijk zelf te plaatsen',
+    breedte: '2,30 of 2,80 m',
+    lengte: '3,00 of 3,70 m',
+    omschrijving:
+      'Onze kleinste kas, die we hier in de schuur maken. Hij is zo gebouwd dat je hem makkelijk zelf neerzet. Liever dat wij het doen? Dat kan natuurlijk ook.',
+    kenmerken: [
+      'De deur kan op bijna elke plek',
+      'Een extra breed luchtraam in het dak',
+      'In twee breedtes en twee lengtes',
+    ],
+    voor: 'Een gewone achtertuin, en wie de kas zelf wil neerzetten.',
+  },
   {
     slug: 'venlo',
     naam: 'Venlo kas',
-    type: 'Vrijstaand, gegalvaniseerd staal',
+    type: 'Op maat in de lengte',
     breedte: '3,40 m',
-    lengte: '3,75 tot 10 m',
+    lengte: 'Vanaf 4 m',
     omschrijving:
-      'De klassieke Venlo, hetzelfde profiel dat in de professionele kassenbouw staat. Rechte gevels, veel licht, en ruimte om rechtop te werken tot in de hoeken.',
-    voor: 'Wie serieus wil telen en een kas wil die decennia meegaat.',
+      'De Venlo kas maken we zo lang als je wilt: per vak van 73 cm komt er een stuk bij. Met een enkele of een dubbele deur, en hij kan ook op een gemetselde muur.',
+    kenmerken: [
+      'Twee extra brede luchtramen in het dak',
+      'Lengte naar wens, per vak van 73 cm',
+      'Enkele of dubbele deur',
+    ],
+    voor: 'Wie meer ruimte wil, in precies de lengte die in de tuin past.',
   },
   {
     slug: 'belgische',
     naam: 'Belgische kas',
-    type: 'Vrijstaand, gegalvaniseerd staal',
+    type: 'Met schuine gevels',
     breedte: '3,80 m',
-    lengte: '4,50 tot 10 m',
+    lengte: 'Naar wens',
     omschrijving:
-      'Te herkennen aan de schuine regels in de gevel. Breder en met een steilere kap dan de Venlo, waardoor regen en vuil sneller aflopen en je extra hoogte houdt boven het middenpad.',
-    voor: 'Grote moestuinen en wie hoog wil kunnen opbinden.',
+      'Een Belgische kas herken je aan de gevels die schuin naar buiten lopen. Daardoor vangt hij meer licht, en wordt het binnen ook sneller warm.',
+    kenmerken: [
+      'Schuine gevels: meer licht en meer warmte',
+      'Een extra breed luchtraam in het dak',
+      'Lengte naar wens',
+    ],
+    voor: 'Wie zoveel mogelijk licht en warmte in de kas wil.',
   },
   {
-    slug: 'compact-230',
-    naam: 'Compact 2,30',
-    type: 'Vrijstaand, gegalvaniseerd staal',
-    breedte: '2,30 m',
-    lengte: '3,00 m of 3,70 m',
+    slug: 'dubbelkap',
+    naam: 'Dubbelkap',
+    type: 'Twee kappen naast elkaar',
+    breedte: '6,60 m',
+    lengte: 'Naar wens',
     omschrijving:
-      'Onze kleinste maat, met precies hetzelfde staal en glas als de grote kassen. Past in vrijwel elke achtertuin zonder dat je inlevert op stevigheid.',
-    voor: 'Stadstuinen en kleinere percelen.',
-  },
-  {
-    slug: 'compact-280',
-    naam: 'Compact 2,80',
-    type: 'Vrijstaand, gegalvaniseerd staal',
-    breedte: '2,80 m',
-    lengte: '3,75 m',
-    omschrijving:
-      'Een halve meter breder dan de 2,30, en dat scheelt: je houdt aan beide kanten een volwaardig bed over met een pad ertussen.',
-    voor: 'De meest gekozen maat voor een gewone tuin.',
+      'Twee kappen naast elkaar, met één goot ertussen. Standaard 6,60 m breed, maar we maken hem ook smaller. Wil je vijf meter breed? Dan worden het twee kappen van 2,50 m.',
+    kenmerken: [
+      'Standaard 6,60 m breed, smaller kan ook',
+      'Lengte naar wens',
+      'Eén goot in het midden',
+    ],
+    voor: 'Grote tuinen, en wie echt veel wil kweken.',
   },
   {
     slug: 'maatwerk',
     naam: 'Maatwerk',
-    type: 'Vrijstaand, gegalvaniseerd staal',
+    type: 'Precies zoals jij hem wilt',
     breedte: 'In overleg',
     lengte: 'In overleg',
     omschrijving:
-      'Rechthoekig, vierkant of rond: we bouwen je kas in bijna elk formaat dat je wilt. Het glas maken we zelf op maat, dus een afwijkende hoek of lengte is geen probleem.',
+      'Rechthoekig, vierkant of tegen een bestaande muur: we bouwen je kas in bijna elk formaat. Deze kas hebben we bijvoorbeeld tegen een schuur aan gezet.',
+    kenmerken: [
+      'Ook tegen een muur of schuur',
+      'Het glas maken we zelf op maat',
+      'Samen kijken wat er kan',
+    ],
     voor: 'Een lastige hoek, een bestaande muur of gewoon een eigen plan.',
   },
 ];
@@ -262,17 +293,22 @@ export type Accessoire = {
 };
 
 /* Wim wil het aanbod bewust smal houden: dit hoort standaard bij een kas.
-   Sloten en dat soort losse artikelen doen we niet. */
+   Sloten en dat soort losse artikelen doen we niet, een werkbank ook niet. */
 export const standaard: Accessoire[] = [
   {
-    naam: 'Goten en afvoer',
+    naam: 'Nieuwe kas, hergebruikt tuindersglas',
     omschrijving:
-      'Elke kas krijgt goten met afvoer. Jij kiest of dat op het hemelwater gaat of op een regenton. Aansluiten doen we ook.',
+      'De kas is nieuw, het glas is gebruikt tuindersglas. Netjes afgewerkt met een zwarte strip, dus je ziet er niets van.',
+  },
+  {
+    naam: 'Goot en afvoer',
+    omschrijving:
+      'De goot zit er standaard aan. Jij kiest of de afvoer aan de voorkant of aan de achterkant komt.',
   },
   {
     naam: 'Luchtramen',
     omschrijving:
-      'Ramen in dak en gevel, zodat de warmte weg kan. Hoeveel er nodig zijn hangt af van je maat, dat rekenen wij voor je uit.',
+      'Elke kas heeft een extra breed luchtraam in het dak. In de Venlo kas zitten er twee.',
   },
   {
     naam: 'Plaatsen',
@@ -283,14 +319,14 @@ export const standaard: Accessoire[] = [
 
 export const bijTeKiezen: Accessoire[] = [
   {
-    naam: 'Werkbank',
+    naam: 'Kweekbladen',
     omschrijving:
-      'Ingebouwd, van watervast gelamineerd multiplex op een ijzeren frame. Op de hoogte die jou uitkomt.',
+      'Tafels van betonplex, een plaat die tegen water kan. Of een smal blad van 20 cm, op elke hoogte die je wilt.',
   },
   {
     naam: 'Automatische raamopeners',
     omschrijving:
-      'De ramen gaan vanzelf open en dicht bij een temperatuur die je zelf instelt. Handig als je overdag weg bent.',
+      'De ramen gaan vanzelf open en dicht als het warm of koud wordt. Handig als je overdag weg bent.',
   },
   {
     naam: 'Fundering',
@@ -322,8 +358,9 @@ export const kleuren: Kleur[] = [
 
 export const bedrijf = {
   naam: 'Tuinkassen Zeeland',
-  /* De teken-configurator van Euroserre. Werkt achter een login bij Euroserre
-     zelf, dus we verwijzen door in plaats van hem na te bouwen. */
+  /* Het tekenprogramma van Euroserre. Inbouwen kan niet (Euroserre staat dat
+     technisch niet toe) en een aanvraag daaruit gaat altijd naar Euroserre zelf.
+     Daarom vragen we mensen Wim een foto van hun tekening te appen. */
   euroserreConfigurator: 'https://euroserre.com/configurator/',
   moeder: 'Landbouwbedrijf Markusse',
   slogan: 'Solide en degelijk',

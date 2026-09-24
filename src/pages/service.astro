@@ -22,19 +22,24 @@ const diensten = [
   {
     naam: 'Reparatie',
     tekst:
-      'Je kan ook een afspraak maken voor reparatie, ook aan een bestaande kas die niet van ons is. Het glas maken we zelf op maat.',
+      'Je kan ook een afspraak maken voor reparatie, ook aan een kas die niet van ons is. Bel wel even van tevoren, dan weet je zeker dat er iemand is.',
   },
   {
     naam: 'Uitbreiding',
     tekst:
       'Een kas te klein geworden? We breiden bestaande kassen uit. Vaak kan er meer dan je denkt.',
   },
+  {
+    naam: 'Losse onderdelen',
+    tekst:
+      'Voor losse onderdelen kun je ook bij ons terecht. Automatische raamopeners verkopen we bijvoorbeeld veel los, en een ruit maken we op maat.',
+  },
 ];
 ---
 
 <Basis
   titel={`Service en reparatie | ${bedrijf.naam}`}
-  omschrijving="Plaatsen, nazorg, reparatie en uitbreiding van tuinkassen. Ook voor bestaande kassen. Glas maken we zelf op maat. Tuinkassen Zeeland, Ritthem."
+  omschrijving="Plaatsen, nazorg, reparatie, uitbreiding en losse onderdelen voor tuinkassen. Ook voor bestaande kassen. Tuinkassen Zeeland, Ritthem."
 >
   <PaginaKop
     label="Service"
@@ -100,8 +105,8 @@ const diensten = [
               overige wortel- en knolgewassen.
             </p>
             <p>
-              We staan dus zelf ook op het land. Daarom bouwen we de kassen zwaar, van
-              gegalvaniseerd staal met 4 mm tuindersglas. Zo gaan ze hier gewoon lang mee.
+              We staan dus zelf ook op het land. Daarom bouwen we de kassen van gegalvaniseerd
+              staal met 4 mm tuindersglas. Zo gaan ze hier gewoon lang mee.
             </p>
           </div>
         </div>
