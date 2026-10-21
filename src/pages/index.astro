@@ -5,7 +5,12 @@ import type { ImageMetadata } from 'astro';
 import { bedrijf, eigenKassen, euroSerres } from '../data/aanbod';
 import KlikFoto from '../components/KlikFoto.astro';
 import KomLangs from '../components/KomLangs.astro';
-import SerreTekening from '../components/SerreTekening.astro';
+// Euroserre-foto's uit hun galerij; toestemming en herkomst in
+// src/assets/fotos/euroserre/BRON.md.
+import esMaxi from '../assets/fotos/euroserre/maxi-tuin.webp';
+import esRustiq from '../assets/fotos/euroserre/rustiq-tuin.webp';
+import esPlus from '../assets/fotos/euroserre/plus-zitplek.webp';
+import esMuur from '../assets/fotos/euroserre/muurserre-gevel.webp';
 
 import hero from '../assets/fotos/kassen/hero-compact-zon.webp';
 import staal from '../assets/fotos/kas-luchtraam-detail.jpg';
@@ -84,13 +89,12 @@ const stappen = [
 ];
 
 const bestsellers = euroSerres.filter((s) => s.bestseller);
-const tekeningPer: Record<string, 'maxi' | 'rustiq' | 'plus' | 'muur'> = {
-  'euro-maxi': 'maxi',
-  'euro-rustiq': 'rustiq',
-  'euro-plus': 'plus',
-  'euro-muurserre': 'muur',
+const euroFoto: Record<string, ImageMetadata> = {
+  'euro-maxi': esMaxi,
+  'euro-rustiq': esRustiq,
+  'euro-plus': esPlus,
+  'euro-muurserre': esMuur,
 };
-const tekeningKleur = ['#1b1b1b', '#27352a', '#8f9592', '#1b1b1b'];
 ---
 
 <Basis
@@ -354,16 +358,26 @@ const tekeningKleur = ['#1b1b1b', '#27352a', '#8f9592', '#1b1b1b'];
         </div>
         <div class="grid grid-cols-2 gap-4">
           {
-            bestsellers.map((b, i) => (
+            bestsellers.map((b) => (
               <a
                 href="/euroserre/#bestsellers"
-                class="rijs group rounded-2xl bg-white p-4 ring-1 ring-staal-900/5 transition-shadow duration-300 hover:shadow-[0_20px_44px_-28px_rgba(14,26,15,0.45)] sm:p-5"
+                class="rijs group overflow-hidden rounded-2xl bg-white ring-1 ring-staal-900/5 transition-shadow duration-300 hover:shadow-[0_20px_44px_-28px_rgba(14,26,15,0.45)]"
               >
-                <div class="rounded-xl bg-[linear-gradient(180deg,#eef3ec_0%,#e2eadf_100%)] px-2 pt-4">
-                  <SerreTekening model={tekeningPer[b.slug]} kleur={tekeningKleur[i]} class="w-full transition-transform duration-500 group-hover:scale-[1.04]" />
+                <div class="overflow-hidden">
+                  <Image
+                    src={euroFoto[b.slug]}
+                    alt={`De ${b.naam} van Euroserre in een tuin`}
+                    class="h-36 w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05] sm:h-44"
+                    widths={[300, 600]}
+                    sizes="(max-width: 1024px) 46vw, 26vw"
+                    loading="lazy"
+                    quality={72}
+                  />
                 </div>
-                <p class="mt-3 font-kop text-xl text-staal-900">{b.naam}</p>
-                <p class="text-sm text-staal-500">{b.typering}</p>
+                <div class="p-4 sm:p-5">
+                  <p class="font-kop text-xl text-staal-900">{b.naam}</p>
+                  <p class="text-sm text-staal-500">{b.typering}</p>
+                </div>
               </a>
             ))
           }

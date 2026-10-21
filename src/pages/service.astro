@@ -7,6 +7,10 @@ import trekker from '../assets/fotos/landbouw-trekker.jpg';
 import PaginaKop from '../components/PaginaKop.astro';
 import kopfoto from '../assets/fotos/kas-weiland.jpg';
 import Uitnodiging from '../components/Uitnodiging.astro';
+import KlikFoto from '../components/KlikFoto.astro';
+// Uit de galerij van Euroserre, zie src/assets/fotos/euroserre/BRON.md.
+import opener from '../assets/fotos/euroserre/raamopener.webp';
+import openerDak from '../assets/fotos/euroserre/raamopener-dak.webp';
 
 const diensten = [
   {
@@ -75,6 +79,44 @@ const diensten = [
               </div>
             ))
           }
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Losse onderdelen: de raamopeners gaan hard -->
+  <section class="bg-white pb-16 sm:pb-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="rijs grid items-center gap-8 overflow-hidden rounded-[1.75rem] bg-klei-50 p-6 ring-1 ring-staal-900/5 sm:p-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
+        <div>
+          <p class="oogmerk text-blad-600">Losse onderdelen</p>
+          <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Automatische raamopeners</h2>
+          <p class="mt-5 leading-relaxed text-staal-600">
+            Een raamopener zet het luchtraam vanzelf open als het warm wordt, en doet het weer dicht
+            als het afkoelt. Geen stroom nodig, en je hoeft er niet voor thuis te zijn. Die verkopen we
+            ook los, net als ruiten op maat en andere onderdelen. Bel even, dan kijken we wat er op
+            jouw kas past.
+          </p>
+          <a href={`tel:${bedrijf.telefoonNet}`} class="knop-vol mt-8 justify-center">Bel {bedrijf.telefoonToon}</a>
+        </div>
+        <div class="grid grid-cols-[1.6fr_1fr] gap-3">
+          <KlikFoto
+            src={opener}
+            alt="Een automatische raamopener aan een luchtraam van een kas"
+            groep="onderdelen"
+            class="h-56 w-full object-cover sm:h-72"
+            lijst="rounded-2xl"
+            sizes="(max-width: 1024px) 56vw, 30vw"
+          />
+          <KlikFoto
+            src={openerDak}
+            alt="Openstaande luchtramen met raamopeners, van binnen gezien"
+            groep="onderdelen"
+            class="h-56 w-full object-cover sm:h-72"
+            lijst="rounded-2xl"
+            sizes="(max-width: 1024px) 34vw, 18vw"
+          />
         </div>
       </div>
     </div>

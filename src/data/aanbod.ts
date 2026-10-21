@@ -365,10 +365,13 @@ export const kleuren: Kleur[] = [
 
 export const bedrijf = {
   naam: 'Tuinkassen Zeeland',
-  /* Het tekenprogramma van Euroserre. Inbouwen kan niet (Euroserre staat dat
-     technisch niet toe) en een aanvraag daaruit gaat altijd naar Euroserre zelf.
-     Daarom vragen we mensen Wim een foto van hun tekening te appen. */
-  euroserreConfigurator: 'https://euroserre.com/configurator/',
+  /* Het tekenprogramma (configurator) van Euroserre, via de eigen gastlink van
+     Tuinkassen Zeeland. Die link kregen we van Stijn Lemmens (Euro-Serre) op
+     20 oktober 2026. Aanvragen die via deze link binnenkomen gaan rechtstreeks
+     naar het mailadres van Wim, niet eerst langs Euroserre. Euroserre vraagt
+     uitdrukkelijk om deze link te gebruiken en niet rechtstreeks naar hun
+     configurator te linken. */
+  euroserreConfigurator: 'https://euroserre.com/portal/login-guest/?guestname=Zeeland',
   moeder: 'Landbouwbedrijf Markusse',
   slogan: 'Solide en degelijk',
   straat: 'Welzingseweg 2A',
