@@ -2,7 +2,7 @@
 import Basis from '../layouts/Basis.astro';
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import { bedrijf, euroSerres, bestsellerJaar } from '../data/aanbod';
+import { bedrijf, euroSerres, bestsellerJaar, configuratorLink } from '../data/aanbod';
 import KlikFoto from '../components/KlikFoto.astro';
 import KomLangs from '../components/KomLangs.astro';
 
@@ -229,6 +229,15 @@ const stappen = [
                       <dd class="text-right font-semibold text-staal-900">{s.nokhoogte}</dd>
                     </div>
                   </dl>
+                  <a
+                    href={configuratorLink(s.configurator)}
+                    target="_blank"
+                    rel="noopener"
+                    class="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-blad-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-blad-700"
+                  >
+                    Teken de {s.naam}
+                    <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>
+                  </a>
                 </div>
               </article>
             );
@@ -315,11 +324,12 @@ const stappen = [
             <h2 class="mt-4 text-3xl text-staal-900 sm:text-4xl">Stel je serre zelf samen, in 3D</h2>
             <p class="mt-5 leading-relaxed text-staal-600">
               In het tekenprogramma van Euroserre stel je je serre helemaal zelf samen: model, maat,
-              kleur, deuren en ramen. Je ziet hem meteen voor je, van alle kanten. Klaar? Dan komt je
+              kleur, deuren en ramen. Bij elk model op deze pagina staat ook een knop die meteen dat model
+              opent. Je ziet hem meteen voor je, van alle kanten. Klaar? Dan komt je
               aanvraag rechtstreeks bij ons binnen, en bellen we je met een prijs en een datum.
             </p>
             <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <a href={bedrijf.euroserreConfigurator} target="_blank" rel="noopener" class="knop-vol justify-center">
+              <a href={configuratorLink()} target="_blank" rel="noopener" class="knop-vol justify-center">
                 Open het tekenprogramma
                 <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true">
                   <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path>
@@ -424,6 +434,17 @@ const stappen = [
                     <span class="font-semibold text-staal-800">{s.breedte}</span> breed, vanaf{' '}
                     <span class="font-semibold text-staal-800">{s.minLengte}</span> lang
                   </p>
+                  {s.configurator && (
+                    <a
+                      href={configuratorLink(s.configurator)}
+                      target="_blank"
+                      rel="noopener"
+                      class="mt-4 inline-flex items-center gap-1.5 self-start text-sm font-semibold text-blad-700 transition-colors hover:text-blad-800"
+                    >
+                      Teken deze serre
+                      <svg viewBox="0 0 20 20" fill="currentColor" class="h-4 w-4" aria-hidden="true"><path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z"></path><path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"></path></svg>
+                    </a>
+                  )}
                 </article>
               ))}
             </div>

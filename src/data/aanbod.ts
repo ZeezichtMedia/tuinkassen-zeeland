@@ -121,6 +121,9 @@ export type Serre = {
   lengtes?: string;
   glas?: string;
   nokhoogte?: string;
+  /* Nummer van dit model in de configurator van Euroserre (idSerre). Daarmee
+     opent "Teken deze serre" meteen het juiste model. */
+  configurator?: number;
 };
 
 /* Het jaar van de bestsellerlijst die nu op de site staat. Euroserre geeft in
@@ -130,6 +133,7 @@ export const bestsellerJaar = 2026;
 export const euroSerres: Serre[] = [
   {
     slug: 'euro-micro',
+    configurator: 37,
     naam: 'Euro-Micro',
     categorie: 'Vrijstaand',
     breedte: '1,61 m',
@@ -139,6 +143,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-maxi',
+    configurator: 39,
     bestseller: true,
     naam: 'Euro-Maxi',
     categorie: 'Vrijstaand',
@@ -153,6 +158,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-rustiq',
+    configurator: 11,
     bestseller: true,
     naam: 'Euro-Rustiq',
     categorie: 'Vrijstaand',
@@ -167,6 +173,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-cottage',
+    configurator: 77,
     naam: 'Euro-Cottage',
     categorie: 'Vrijstaand',
     breedte: '2,36 m of 3,09 m',
@@ -176,6 +183,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-starr',
+    configurator: 35,
     naam: 'Euro-Starr',
     categorie: 'Vrijstaand',
     breedte: '3,09 m of 3,80 m',
@@ -185,6 +193,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-plus',
+    configurator: 3,
     bestseller: true,
     naam: 'Euro-Plus',
     categorie: 'Vrijstaand',
@@ -199,6 +208,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-super',
+    configurator: 2,
     naam: 'Euro-Super',
     categorie: 'Vrijstaand',
     breedte: '4,78 m tot 12,58 m',
@@ -208,6 +218,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-victorian',
+    configurator: 49,
     naam: 'Euro-Victorian',
     categorie: 'Vrijstaand',
     breedte: '3,09 m',
@@ -217,6 +228,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-modern',
+    configurator: 33,
     naam: 'Euro-Modern',
     categorie: 'Vrijstaand',
     breedte: '3,09 m',
@@ -226,6 +238,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-exotic',
+    configurator: 9,
     naam: 'Euro-Exotic',
     categorie: 'Vrijstaand',
     breedte: '3,00 m',
@@ -235,6 +248,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-pyra',
+    configurator: 30,
     naam: 'Euro-Pyra',
     categorie: 'Vrijstaand',
     breedte: '3,09 m of 3,80 m',
@@ -244,6 +258,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-royal',
+    configurator: 12,
     naam: 'Euro-Royal',
     categorie: 'Vrijstaand',
     breedte: '4,57 m',
@@ -253,6 +268,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-muurserre',
+    configurator: 4,
     bestseller: true,
     naam: 'Euro-Muurserre',
     categorie: 'Tegen een muur',
@@ -267,6 +283,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-midi',
+    configurator: 6,
     naam: 'Euro-Midi',
     categorie: 'Tegen een muur',
     breedte: '1,18 m of 1,56 m',
@@ -276,6 +293,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-veranda',
+    configurator: 10,
     naam: 'Euro-Veranda',
     categorie: 'Tegen een muur',
     breedte: '2,33 m of 3,08 m',
@@ -285,6 +303,7 @@ export const euroSerres: Serre[] = [
   },
   {
     slug: 'euro-gothic',
+    configurator: 14,
     naam: 'Euro-Gothic',
     categorie: 'Tegen een muur',
     breedte: '2,36 m of 3,09 m',
@@ -381,3 +400,16 @@ export const bedrijf = {
   telefoonNet: '+31651326385',
   telefoonToon: '06 51 32 63 85',
 };
+
+/* Rechtstreekse link naar één model in de configurator, op het gastaccount
+   van Tuinkassen Zeeland. De code achter id= hoort bij dat gastaccount: getest
+   op 21 oktober 2026 in een verse browser, het model opent meteen met
+   "WELCOME ZEELAND" en de aanvraag komt dus bij Wim. Geeft Euroserre ooit een
+   nieuwe gastlink, zoek dan de nieuwe code op (open de gastlink en kijk naar
+   de links naar middleware.euroserre.com) en vervang hem hier. Zonder model
+   valt de link terug op de gewone gastlink. */
+const configuratorCode = 'dFmq%2BjLqw5GhDGTIzharnA%3D%3D';
+export function configuratorLink(model?: number): string {
+  if (!model) return bedrijf.euroserreConfigurator;
+  return `https://middleware.euroserre.com/webflux/serre?idSerre=${model}&id=${configuratorCode}`;
+}
